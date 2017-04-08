@@ -6,18 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://lawlite.com">
-  <title>Lawlite的博客</title>
+  <title>Tag: 翻墙 | Lawlite的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Camera                      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;">
+  <meta name="description" content="东南-蒙纳士联合学院研究生">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Lawlite的博客">
-<meta property="og:url" content="http://lawlite.com/assets/MyResume/example/camera_example.html">
+<meta property="og:url" content="http://lawlite.com/tags/翻墙/index.html">
 <meta property="og:site_name" content="Lawlite的博客">
-<meta property="og:description" content="Camera                      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;">
-<meta property="og:updated_time" content="2017-04-08T03:21:40.518Z">
+<meta property="og:description" content="东南-蒙纳士联合学院研究生">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Lawlite的博客">
-<meta name="twitter:description" content="Camera                      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;">
+<meta name="twitter:description" content="东南-蒙纳士联合学院研究生">
   
     <link rel="alternative" href="/atom.xml" title="Lawlite的博客" type="application/atom+xml">
   
@@ -149,189 +148,60 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-undefined" class="article article-type-page " itemscope itemprop="blogPost">
-  <div class="article-inner">
+            
+  
+  
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
-        <title>Camera</title>
-        <script type="text/javascript">
-            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
-            window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
-
-            function getUserMedia(constraints, success, failure) {
-                navigator.getUserMedia(constraints, function(stream) {
-                    var videoSrc = (window.URL && window.URL.createObjectURL(stream)) || stream;
-                    success.apply(null, [videoSrc]);
-                }, failure);
-            }
-
-
-            function initCamera(constraints, video, callback) {
-                getUserMedia(constraints, function (src) {
-                    video.src = src;
-                    video.addEventListener('loadeddata', function() {
-                        var attempts = 10;
-
-                        function checkVideo() {
-                            if (attempts > 0) {
-                                if (video.videoWidth > 0 && video.videoHeight > 0) {
-                                    console.log(video.videoWidth + "px x " + video.videoHeight + "px");
-                                    video.play();
-                                    callback();
-                                } else {
-                                    window.setTimeout(checkVideo, 100);
-                                }
-                            } else {
-                                callback('Unable to play video stream.');
-                            }
-                            attempts--;
-                        }
-
-                        checkVideo();
-                    }, false);
-                }, function(e) {
-                    console.log(e);
-                });
-            }
-
-            function copyToCanvas(video, ctx) {
-                ( function frame() {
-                    ctx.drawImage(video, 0, 0);
-                    window.requestAnimationFrame(frame);
-                }());
-            }
-
-            window.addEventListener('load', function() {
-                var constraints = {
-                            video: {
-                                mandatory: {
-                                    minWidth: 1280,
-                                    minHeight: 720
-                                }
-                            }
-                        },
-                        video = document.createElement('video'),
-                        canvas = document.createElement('canvas');
-
-                document.body.appendChild(video);
-                document.body.appendChild(canvas);
-
-                initCamera(constraints, video, function() {
-                    canvas.setAttribute('width', video.videoWidth);
-                    canvas.setAttribute('height', video.videoHeight);
-                    copyToCanvas(video, canvas.getContext('2d'));
-                });
-            }, false);
-
-
-        </script>
-    </head>
-    <body>
-
-    </body>
-</html>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
+    
       
       
-      
-
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/04/08/搭建自己的VPN/" class="archive-article-date">
+  	<time datetime="2017-04-08T09:33:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-08</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/04/08/搭建自己的VPN/">搭建自己的VPN</a>
+    </h1>
+  
 
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://lawlite.com/assets/MyResume/example/camera_example.html" alt="微信分享二维码">
-    </div>
-</div>
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">翻墙</a>
+        		</li>
+      		
+		</ul>
+	</div>
 
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
+  
+  
+    </div></section>
   
 
-
-
-
-
-  
-    <div class="duoshuo"></div>
-  
-
-
-
-<section id="comments">
-  <div id="disqus_thread"></div>
-    <script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'lawlite'; // required: replace example with your forum shortname
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</section>
+    
 
 
           </div>
@@ -356,7 +226,7 @@
 		isHome: false,
 		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: true,
 		root: "/",
