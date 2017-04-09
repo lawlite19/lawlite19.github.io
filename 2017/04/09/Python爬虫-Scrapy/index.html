@@ -6,18 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://lawlite.com">
-  <title>Lawlite的博客</title>
+  <title>Scrapy爬虫框架模板 | Lawlite的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我的个人主页 template.html 为模板，index.html为显示的页面">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Lawlite的博客">
-<meta property="og:url" content="http://lawlite.com/assets/MyResume/readme.html">
+  <meta name="description" content="说明 github地址：https://github.com/lawlite19/PythonCrawler-Scrapy-Mysql-File-Template 使用scrapy爬虫框架将数据保存Mysql数据库和文件中  settings.py 修改Mysql的配置信息 1234567#Mysql数据库的配置信息MYSQL_HOST = &apos;127.0.0.1&apos;MYSQL_DBNAME = &apos;t">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scrapy爬虫框架模板">
+<meta property="og:url" content="http://lawlite.com/2017/04/09/Python爬虫-Scrapy/index.html">
 <meta property="og:site_name" content="Lawlite的博客">
-<meta property="og:description" content="我的个人主页 template.html 为模板，index.html为显示的页面">
-<meta property="og:updated_time" content="2017-04-08T03:21:40.537Z">
+<meta property="og:description" content="说明 github地址：https://github.com/lawlite19/PythonCrawler-Scrapy-Mysql-File-Template 使用scrapy爬虫框架将数据保存Mysql数据库和文件中  settings.py 修改Mysql的配置信息 1234567#Mysql数据库的配置信息MYSQL_HOST = &apos;127.0.0.1&apos;MYSQL_DBNAME = &apos;t">
+<meta property="og:image" content="http://lawlite.com/assets/images/scrapy_images/testDBHelper.gif">
+<meta property="og:image" content="http://lawlite.com/assets/images/scrapy_images/testCrawl.gif">
+<meta property="og:updated_time" content="2017-04-09T05:48:27.073Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Lawlite的博客">
-<meta name="twitter:description" content="我的个人主页 template.html 为模板，index.html为显示的页面">
+<meta name="twitter:title" content="Scrapy爬虫框架模板">
+<meta name="twitter:description" content="说明 github地址：https://github.com/lawlite19/PythonCrawler-Scrapy-Mysql-File-Template 使用scrapy爬虫框架将数据保存Mysql数据库和文件中  settings.py 修改Mysql的配置信息 1234567#Mysql数据库的配置信息MYSQL_HOST = &apos;127.0.0.1&apos;MYSQL_DBNAME = &apos;t">
+<meta name="twitter:image" content="http://lawlite.com/assets/images/scrapy_images/testDBHelper.gif">
   
     <link rel="alternative" href="/atom.xml" title="Lawlite的博客" type="application/atom+xml">
   
@@ -180,14 +184,107 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-undefined" class="article article-type-page " itemscope itemprop="blogPost">
+            <article id="post-Python爬虫-Scrapy" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Scrapy爬虫框架模板
+    </h1>
+  
+
+        
+        <a href="/2017/04/09/Python爬虫-Scrapy/" class="archive-article-date">
+  	<time datetime="2017-04-09T05:42:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-09</time>
+</a>
+        
+      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="我的个人主页"><a href="#我的个人主页" class="headerlink" title="我的个人主页"></a>我的个人主页</h1><ul>
-<li>template.html 为模板，index.html为显示的页面</li>
+        <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><ul>
+<li>github地址：<a href="https://github.com/lawlite19/PythonCrawler-Scrapy-Mysql-File-Template" target="_blank" rel="external">https://github.com/lawlite19/PythonCrawler-Scrapy-Mysql-File-Template</a></li>
+<li>使用scrapy爬虫框架将数据保存Mysql数据库和文件中</li>
 </ul>
+<h2 id="settings-py"><a href="#settings-py" class="headerlink" title="settings.py"></a>settings.py</h2><ul>
+<li><p>修改Mysql的配置信息</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#Mysql数据库的配置信息</div><div class="line">MYSQL_HOST = <span class="string">'127.0.0.1'</span></div><div class="line">MYSQL_DBNAME = <span class="string">'testdb'</span>         #数据库名字，请修改</div><div class="line">MYSQL_USER = <span class="string">'root'</span>             #数据库账号，请修改 </div><div class="line">MYSQL_PASSWD = <span class="string">'123456'</span>         #数据库密码，请修改</div><div class="line"></div><div class="line">MYSQL_PORT = <span class="number">3306</span>               #数据库端口，在dbhelper中使用</div></pre></td></tr></table></figure>
+</li>
+<li><p>指定pipelines</p>
+</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ITEM_PIPELINES = &#123;</div><div class="line">    <span class="string">'webCrawler_scrapy.pipelines.WebcrawlerScrapyPipeline'</span>: <span class="number">300</span>,#保存到mysql数据库</div><div class="line">    <span class="string">'webCrawler_scrapy.pipelines.JsonWithEncodingPipeline'</span>: <span class="number">300</span>,#保存到文件中</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="items-py"><a href="#items-py" class="headerlink" title="items.py"></a>items.py</h2><ul>
+<li>声明需要格式化处理的字段</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class WebcrawlerScrapyItem(scrapy.Item):</div><div class="line">    '''定义需要格式化的内容（或是需要保存到数据库的字段）'''</div><div class="line">    # define the fields for your item here like:</div><div class="line">    # name = scrapy.Field()</div><div class="line">    name = scrapy.Field()   #修改你所需要的字段</div><div class="line">    url = scrapy.Field()</div></pre></td></tr></table></figure>
+<h2 id="pipelines-py"><a href="#pipelines-py" class="headerlink" title="pipelines.py"></a>pipelines.py</h2><h3 id="一、保存到数据库的类WebcrawlerScrapyPipeline（在settings中声明）"><a href="#一、保存到数据库的类WebcrawlerScrapyPipeline（在settings中声明）" class="headerlink" title="一、保存到数据库的类WebcrawlerScrapyPipeline（在settings中声明）"></a>一、保存到数据库的类<code>WebcrawlerScrapyPipeline</code>（在settings中声明）</h3><ul>
+<li>定义一个类方法<code>from_settings</code>，得到settings中的Mysql数据库配置信息，得到数据库连接池dbpool</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">@classmethod</div><div class="line">def from_settings(cls,settings):</div><div class="line">    '''1、@classmethod声明一个类方法，而对于平常我们见到的则叫做实例方法。 </div><div class="line">       2、类方法的第一个参数cls（class的缩写，指这个类本身），而实例方法的第一个参数是self，表示该类的一个实例</div><div class="line">       3、可以通过类来调用，就像C.f()，相当于java中的静态方法'''</div><div class="line">    dbparams=dict(</div><div class="line">        host=settings['MYSQL_HOST'],#读取settings中的配置</div><div class="line">        db=settings['MYSQL_DBNAME'],</div><div class="line">        user=settings['MYSQL_USER'],</div><div class="line">        passwd=settings['MYSQL_PASSWD'],</div><div class="line">        charset='utf8',#编码要加上，否则可能出现中文乱码问题</div><div class="line">        cursorclass=MySQLdb.cursors.DictCursor,</div><div class="line">        use_unicode=False,</div><div class="line">    )</div><div class="line">    dbpool=adbapi.ConnectionPool('MySQLdb',**dbparams)#**表示将字典扩展为关键字参数,相当于host=xxx,db=yyy....</div><div class="line">    return cls(dbpool)#相当于dbpool付给了这个类，self中可以得到</div></pre></td></tr></table></figure>
+<ul>
+<li><code>__init__</code>中会得到连接池dbpool</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">def __init__(self,dbpool):</div><div class="line">    self.dbpool=dbpool</div></pre></td></tr></table></figure>
+<ul>
+<li><code>process_item</code>方法是pipeline默认调用的，进行数据库操作</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#pipeline默认调用</div><div class="line">def process_item(self, item, spider):</div><div class="line">    query=self.dbpool.runInteraction(self._conditional_insert,item)#调用插入的方法</div><div class="line">    query.addErrback(self._handle_error,item,spider)#调用异常处理方法</div><div class="line">    return item</div></pre></td></tr></table></figure>
+<ul>
+<li>插入数据库方法<code>_conditional_insert</code></li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#写入数据库中</div><div class="line">def _conditional_insert(self,tx,item):</div><div class="line">    #print item['name']</div><div class="line">    sql="insert into testpictures(name,url) values(%s,%s)"</div><div class="line">    params=(item["name"],item["url"])</div><div class="line">    tx.execute(sql,params)</div></pre></td></tr></table></figure>
+<ul>
+<li>错误处理方法<code>_handle_error</code></li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#错误处理方法</div><div class="line">def _handle_error(self, failue, item, spider):</div><div class="line">    print failue</div></pre></td></tr></table></figure>
+<h3 id="二、保存到文件中的类JsonWithEncodingPipeline（在settings中声明）"><a href="#二、保存到文件中的类JsonWithEncodingPipeline（在settings中声明）" class="headerlink" title="二、保存到文件中的类JsonWithEncodingPipeline（在settings中声明）"></a>二、保存到文件中的类<code>JsonWithEncodingPipeline</code>（在settings中声明）</h3><ul>
+<li>保存为json格式的文件，比较简单，代码如下</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">class JsonWithEncodingPipeline(object):</div><div class="line">    '''保存到文件中对应的class</div><div class="line">       1、在settings.py文件中配置</div><div class="line">       2、在自己实现的爬虫类中yield item,会自动执行'''    </div><div class="line">    def __init__(self):</div><div class="line">        self.file = codecs.open('info.json', 'w', encoding='utf-8')#保存为json文件</div><div class="line">    def process_item(self, item, spider):</div><div class="line">        line = json.dumps(dict(item)) + "\n"#转为json的</div><div class="line">        self.file.write(line)#写入文件中</div><div class="line">        return item</div><div class="line">    def spider_closed(self, spider):#爬虫结束时关闭文件</div><div class="line">        self.file.close()</div></pre></td></tr></table></figure>
+<h2 id="dbhelper-py"><a href="#dbhelper-py" class="headerlink" title="dbhelper.py"></a>dbhelper.py</h2><ul>
+<li>自己实现的操作Mysql数据库的类</li>
+<li><strong>init</strong>方法，获取settings配置文件中的信息</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">def __init__(self):</div><div class="line">    self.settings=get_project_settings() #获取settings配置，设置需要的信息</div><div class="line">    </div><div class="line">    self.host=self.settings['MYSQL_HOST']</div><div class="line">    self.port=self.settings['MYSQL_PORT']</div><div class="line">    self.user=self.settings['MYSQL_USER']</div><div class="line">    self.passwd=self.settings['MYSQL_PASSWD']</div><div class="line">    self.db=self.settings['MYSQL_DBNAME']</div></pre></td></tr></table></figure>
+<ul>
+<li>连接到Mysql</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">#连接到mysql，不是连接到具体的数据库</div><div class="line">def connectMysql(self):</div><div class="line">    conn=MySQLdb.connect(host=self.host,</div><div class="line">                         port=self.port,</div><div class="line">                         user=self.user,</div><div class="line">                         passwd=self.passwd,</div><div class="line">                         #db=self.db,不指定数据库名</div><div class="line">                         charset='utf8') #要指定编码，否则中文可能乱码</div><div class="line">    return conn</div></pre></td></tr></table></figure>
+<ul>
+<li>连接到settings配置文件中的数据库名（MYSQL_DBNAME）</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">#连接到具体的数据库（settings中设置的MYSQL_DBNAME）</div><div class="line">def connectDatabase(self):</div><div class="line">    conn=MySQLdb.connect(host=self.host,</div><div class="line">                         port=self.port,</div><div class="line">                         user=self.user,</div><div class="line">                         passwd=self.passwd,</div><div class="line">                         db=self.db,</div><div class="line">                         charset='utf8') #要指定编码，否则中文可能乱码</div><div class="line">    return conn</div></pre></td></tr></table></figure>
+<ul>
+<li>创建数据库（settings文件中配置的数据库名）</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">#创建数据库</div><div class="line">def createDatabase(self):</div><div class="line">    '''因为创建数据库直接修改settings中的配置MYSQL_DBNAME即可，所以就不要传sql语句了'''</div><div class="line">    conn=self.connectMysql()#连接数据库</div><div class="line">    </div><div class="line">    sql="create database if not exists "+self.db</div><div class="line">    cur=conn.cursor()</div><div class="line">    cur.execute(sql)#执行sql语句</div><div class="line">    cur.close()</div><div class="line">    conn.close()</div></pre></td></tr></table></figure>
+<ul>
+<li>还有一些数据库操作方法传入sql语句和参数即可（具体看代码）</li>
+</ul>
+<h2 id="实现具体的爬虫-py（即模板中的pictureSpider-demo-py文件）"><a href="#实现具体的爬虫-py（即模板中的pictureSpider-demo-py文件）" class="headerlink" title="实现具体的爬虫.py（即模板中的pictureSpider_demo.py文件）"></a>实现具体的爬虫.py（即模板中的<code>pictureSpider_demo.py</code>文件）</h2><ul>
+<li>继承<code>scrapy.spiders.Spider</code> 类</li>
+<li>声明三个属性</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">name=<span class="string">"webCrawler_scrapy"</span>    #定义爬虫名，要和settings中的BOT_NAME属性对应的值一致</div><div class="line"></div><div class="line">allowed_domains=[<span class="string">"desk.zol.com.cn"</span>] #搜索的域名范围，也就是爬虫的约束区域，规定爬虫只爬取这个域名下的网页</div><div class="line"></div><div class="line">start_urls=[<span class="string">"http://desk.zol.com.cn/fengjing/1920x1080/1.html"</span>]   #开始爬取的地址</div></pre></td></tr></table></figure>
+<ul>
+<li>实现<code>parse</code>方法，该函数名不能改变，因为Scrapy源码中默认callback函数的函数名就是parse</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">def parse(self, response):</div></pre></td></tr></table></figure>
+<ul>
+<li>返回item</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">item=WebcrawlerScrapyItem()  #实例item（具体定义的item类）,将要保存的值放到事先声明的item属性中</div><div class="line">item[<span class="string">'name'</span>]=file_name </div><div class="line">item[<span class="string">'url'</span>]=realUrl</div><div class="line">print item[<span class="string">"name"</span>],item[<span class="string">"url"</span>]    </div><div class="line">                </div><div class="line">yield item  #返回item,这时会自定解析item</div></pre></td></tr></table></figure>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><ul>
+<li>测试DBHelper<br>创建testdb数据库和testtable表</li>
+</ul>
+<p><img src="/assets/images/scrapy_images/testDBHelper.gif" alt="创建testdb数据库和testtable表" title="testDBHelper.gif"></p>
+<ul>
+<li>测试爬虫<br><code>scrapy crawl webCrawler_scrapy</code>运行爬虫后会将爬取得图片保存到本地，并且将name和url保存到数据库中</li>
+</ul>
+<p><img src="/assets/images/scrapy_images/testCrawl.gif" alt="测试爬虫" title="testCrawl.gif"></p>
 
       
 
@@ -246,7 +343,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://lawlite.com/assets/MyResume/readme.html" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://lawlite.com/2017/04/09/Python爬虫-Scrapy/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -258,6 +355,20 @@ var _hmt = _hmt || [];
 </article>
 
   
+<nav id="article-nav">
+  
+    <a href="/2017/03/24/致火影/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          致火影
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
 
 
 
@@ -315,7 +426,7 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
@@ -381,10 +492,6 @@ var _hmt = _hmt || [];
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
@@ -397,11 +504,11 @@ var _hmt = _hmt || [];
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>
