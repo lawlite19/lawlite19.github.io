@@ -8,17 +8,26 @@
   <link rel="dns-prefetch" href="http://lawlite.me">
   <title>Hexo+Github搭建自己的博客 | Lawlite的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="东南-蒙纳士联合学院研究生">
+  <meta name="description" content="最终效果可以查看：http://lawlite.me/ 后序继续完善  一、说明 关于一些基本软件的安装和配置这里不再给出 安装NodeJS：http://nodejs.cn/download/ 需要配置环境变量   安装git工具：https://git-for-windows.github.io/ 注册github账号 配置SSH-key 创建名为userName.github.io的仓库,">
 <meta name="keywords" content="Github">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo+Github搭建自己的博客">
 <meta property="og:url" content="http://lawlite.me/2017/04/10/Hexo-Github搭建自己的博客/index.html">
 <meta property="og:site_name" content="Lawlite的博客">
-<meta property="og:description" content="东南-蒙纳士联合学院研究生">
-<meta property="og:updated_time" content="2017-04-10T14:57:47.652Z">
+<meta property="og:description" content="最终效果可以查看：http://lawlite.me/ 后序继续完善  一、说明 关于一些基本软件的安装和配置这里不再给出 安装NodeJS：http://nodejs.cn/download/ 需要配置环境变量   安装git工具：https://git-for-windows.github.io/ 注册github账号 配置SSH-key 创建名为userName.github.io的仓库,">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/hexo+github/01.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/hexo+github/02.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/hexo+github/03.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/hexo+github/04.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/hexo+github/05.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/hexo+github/06.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/hexo+github/07.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/hexo+github/08.png">
+<meta property="og:updated_time" content="2017-04-12T08:31:46.822Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo+Github搭建自己的博客">
-<meta name="twitter:description" content="东南-蒙纳士联合学院研究生">
+<meta name="twitter:description" content="最终效果可以查看：http://lawlite.me/ 后序继续完善  一、说明 关于一些基本软件的安装和配置这里不再给出 安装NodeJS：http://nodejs.cn/download/ 需要配置环境变量   安装git工具：https://git-for-windows.github.io/ 注册github账号 配置SSH-key 创建名为userName.github.io的仓库,">
+<meta name="twitter:image" content="http://lawlite.me/assets/blog_images/hexo+github/01.png">
   
     <link rel="alternative" href="/atom.xml" title="Lawlite的博客" type="application/atom+xml">
   
@@ -217,7 +226,116 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <ul>
+<li>最终效果可以查看：<a href="http://lawlite.me/">http://lawlite.me/</a></li>
+<li>后序继续完善</li>
+</ul>
+<h2 id="一、说明"><a href="#一、说明" class="headerlink" title="一、说明"></a>一、说明</h2><ul>
+<li>关于一些基本软件的安装和配置这里不再给出<ul>
+<li>安装<code>NodeJS</code>：<a href="http://nodejs.cn/download/" target="_blank" rel="external">http://nodejs.cn/download/</a><ul>
+<li>需要配置环境变量</li>
+</ul>
+</li>
+<li>安装<code>git</code>工具：<a href="https://git-for-windows.github.io/" target="_blank" rel="external">https://git-for-windows.github.io/</a><ul>
+<li>注册<code>github</code>账号</li>
+<li>配置<code>SSH-key</code></li>
+<li>创建名为<code>userName.github.io</code>的仓库,<code>userName</code>是你申请的用户名</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h2 id="二、安装Hexo和基本使用"><a href="#二、安装Hexo和基本使用" class="headerlink" title="二、安装Hexo和基本使用"></a>二、安装Hexo和基本使用</h2><ul>
+<li>安装<strong>Hexo</strong>: <code>npm install -g hexo</code></li>
+<li>初始化<strong>Hexo</strong>: <code>hexo init</code></li>
+<li>生成静态页面：<code>hexo generate</code> 或者 <code>hexo g</code></li>
+<li>启动服务器：<code>hexo server</code> 或者 <code>hexo s</code><ul>
+<li>注意：服务器默认是<code>4000</code>端口，若是安装了<strong>福昕阅读器</strong>可能端口冲突</li>
+<li>可以制定端口：<code>hexo s -p5000</code></li>
+</ul>
+</li>
+<li>浏览器中访问：<code>http://localhost:4000</code></li>
+</ul>
+<h2 id="三、更换主题Theme及基本配置"><a href="#三、更换主题Theme及基本配置" class="headerlink" title="三、更换主题Theme及基本配置"></a>三、更换主题Theme及基本配置</h2><h3 id="1、更换主题"><a href="#1、更换主题" class="headerlink" title="1、更换主题"></a>1、更换主题</h3><ul>
+<li>默认主题是<code>landscape</code>，在<code>themes</code>文件夹下，可以使用别人开发好的主题，<a href="https://github.com/hexojs/hexo/wiki/Themes" target="_blank" rel="external">这里</a>有很多，我使用的是这一个: <a href="https://github.com/litten/hexo-theme-yilia" target="_blank" rel="external">https://github.com/litten/hexo-theme-yilia</a><ul>
+<li>下载之后放到<code>themes</code>文件夹下即可：<code>git clone git@github.com:litten/hexo-theme-yilia.git</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="2、主题基本配置"><a href="#2、主题基本配置" class="headerlink" title="2、主题基本配置"></a>2、主题基本配置</h3><ul>
+<li>配置在<code>_config.yml</code>文件中，基本的配置尝试一下就知道了，不在给出<h4 id="1-图片的位置："><a href="#1-图片的位置：" class="headerlink" title="(1) 图片的位置："></a>(1) 图片的位置：</h4></li>
+<li>比如<strong>打赏</strong>的支付宝二维码图片，是在<strong>当前博客</strong>的<code>source/assets/img/</code>下 （不是当前主题）<br><img src="/assets/blog_images/hexo+github/01.png" alt="enter description here" title="01"></li>
+<li>配置：<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 打赏基础设定：0-关闭打赏； 1-文章对应的md文件里有reward:true属性，才有打赏； 2-所有文章均有打赏</div><div class="line">reward_type: 1</div><div class="line"># 打赏wording</div><div class="line">reward_wording: '谢谢你请我吃糖果'</div><div class="line"># 支付宝二维码图片地址，跟你设置头像的方式一样。比如：/assets/img/alipay.jpg</div><div class="line">alipay: /assets/img/alipay.jpg</div><div class="line"># 微信二维码图片地址</div><div class="line">weixin: /assets/img/weixin.png</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="2-百度、谷歌统计配置"><a href="#2-百度、谷歌统计配置" class="headerlink" title="(2) 百度、谷歌统计配置"></a>(2) 百度、谷歌统计配置</h4><ul>
+<li>申请账号：<a href="https://tongji.baidu.com/web/welcome/login" target="_blank" rel="external">https://tongji.baidu.com/web/welcome/login</a></li>
+<li>在<strong>代码获取</strong>的地方只要填入<strong>key</strong>即可<br><img src="/assets/blog_images/hexo+github/02.png" alt="enter description here" title="02"></li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># Miscellaneous</div><div class="line">baidu_analytics: '454d1a5ba8ed29xxxxxxxx'</div><div class="line">google_analytics: 'UA-9700xxxxxxxx'</div></pre></td></tr></table></figure>
+<ul>
+<li>就可以统计网站访问情况了，如下图，<br><img src="/assets/blog_images/hexo+github/03.png" alt="enter description here" title="03"></li>
+<li>谷歌统计同理</li>
+</ul>
+<h4 id="3-文章评论设置"><a href="#3-文章评论设置" class="headerlink" title="(3) 文章评论设置"></a>(3) 文章评论设置</h4><ul>
+<li>由于主题之实现了<strong>多说</strong>和<strong>disqus</strong>的第三方评论功能，这里不配置</li>
+<li>因为<strong>多说</strong>6月份要关闭了，<strong>disqus</strong>需要翻墙访问才行，还有<strong>友言</strong>不支持<code>https</code>协议，因为<code>github</code>使用的是<code>https</code>协议</li>
+<li>下面会给出使用<strong>网易云跟帖</strong>和<strong>来必力</strong>的第三方评论功能</li>
+</ul>
+<h2 id="四、博客的基本配置"><a href="#四、博客的基本配置" class="headerlink" title="四、博客的基本配置"></a>四、博客的基本配置</h2><h3 id="1-部署配置"><a href="#1-部署配置" class="headerlink" title="1 部署配置"></a>1 部署配置</h3><ul>
+<li>配置到<code>github</code>对应的仓库中<ul>
+<li>使用<code>hexo deploy</code>或<code>hexo d</code>命令即可发布到github仓库中</li>
+<li>浏览器输入网址<code>https://userName.github.io</code>即可访问（<code>userName</code>对应你的用户名）</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: git@github<span class="selector-class">.com</span>:lawlite19/lawlite19<span class="selector-class">.github</span><span class="selector-class">.io</span><span class="selector-class">.git</span></div><div class="line">  branch: master</div></pre></td></tr></table></figure>
+<h3 id="2、主题配置"><a href="#2、主题配置" class="headerlink" title="2、主题配置"></a>2、主题配置</h3><ul>
+<li>设置为你下载的主题：<code>theme: yilia</code><h3 id="3、其他"><a href="#3、其他" class="headerlink" title="3、其他"></a>3、其他</h3></li>
+<li>加入如下配置，<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">jsonContent:</div><div class="line">  meta: false</div><div class="line">  pages: false</div><div class="line">  posts:</div><div class="line">    title: true</div><div class="line">    date: true</div><div class="line">    path: true</div><div class="line">    text: true</div><div class="line">    raw: false</div><div class="line">    <span class="attribute">content</span>: false</div><div class="line">    slug: false</div><div class="line">    updated: false</div><div class="line">    comments: false</div><div class="line">    link: false</div><div class="line">    permalink: false</div><div class="line">    excerpt: false</div><div class="line">    categories: false</div><div class="line">    tags: true</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="五、进阶功能配置"><a href="#五、进阶功能配置" class="headerlink" title="五、进阶功能配置"></a>五、进阶功能配置</h2><h3 id="1、网站访问量显示"><a href="#1、网站访问量显示" class="headerlink" title="1、网站访问量显示"></a>1、网站访问量显示</h3><h4 id="1-效果"><a href="#1-效果" class="headerlink" title="(1) 效果"></a>(1) 效果</h4><p><img src="/assets/blog_images/hexo+github/04.png" alt="enter description here" title="04"></p>
+<h4 id="2-实现"><a href="#2-实现" class="headerlink" title="(2) 实现"></a>(2) 实现</h4><ul>
+<li>我使用了<strong>不蒜子</strong>第三方的统计插件，网址：<a href="http://ibruce.info/2015/04/04/busuanzi/" target="_blank" rel="external">http://ibruce.info/2015/04/04/busuanzi/</a></li>
+<li>在<code>themes\yilia\layout\_partial</code>下的<code>footer.ejs</code>中加入如下代码即可</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;script async src=<span class="string">"//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"</span>&gt;</div><div class="line">&lt;/script&gt;</div><div class="line">&lt;<span class="selector-tag">span</span> id=<span class="string">"busuanzi_container_site_pv"</span>&gt;</div><div class="line">  本站总访问量&lt;<span class="selector-tag">span</span> id=<span class="string">"busuanzi_value_site_pv"</span>&gt;&lt;/span&gt;次</div><div class="line">&lt;/span&gt;</div><div class="line">&lt;<span class="selector-tag">span</span> id=<span class="string">"busuanzi_container_site_uv"</span>&gt;</div><div class="line">总访客数&lt;<span class="selector-tag">span</span> id=<span class="string">"busuanzi_value_site_uv"</span>&gt;&lt;/span&gt;人次</div><div class="line">&lt;/span&gt;</div></pre></td></tr></table></figure>
+<h3 id="2、实现单篇文章浏览统计和评论统计"><a href="#2、实现单篇文章浏览统计和评论统计" class="headerlink" title="2、实现单篇文章浏览统计和评论统计"></a>2、实现单篇文章浏览统计和评论统计</h3><ul>
+<li>评论数的统计是<strong>网易云跟帖</strong>中获取的，下面给出<h4 id="1-效果-1"><a href="#1-效果-1" class="headerlink" title="(1) 效果"></a>(1) 效果</h4><img src="/assets/blog_images/hexo+github/05.png" alt="enter description here" title="05"><h4 id="2-实现-1"><a href="#2-实现-1" class="headerlink" title="(2) 实现"></a>(2) 实现</h4></li>
+<li>修改<code>themes\yilia\layout\_partial</code>文件夹下的<code>article.ejs</code>文件</li>
+<li>在<code>&lt;%- partial(&#39;post/title&#39;, {class_name: &#39;article-title&#39;}) %&gt;</code>节点下加入：<ul>
+<li>注意这里<strong>网易云跟帖</strong>还没设置，而<strong>评论数</strong>中使用到了，这里运行会有问题，下面给出<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 显示阅读和评论数 --&gt;</div><div class="line">&lt;% if (!index &amp;&amp; post.comments &amp;&amp; config.wangYi)&#123; %&gt;</div><div class="line">&lt;br/&gt;</div><div class="line">&lt;a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;"&gt;</div><div class="line">&lt;span class="icon-sort"&gt;&lt;/span&gt;</div><div class="line">&lt;span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;"&gt;</div><div class="line">          阅读数: &lt;span id="busuanzi_value_page_pv"&gt;&lt;/span&gt;次 &amp;nbsp;&amp;nbsp;</div><div class="line">&lt;/span&gt;</div><div class="line">&lt;/a&gt;</div><div class="line">&lt;a class="cloud-tie-join-count" href="javascript:void(0);" style="color:#ef7522;font-size:14px;"&gt;</div><div class="line">	&lt;span class="icon-comment"&gt;&lt;/span&gt;</div><div class="line">	&lt;span class="join-text" style="color:#ef7522;font-size:14px;"&gt;评论数:&lt;/span&gt;</div><div class="line">	&lt;span class="join-count"&gt;0&lt;/span&gt;次</div><div class="line">&lt;/a&gt;</div><div class="line">&lt;% &#125; %&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="3、实现网易云跟帖评论"><a href="#3、实现网易云跟帖评论" class="headerlink" title="3、实现网易云跟帖评论"></a>3、实现网易云跟帖评论</h3><h4 id="1-效果-2"><a href="#1-效果-2" class="headerlink" title="(1) 效果"></a>(1) 效果</h4><p><img src="/assets/blog_images/hexo+github/06.png" alt="enter description here" title="06"></p>
+<h4 id="2-实现-2"><a href="#2-实现-2" class="headerlink" title="(2) 实现"></a>(2) 实现</h4><ul>
+<li>注册账号：<a href="https://gentie.163.com/info.html" target="_blank" rel="external">https://gentie.163.com/info.html</a></li>
+<li>填写完成之后获取<code>WEB</code>代码</li>
+<li>修改<code>themes\yilia\layout\_partial</code>文件夹下的<code>article.ejs</code>文件</li>
+<li>在最后加入</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 网易云跟帖 --&gt;</div><div class="line">&lt;% if (!index &amp;&amp; post.comments &amp;&amp; config.wangYi)&#123; %&gt;</div><div class="line">&lt;section class="duoshuo" id="comments"&gt;</div><div class="line">&lt;div id="cloud-tie-wrapper" class="cloud-tie-wrapper"&gt;&lt;/div&gt;</div><div class="line">&lt;script&gt;</div><div class="line">  var cloudTieConfig = &#123;</div><div class="line">    url: document.location.href, </div><div class="line">    sourceId: "",</div><div class="line">    productKey: "&lt;%= config.wangYi%&gt;",</div><div class="line">    target: "cloud-tie-wrapper"</div><div class="line">  &#125;;</div><div class="line">&lt;/script&gt;</div><div class="line">&lt;script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"&gt;&lt;/script&gt;</div><div class="line">&lt;/section&gt;</div><div class="line">&lt;% &#125; %&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>在<strong>博客</strong>的配置文件<code>_config.yml</code>最后加入获取代码中的<code>productKey</code><br><img src="/assets/blog_images/hexo+github/07.png" alt="enter description here" title="07"></li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wangYi: <span class="number">06</span>ab5cdc0b4c45efb39xxxxxxxxxxxx</div></pre></td></tr></table></figure>
+<ul>
+<li>发布到<code>github</code>上可以查看效果</li>
+</ul>
+<h2 id="六、写作的一些说明"><a href="#六、写作的一些说明" class="headerlink" title="六、写作的一些说明"></a>六、写作的一些说明</h2><ul>
+<li>执行命令：<code>hexo new  &quot;xxxx&quot;</code>创建<code>Markdown</code>文件，在<strong>博客</strong>的<code>source\_posts</code>文件夹下</li>
+<li>比如如下例子，<ul>
+<li><code>comments</code>设置为<code>true</code>允许评论，若设置为<code>false</code>则不能评论</li>
+<li><code>reward</code>设置为<code>true</code>允许打赏，若设置为<code>false</code>则不能打赏，（注意对应主题的配置文件<code>reward_type</code>: 设置的为<code>1</code>）<br><img src="/assets/blog_images/hexo+github/08.png" alt="enter description here" title="08"></li>
+</ul>
+</li>
+<li>在文章中加入<code>&lt;!-- more --&gt;</code>将文章<strong>截断</strong>显示在<strong>主页</strong></li>
+</ul>
+
       
 
       
@@ -473,15 +591,15 @@ var _hmt = _hmt || [];
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
               </li>
              
               <li class="article-tag-list-item">
