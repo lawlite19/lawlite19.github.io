@@ -192,15 +192,22 @@ var _hmt = _hmt || [];
     </h1>
   
 
+		<!-- 显示阅读和评论数 -->
+		
 		<br/>
-		<span id="busuanzi_container_page_pv" style="color:#ef7522">
-            阅读次数: <span id="busuanzi_value_page_pv"></span>次
+		<a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+		<span class="icon-sort"></span>
+		<span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+            阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
 		</span>
-		<a class="cloud-tie-join-count" href="javascript:void(0);">
-		<span class="icon-comment"></span>
-		<span class="join-text">评论次数: </span>
-		<span class="join-count">0</span>
 		</a>
+		<a class="cloud-tie-join-count" href="javascript:void(0);" style="color:#ef7522;font-size:14px;">
+			<span class="icon-comment"></span>
+			<span class="join-text" style="color:#ef7522;font-size:14px;">评论数:</span>
+			<span class="join-count">0</span>次
+		</a>
+		
+		
         
         <a href="/2016/09/09/算法练习/" class="archive-article-date">
   	<time datetime="2016-09-09T05:35:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-09</time>
@@ -491,20 +498,19 @@ var _hmt = _hmt || [];
 
 
 
+<!-- 网易云跟帖 -->
 
-<section class="wangYi" id="comments">
+<section class="duoshuo" id="comments">
 <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
-<script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
 <script>
-var cloudTieConfig = {
-  url: document.location.href, 
-  sourceId: "",
-  productKey: "06ab5cdc0b4c45efb39147d77fbc5176",
-  target: "cloud-tie-wrapper"
-};
-var yunManualLoad = true;
-Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+  var cloudTieConfig = {
+    url: document.location.href, 
+    sourceId: "",
+    productKey: "06ab5cdc0b4c45efb39147d77fbc5176",
+    target: "cloud-tie-wrapper"
+  };
 </script>
+<script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
 </section>
 
 
@@ -523,6 +529,14 @@ Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true)
       	</div>
     </div>
   </div>
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+  总访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
 </footer>
     </div>
     <script>
