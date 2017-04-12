@@ -116,8 +116,8 @@
         var data = res.list[j].arr;
         var liTmpl = "";
         for (var i = 0, len = data.link.length; i < len; i++) {
-          var minSrc = 'http://litten.me/ins-min/' + data.link[i] + '.min.jpg';
-          var src = 'http://litten.me/ins/' + data.link[i];
+          var minSrc = 'https://raw.githubusercontent.com/lawlite19/blog-back-up/master/photos/' + data.link[i] + '.jpg';
+          var src = 'https://raw.githubusercontent.com/lawlite19/blog-back-up/master/photos/' + data.link[i];
           var type = data.type[i];
           var target = src + (type === 'video' ? '.mp4' : '.jpg');
           src += '.jpg';
@@ -144,26 +144,7 @@
     };
 
     var ctrler = function ctrler(data) {
-      var imgObj = {};
-      for (var i = 0, len = data.length; i < len; i++) {
-        var y = data[i].y;
-        var m = data[i].m;
-        var src = replacer(data[i].src);
-        var text = data[i].text;
-        var key = y + "" + ((m + "").length == 1 ? "0" + m : m);
-        if (imgObj[key]) {
-          imgObj[key].srclist.push(src);
-          imgObj[key].text.push(text);
-        } else {
-          imgObj[key] = {
-            year: y,
-            month: m,
-            srclist: [src],
-            text: [text]
-          };
-        }
-      }
-      render(imgObj);
+      render(data);
     };
 
     function loadData(success) {
