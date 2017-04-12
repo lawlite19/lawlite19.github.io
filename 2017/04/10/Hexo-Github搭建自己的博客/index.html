@@ -22,8 +22,9 @@
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/hexo+github/05.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/hexo+github/06.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/hexo+github/07.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/hexo+github/09.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/hexo+github/08.png">
-<meta property="og:updated_time" content="2017-04-12T08:31:46.822Z">
+<meta property="og:updated_time" content="2017-04-12T08:44:53.483Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo+Github搭建自己的博客">
 <meta name="twitter:description" content="最终效果可以查看：http://lawlite.me/ 后序继续完善  一、说明 关于一些基本软件的安装和配置这里不再给出 安装NodeJS：http://nodejs.cn/download/ 需要配置环境变量   安装git工具：https://git-for-windows.github.io/ 注册github账号 配置SSH-key 创建名为userName.github.io的仓库,">
@@ -283,7 +284,7 @@ var _hmt = _hmt || [];
 <li>因为<strong>多说</strong>6月份要关闭了，<strong>disqus</strong>需要翻墙访问才行，还有<strong>友言</strong>不支持<code>https</code>协议，因为<code>github</code>使用的是<code>https</code>协议</li>
 <li>下面会给出使用<strong>网易云跟帖</strong>和<strong>来必力</strong>的第三方评论功能</li>
 </ul>
-<h2 id="四、博客的基本配置"><a href="#四、博客的基本配置" class="headerlink" title="四、博客的基本配置"></a>四、博客的基本配置</h2><h3 id="1-部署配置"><a href="#1-部署配置" class="headerlink" title="1 部署配置"></a>1 部署配置</h3><ul>
+<h2 id="四、博客的基本配置"><a href="#四、博客的基本配置" class="headerlink" title="四、博客的基本配置"></a>四、博客的基本配置</h2><h3 id="1、部署配置"><a href="#1、部署配置" class="headerlink" title="1、部署配置"></a>1、部署配置</h3><ul>
 <li>配置到<code>github</code>对应的仓库中<ul>
 <li>使用<code>hexo deploy</code>或<code>hexo d</code>命令即可发布到github仓库中</li>
 <li>浏览器输入网址<code>https://userName.github.io</code>即可访问（<code>userName</code>对应你的用户名）</li>
@@ -326,7 +327,15 @@ var _hmt = _hmt || [];
 <ul>
 <li>发布到<code>github</code>上可以查看效果</li>
 </ul>
-<h2 id="六、写作的一些说明"><a href="#六、写作的一些说明" class="headerlink" title="六、写作的一些说明"></a>六、写作的一些说明</h2><ul>
+<h2 id="六、绑定到申请的域名"><a href="#六、绑定到申请的域名" class="headerlink" title="六、绑定到申请的域名"></a>六、绑定到申请的域名</h2><ul>
+<li>可以绑定到自己申请的域名上，不用使用<code>userName.github.io</code>访问了，直接使用自己的域名访问<h3 id="1、申请域名"><a href="#1、申请域名" class="headerlink" title="1、申请域名"></a>1、申请域名</h3></li>
+<li>我在万网购买的域名，地址：<a href="https://wanwang.aliyun.com/domain/com?spm=5176.8142029.388261.137.LoKzy7" target="_blank" rel="external">https://wanwang.aliyun.com/domain/com?spm=5176.8142029.388261.137.LoKzy7</a></li>
+<li>我这里是<code>.me</code>结尾的域名，一年<code>13</code>大洋<h3 id="2、解析域名"><a href="#2、解析域名" class="headerlink" title="2、解析域名"></a>2、解析域名</h3></li>
+<li>添加如下的解析<br><img src="/assets/blog_images/hexo+github/09.png" alt="enter description here" title="09"><h3 id="3、配置一下"><a href="#3、配置一下" class="headerlink" title="3、配置一下"></a>3、配置一下</h3></li>
+<li>在<strong>博客</strong>的<code>source</code>文件夹下建立一个<code>CNAME</code>的文件</li>
+<li>内容写入你的域名信息，比如我这里是<code>lawlite.me</code></li>
+<li>发布到<code>github</code>即可<h3 id="4、细节说明"><a href="#4、细节说明" class="headerlink" title="4、细节说明"></a>4、细节说明</h3></li>
+<li>之前<strong>网易云跟帖</strong>，<strong>百度统计</strong>设置的域名这里对应该过来一下<h2 id="七、写作的一些说明"><a href="#七、写作的一些说明" class="headerlink" title="七、写作的一些说明"></a>七、写作的一些说明</h2></li>
 <li>执行命令：<code>hexo new  &quot;xxxx&quot;</code>创建<code>Markdown</code>文件，在<strong>博客</strong>的<code>source\_posts</code>文件夹下</li>
 <li>比如如下例子，<ul>
 <li><code>comments</code>设置为<code>true</code>允许评论，若设置为<code>false</code>则不能评论</li>
