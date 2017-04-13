@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/hexo+github/07.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/hexo+github/09.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/hexo+github/08.png">
-<meta property="og:updated_time" content="2017-04-12T08:58:40.357Z">
+<meta property="og:updated_time" content="2017-04-13T07:47:50.714Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo+Github搭建自己的博客">
 <meta name="twitter:description" content="最终效果可以查看：http://lawlite.me/ 后序继续完善，有问题可以联系我或是下面评论  一、说明 关于一些基本软件的安装和配置这里不再给出 安装NodeJS：http://nodejs.cn/download/ 需要配置环境变量   安装git工具：https://git-for-windows.github.io/ 注册github账号 配置SSH-key 创建名为userNam">
@@ -86,8 +86,6 @@ var _hmt = _hmt || [];
 		  <h1 class="header-author"><a href="/">Lawlite</a></h1>
 		</hgroup>
 		
-		<p class="header-subtitle">随意点</p>
-		
 
 		<nav class="header-menu">
 			<ul>
@@ -95,6 +93,8 @@ var _hmt = _hmt || [];
 				<li><a href="/">主页</a></li>
 	        
 				<li><a href="/tags/随笔/">随笔</a></li>
+	        
+				<li><a href="/photos/">相册</a></li>
 	        
 				<li><a href="/留言板/">留言板</a></li>
 	        
@@ -148,9 +148,9 @@ var _hmt = _hmt || [];
 			  <h1 class="header-author js-header-author">Lawlite</h1>
 			</hgroup>
 			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>随意点<i class="icon icon-quo-right"></i></p>
 			
 			
+				
 			
 				
 			
@@ -178,11 +178,13 @@ var _hmt = _hmt || [];
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 25%"><a href="/">主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/tags/随笔/">随笔</a></li>
+					<li style="width: 25%"><a href="/tags/随笔/">随笔</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/留言板/">留言板</a></li>
+					<li style="width: 25%"><a href="/photos/">相册</a></li>
+		        
+					<li style="width: 25%"><a href="/留言板/">留言板</a></li>
 		        
 				</ul>
 			</nav>
@@ -323,9 +325,13 @@ var _hmt = _hmt || [];
 <li>注册账号：<a href="https://gentie.163.com/info.html" target="_blank" rel="external">https://gentie.163.com/info.html</a></li>
 <li>填写完成之后获取<code>WEB</code>代码</li>
 <li>修改<code>themes\yilia\layout\_partial</code>文件夹下的<code>article.ejs</code>文件</li>
-<li>在最后加入</li>
+<li>在最后加入<ul>
+<li>这里需要注意下，一个站点不同端标识文章的方式必须统一（同一站点可以采用以下方式标识文章：①<code>URL</code>；②<code>Sourceid+productKey</code> ；③<code>URL+Sourceid+productKey</code>，建议用②或者③），否则跟贴数据可能错乱。比如同一站点PC端采用URL，APP采用Sourceid+productKey，这种情况跟贴数据会错乱，必选采用统一方式标识。</li>
+<li>这里使用方式②</li>
 </ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 网易云跟帖 --&gt;</div><div class="line">&lt;% if (!index &amp;&amp; post.comments &amp;&amp; config.wangYi)&#123; %&gt;</div><div class="line">&lt;section class="duoshuo" id="comments"&gt;</div><div class="line">&lt;div id="cloud-tie-wrapper" class="cloud-tie-wrapper"&gt;&lt;/div&gt;</div><div class="line">&lt;script&gt;</div><div class="line">  var cloudTieConfig = &#123;</div><div class="line">    url: document.location.href, </div><div class="line">    sourceId: "",</div><div class="line">    productKey: "&lt;%= config.wangYi%&gt;",</div><div class="line">    target: "cloud-tie-wrapper"</div><div class="line">  &#125;;</div><div class="line">&lt;/script&gt;</div><div class="line">&lt;script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"&gt;&lt;/script&gt;</div><div class="line">&lt;/section&gt;</div><div class="line">&lt;% &#125; %&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 网易云跟帖 --&gt;</div><div class="line">&lt;% if (!index &amp;&amp; post.comments &amp;&amp; config.wangYi)&#123; %&gt;</div><div class="line">&lt;section class="duoshuo" id="comments"&gt;</div><div class="line">&lt;div id="cloud-tie-wrapper" class="cloud-tie-wrapper"&gt;&lt;/div&gt;</div><div class="line">&lt;script&gt;</div><div class="line">  var cloudTieConfig = &#123;</div><div class="line">    url: "", </div><div class="line">    sourceId: "&lt;%= post.path%&gt;",</div><div class="line">    productKey: "&lt;%= config.wangYi%&gt;",</div><div class="line">    target: "cloud-tie-wrapper"</div><div class="line">  &#125;;</div><div class="line">&lt;/script&gt;</div><div class="line">&lt;script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"&gt;&lt;/script&gt;</div><div class="line">&lt;/section&gt;</div><div class="line">&lt;% &#125; %&gt;</div></pre></td></tr></table></figure>
 <ul>
 <li>在<strong>博客</strong>的配置文件<code>_config.yml</code>最后加入获取代码中的<code>productKey</code><br><img src="/assets/blog_images/hexo+github/07.png" alt="enter description here" title="07"></li>
 </ul>
@@ -622,11 +628,11 @@ var _hmt = _hmt || [];
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>
