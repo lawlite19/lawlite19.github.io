@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/vpn/vpn_setup_02.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/vpn/vpn_setup_03.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/vpn/vpn_setup_04.png">
-<meta property="og:updated_time" content="2017-04-08T14:41:23.351Z">
+<meta property="og:updated_time" content="2017-04-16T10:09:14.315Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="搭建自己的VPN">
 <meta name="twitter:description" content="一、首先租一个服务器 1、租一个香港的服务器，这里我选的按量付费，如果不使用了释放就可以了，按小时收费的，不过要求你账户上要多于100块钱。">
@@ -64,6 +64,7 @@ var _hmt = _hmt || [];
 </script>
 
 
+  
 </head>
 
 <body>
@@ -228,7 +229,36 @@ var _hmt = _hmt || [];
 </a>
         
       </header>
+
     
+			<!-- 目录内容 -->
+		
+		   
+		    <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+            <span class="btn-bg"></span>
+            <span class="btn-text">文章导航</span>
+            </p>
+			<div id="toc-article" class="toc-article">
+			    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+				<strong class="toc-title">文章目录</strong>
+	            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、首先租一个服务器"><span class="toc-number">1.</span> <span class="toc-text">一、首先租一个服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、配置VPN"><span class="toc-number">2.</span> <span class="toc-text">二、配置VPN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、配置防火墙"><span class="toc-number">3.</span> <span class="toc-text">三、配置防火墙</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、测试"><span class="toc-number">4.</span> <span class="toc-text">四、测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、shell脚本"><span class="toc-number">5.</span> <span class="toc-text">五、shell脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六、总结"><span class="toc-number">6.</span> <span class="toc-text">六、总结</span></a></li></ol>
+           </div>
+		   <script type="text/javascript">
+function showToc(){
+	var toc_article = document.getElementById("toc-article");
+	var show_toc_btn = document.getElementById("show-toc-btn");
+	toc_article.setAttribute("style","display:block");
+	show_toc_btn.setAttribute("style","display:none");
+	};
+function showBtn(){
+	var toc_article = document.getElementById("toc-article");
+	var show_toc_btn = document.getElementById("show-toc-btn");
+	toc_article.setAttribute("style","display:none");
+	show_toc_btn.setAttribute("style","display:block");
+	};
+		   </script>
+        		
+		<!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
         <p><img src="/assets/blog_images/vpn/vpn_setup_00.png" alt="google" title="vpn_setup_00"></p>
@@ -294,6 +324,8 @@ var _hmt = _hmt || [];
 <li>最初是在租了一个国外的服务器测试的，没有问题，但是后来租用香港的服务器就出现的了错误，同样的系统、同样的配置，后来查看内网绑定的是网卡eth0,外网绑定的是网卡<code>eth1</code>，而我防火墙里设置的是内网的网卡<code>eth0</code>。而国外的那个服务器只要一个网卡，所以没有问题。另外练练<code>shell</code>脚本。 </li>
 </ul>
 
+
+		
       
 
       
@@ -495,7 +527,7 @@ var _hmt = _hmt || [];
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
-		open_in_new: true,
+		open_in_new: false,
 		root: "/",
 		innerArchive: true,
 		showTags: true

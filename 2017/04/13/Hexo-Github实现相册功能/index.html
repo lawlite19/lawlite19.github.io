@@ -20,7 +20,7 @@
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/hexo+github/12.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/hexo+github/13.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/hexo+github/14.png">
-<meta property="og:updated_time" content="2017-04-13T14:58:03.644Z">
+<meta property="og:updated_time" content="2017-04-16T10:08:21.201Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo+Github实现相册功能">
 <meta name="twitter:description" content="最终效果请看这里：http://lawlite.me/photos/ 粗略实现，有问题可以在下方评论区评论，或者留言区留言  一、说明1、关于 我使用的主题是hexo-theme-yilia，其中实现相册功能的方案是同步instagram上面的图片，但是现在instagram被禁，不能使用了 下面是通过自己的方式实现了相册功能，其中的样式还是使用该主题提供的2、方案 在github上新建一个仓库">
@@ -65,6 +65,7 @@ var _hmt = _hmt || [];
 </script>
 
 
+  
 </head>
 
 <body>
@@ -229,7 +230,36 @@ var _hmt = _hmt || [];
 </a>
         
       </header>
+
     
+			<!-- 目录内容 -->
+		
+		   
+		    <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+            <span class="btn-bg"></span>
+            <span class="btn-text">文章导航</span>
+            </p>
+			<div id="toc-article" class="toc-article">
+			    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+				<strong class="toc-title">文章目录</strong>
+	            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、说明"><span class="toc-number">1.</span> <span class="toc-text">一、说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、关于"><span class="toc-number">1.1.</span> <span class="toc-text">1、关于</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、方案"><span class="toc-number">1.2.</span> <span class="toc-text">2、方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、实现"><span class="toc-number">2.</span> <span class="toc-text">二、实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、github操作"><span class="toc-number">2.1.</span> <span class="toc-text">1、github操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、博客操作"><span class="toc-number">2.2.</span> <span class="toc-text">2、博客操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、图片处理"><span class="toc-number">2.3.</span> <span class="toc-text">3、图片处理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-裁剪图片"><span class="toc-number">2.3.1.</span> <span class="toc-text">(1) 裁剪图片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-压缩图片"><span class="toc-number">2.3.2.</span> <span class="toc-text">(2) 压缩图片</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、github提交"><span class="toc-number">2.4.</span> <span class="toc-text">4、github提交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、json数据处理"><span class="toc-number">2.5.</span> <span class="toc-text">5、json数据处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、其他"><span class="toc-number">3.</span> <span class="toc-text">三、其他</span></a></li></ol>
+           </div>
+		   <script type="text/javascript">
+function showToc(){
+	var toc_article = document.getElementById("toc-article");
+	var show_toc_btn = document.getElementById("show-toc-btn");
+	toc_article.setAttribute("style","display:block");
+	show_toc_btn.setAttribute("style","display:none");
+	};
+function showBtn(){
+	var toc_article = document.getElementById("toc-article");
+	var show_toc_btn = document.getElementById("show-toc-btn");
+	toc_article.setAttribute("style","display:none");
+	show_toc_btn.setAttribute("style","display:block");
+	};
+		   </script>
+        		
+		<!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
         <ul>
@@ -298,6 +328,8 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 
+
+		
       
 
       
@@ -494,7 +526,7 @@ var _hmt = _hmt || [];
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
-		open_in_new: true,
+		open_in_new: false,
 		root: "/",
 		innerArchive: true,
 		showTags: true
