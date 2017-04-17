@@ -143,3 +143,27 @@
 		height: 90%;
 	}
 }
+@media screen and (min-width: 800px) {
+    main {
+    width: var(--max-window-width);
+    margin: 0 auto;
+    }
+    .video-container, .video-container iframe, .video-container object, .video-container embed {
+    max-width: var(--max-window-width);
+    max-height: calc(var(--max-window-width)/16*9);
+    }
+    #tut-nav {
+    width: calc(var(--max-window-width)*0.5);
+    }
+
+}
+/* ====== video ===== */
+.video-container {
+z-index: 1;
+position: relative;
+padding-bottom: 56.25%;
+margin: 0 auto;
+
+}
+.video-container iframe, .video-container object, .video-container embed {z-index: 1;position: absolute;top: 0;left: 7%;width: 85%;height: 85%;box-shadow: 0px 0px 20px 2px #888888;}
+
