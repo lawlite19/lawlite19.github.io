@@ -229,9 +229,8 @@ var _hmt = _hmt || [];
       </header>
 
     
-			<!-- 目录内容 -->
+		<!-- 目录内容 -->
 		
-		   
 		    <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
             <span class="btn-bg"></span>
             <span class="btn-text">文章导航</span>
@@ -242,18 +241,18 @@ var _hmt = _hmt || [];
 	            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#说明"><span class="toc-number">1.</span> <span class="toc-text">说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#settings-py"><span class="toc-number">2.</span> <span class="toc-text">settings.py</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#items-py"><span class="toc-number">3.</span> <span class="toc-text">items.py</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pipelines-py"><span class="toc-number">4.</span> <span class="toc-text">pipelines.py</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、保存到数据库的类WebcrawlerScrapyPipeline（在settings中声明）"><span class="toc-number">4.1.</span> <span class="toc-text">一、保存到数据库的类WebcrawlerScrapyPipeline（在settings中声明）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、保存到文件中的类JsonWithEncodingPipeline（在settings中声明）"><span class="toc-number">4.2.</span> <span class="toc-text">二、保存到文件中的类JsonWithEncodingPipeline（在settings中声明）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dbhelper-py"><span class="toc-number">5.</span> <span class="toc-text">dbhelper.py</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现具体的爬虫-py（即模板中的pictureSpider-demo-py文件）"><span class="toc-number">6.</span> <span class="toc-text">实现具体的爬虫.py（即模板中的pictureSpider_demo.py文件）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试"><span class="toc-number">7.</span> <span class="toc-text">测试</span></a></li></ol>
            </div>
 		   <script type="text/javascript">
-function showToc(){
-	var toc_article = document.getElementById("toc-article");
-	var show_toc_btn = document.getElementById("show-toc-btn");
-	toc_article.setAttribute("style","display:block");
-	show_toc_btn.setAttribute("style","display:none");
-	};
-function showBtn(){
-	var toc_article = document.getElementById("toc-article");
-	var show_toc_btn = document.getElementById("show-toc-btn");
-	toc_article.setAttribute("style","display:none");
-	show_toc_btn.setAttribute("style","display:block");
-	};
+			function showToc(){
+				var toc_article = document.getElementById("toc-article");
+				var show_toc_btn = document.getElementById("show-toc-btn");
+				toc_article.setAttribute("style","display:block");
+				show_toc_btn.setAttribute("style","display:none");
+				};
+			function showBtn(){
+				var toc_article = document.getElementById("toc-article");
+				var show_toc_btn = document.getElementById("show-toc-btn");
+				toc_article.setAttribute("style","display:none");
+				show_toc_btn.setAttribute("style","display:block");
+				};
 		   </script>
         		
 		<!-- 目录内容结束 -->
@@ -617,15 +616,19 @@ function showBtn(){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Github</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Github</a>
               </li>
              
               <li class="article-tag-list-item">
