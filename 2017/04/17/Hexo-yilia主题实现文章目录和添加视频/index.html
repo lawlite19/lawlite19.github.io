@@ -21,7 +21,7 @@
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/hexo+github/18.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/hexo+github/19.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/hexo+github/20.png">
-<meta property="og:updated_time" content="2017-04-17T07:24:01.819Z">
+<meta property="og:updated_time" content="2017-05-05T11:03:20.539Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo+yilia主题实现文章目录和添加视频">
 <meta name="twitter:description" content="一、说明 文章目录功能可以点击这里查看 视频页面可以点击这里查看 粗略实现，有问题可以在下方评论区留言，或者留言板留言  二、文章目录功能1、添加CSS样式 打开themes\yilia\source下的main.234bc0.css文件，添加如下代码： css样式我也放到了github上：https://raw.githubusercontent.com/lawlite19/Blog-Back-">
@@ -266,7 +266,7 @@ var _hmt = _hmt || [];
 <h2 id="2、修改article-ejs文件"><a href="#2、修改article-ejs文件" class="headerlink" title="2、修改article.ejs文件"></a>2、修改article.ejs文件</h2><ul>
 <li>使用的是<code>Hexo</code>的<code>toc</code>函数</li>
 <li>打开<code>themes\yilia\layout\_partial</code>文件夹下的<code>article.ejs</code>文件</li>
-<li>加入如下内容</li>
+<li>在<code>&lt;/header&gt; &lt;% } %&gt;</code>下面加入如下内容（注意位置）</li>
 </ul>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 目录内容 --&gt;</div><div class="line">&lt;% if (!index &amp;&amp; post.toc)&#123; %&gt;</div><div class="line">    &lt;p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none"&gt;</div><div class="line">          &lt;span class="btn-bg"&gt;&lt;/span&gt;</div><div class="line">          &lt;span class="btn-text"&gt;文章导航&lt;/span&gt;</div><div class="line">          &lt;/p&gt;</div><div class="line">	&lt;div id="toc-article" class="toc-article"&gt;</div><div class="line">	    &lt;span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();"&gt;×&lt;/span&gt;</div><div class="line">		&lt;strong class="toc-title"&gt;文章目录&lt;/strong&gt;</div><div class="line">           &lt;%- toc(post.content) %&gt;</div><div class="line">         &lt;/div&gt;</div><div class="line">   &lt;script type="text/javascript"&gt;</div><div class="line">	function showToc()&#123;</div><div class="line">		var toc_article = document.getElementById("toc-article");</div><div class="line">		var show_toc_btn = document.getElementById("show-toc-btn");</div><div class="line">		toc_article.setAttribute("style","display:block");</div><div class="line">		show_toc_btn.setAttribute("style","display:none");</div><div class="line">		&#125;;</div><div class="line">	function showBtn()&#123;</div><div class="line">		var toc_article = document.getElementById("toc-article");</div><div class="line">		var show_toc_btn = document.getElementById("show-toc-btn");</div><div class="line">		toc_article.setAttribute("style","display:none");</div><div class="line">		show_toc_btn.setAttribute("style","display:block");</div><div class="line">		&#125;;</div><div class="line">   &lt;/script&gt;</div><div class="line">      &lt;% &#125; %&gt;		</div><div class="line">&lt;!-- 目录内容结束 --&gt;</div></pre></td></tr></table></figure>
 <ul>
@@ -578,15 +578,15 @@ var _hmt = _hmt || [];
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
               </li>
              
               <li class="article-tag-list-item">
