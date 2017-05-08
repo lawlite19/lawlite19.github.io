@@ -6,17 +6,34 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://lawlite.me">
-  <title>Lawlite的博客</title>
+  <title>Tensorflow学习 | Lawlite的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="东南-蒙纳士联合学院研究生">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Lawlite的博客">
-<meta property="og:url" content="http://lawlite.me/index.html">
+  <meta name="description" content="一、TensorFlow介绍1、什么是TensorFlow 官网：https://www.tensorflow.org/ TensorFlow是Google开发的一款神经网络的Python外部的结构包, 也是一个采用数据流图来进行数值计算的开源软件库. 先绘制计算结构图, 也可以称是一系列可人机交互的计算操作, 然后把编辑好的Python文件 转换成 更高效的C++, 并在后端进行计算.  2、T">
+<meta name="keywords" content="Tensorflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tensorflow学习">
+<meta property="og:url" content="http://lawlite.me/2016/12/08/Tensorflow学习/index.html">
 <meta property="og:site_name" content="Lawlite的博客">
-<meta property="og:description" content="东南-蒙纳士联合学院研究生">
+<meta property="og:description" content="一、TensorFlow介绍1、什么是TensorFlow 官网：https://www.tensorflow.org/ TensorFlow是Google开发的一款神经网络的Python外部的结构包, 也是一个采用数据流图来进行数值计算的开源软件库. 先绘制计算结构图, 也可以称是一系列可人机交互的计算操作, 然后把编辑好的Python文件 转换成 更高效的C++, 并在后端进行计算.  2、T">
+<meta property="og:image" content="https://raw.githubusercontent.com/lawlite19/MachineLearning_TensorFlow/master/images/tensors_flowing.gif">
+<meta property="og:image" content="https://raw.githubusercontent.com/lawlite19/MachineLearning_TensorFlow/master/images/example_01.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lawlite19/MachineLearning_TensorFlow/master/images/LinearModel_02.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lawlite19/MachineLearning_TensorFlow/master/images/LinearModel_03.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lawlite19/MachineLearning_TensorFlow/master/images/LinearModel_04.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lawlite19/MachineLearning_TensorFlow/master/images/CNNModel_01.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lawlite19/MachineLearning_TensorFlow/master/images/CNNModel_03.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lawlite19/MachineLearning_TensorFlow/master/images/CNNModel_02.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lawlite19/MachineLearning_TensorFlow/master/images/CNNModel_04.png">
+<meta property="og:image" content="https://github.com/lawlite19/MachineLearning_TensorFlow/blob/master/images/06_network_flowchart.png">
+<meta property="og:image" content="https://github.com/lawlite19/MachineLearning_TensorFlow/blob/master/images/07_inception_flowchart.png">
+<meta property="og:image" content="https://github.com/lawlite19/MachineLearning_TensorFlow/blob/master/images/08_transfer_learning_flowchart.png">
+<meta property="og:image" content="https://github.com/lawlite19/MachineLearning_TensorFlow/blob/master/images/08_transfer_learning_pca_visualize.png">
+<meta property="og:image" content="https://github.com/lawlite19/MachineLearning_TensorFlow/blob/master/images/08_transfer_learning_pca_visualize_02.png">
+<meta property="og:updated_time" content="2017-05-08T08:15:11.106Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Lawlite的博客">
-<meta name="twitter:description" content="东南-蒙纳士联合学院研究生">
+<meta name="twitter:title" content="Tensorflow学习">
+<meta name="twitter:description" content="一、TensorFlow介绍1、什么是TensorFlow 官网：https://www.tensorflow.org/ TensorFlow是Google开发的一款神经网络的Python外部的结构包, 也是一个采用数据流图来进行数值计算的开源软件库. 先绘制计算结构图, 也可以称是一系列可人机交互的计算操作, 然后把编辑好的Python文件 转换成 更高效的C++, 并在后端进行计算.  2、T">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/lawlite19/MachineLearning_TensorFlow/master/images/tensors_flowing.gif">
   
     <link rel="alternative" href="/atom.xml" title="Lawlite的博客" type="application/atom+xml">
   
@@ -175,460 +192,32 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-Hexo-yilia主题实现文章目录和添加视频" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-Tensorflow学习" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/17/Hexo-yilia主题实现文章目录和添加视频/">Hexo+yilia主题实现文章目录和添加视频</a>
+    <h1 class="article-title" itemprop="name">
+      Tensorflow学习
     </h1>
   
 
 		<!-- 显示阅读和评论数 -->
 		
-		
-        
-        <a href="/2017/04/17/Hexo-yilia主题实现文章目录和添加视频/" class="archive-article-date">
-  	<time datetime="2017-04-17T07:00:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-17</time>
-</a>
-        
-      </header>
-    
-		<!-- 目录内容 -->
-				
-		<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="一、说明"><a href="#一、说明" class="headerlink" title="一、说明"></a>一、说明</h1><ul>
-<li>文章目录功能可以<a href="http://lawlite.me/2017/04/13/Hexo-Github%E5%AE%9E%E7%8E%B0%E7%9B%B8%E5%86%8C%E5%8A%9F%E8%83%BD/">点击这里查看</a></li>
-<li>视频页面可以<a href="http://lawlite.me/photos/videos.html">点击这里查看</a></li>
-<li>粗略实现，有问题可以在下方评论区留言，或者<a href="http://lawlite.me/%E7%95%99%E8%A8%80%E6%9D%BF/">留言板</a>留言</li>
-</ul>
-<h1 id="二、文章目录功能"><a href="#二、文章目录功能" class="headerlink" title="二、文章目录功能"></a>二、文章目录功能</h1><h2 id="1、添加CSS样式"><a href="#1、添加CSS样式" class="headerlink" title="1、添加CSS样式"></a>1、添加CSS样式</h2><ul>
-<li>打开<code>themes\yilia\source</code>下的<code>main.234bc0.css</code>文件，添加如下代码：<ul>
-<li><code>css</code>样式我也放到了<code>github</code>上：<a href="https://raw.githubusercontent.com/lawlite19/Blog-Back-Up/master/css/main.234bc0.css">https://raw.githubusercontent.com/lawlite19/Blog-Back-Up/master/css/main.234bc0.css</a></li>
-<li>使用的是别人的<code>css</code>，可能有冗余的部分</li>
-</ul>
-</li>
-</ul>
-        
-          <a class="article-more-a" href="/2017/04/17/Hexo-yilia主题实现文章目录和添加视频/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Github</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/17/Hexo-yilia主题实现文章目录和添加视频/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-
-
-<!-- 网易云跟帖 -->
-
-
-
-  
-    <article id="post-Hexo-Github实现相册功能" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/13/Hexo-Github实现相册功能/">Hexo+Github实现相册功能</a>
-    </h1>
-  
-
-		<!-- 显示阅读和评论数 -->
-		
-		
-        
-        <a href="/2017/04/13/Hexo-Github实现相册功能/" class="archive-article-date">
-  	<time datetime="2017-04-13T12:27:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-13</time>
-</a>
-        
-      </header>
-    
-		<!-- 目录内容 -->
-				
-		<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>最终效果请看这里：<a href="http://lawlite.me/photos/">http://lawlite.me/photos/</a></li>
-<li>粗略实现，有问题可以在下方评论区评论，或者<a href="http://lawlite.me/%E7%95%99%E8%A8%80%E6%9D%BF/">留言区</a>留言</li>
-</ul>
-<h2 id="一、说明"><a href="#一、说明" class="headerlink" title="一、说明"></a>一、说明</h2><h3 id="1、关于"><a href="#1、关于" class="headerlink" title="1、关于"></a>1、关于</h3><ul>
-<li>我使用的主题是<a href="https://github.com/litten/hexo-theme-yilia">hexo-theme-yilia</a>，其中实现相册功能的方案是同步<code>instagram</code>上面的图片，但是现在<code>instagram</code>被禁，不能使用了</li>
-<li>下面是通过自己的方式实现了相册功能，其中的<strong>样式</strong>还是使用该主题提供的<h3 id="2、方案"><a href="#2、方案" class="headerlink" title="2、方案"></a>2、方案</h3></li>
-<li>在<code>github</code>上<strong>新建一个仓库</strong>，主要用于存储图片，可以通过<code>url</code>访问到，也方便管理</li>
-<li>将要放到相册的图片处理成<code>json</code>格式的数据，然后进行访问，这里<code>json</code>的格式需要配合要使用的样式，所以需要处理成<strong>特定格式</strong>的<code>json</code>数据，下面会给出</li>
-<li><strong>图片裁剪</strong>，因为相册显示的样式最好是<strong>正方形</strong>的的图片，这里使用脚本处理一下</li>
-<li><strong>图片压缩</strong>，相册显示的图片是压缩后的图片，提高加载的速度，打开后的图片是原图。</li>
-</ul>
-        
-          <a class="article-more-a" href="/2017/04/13/Hexo-Github实现相册功能/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Github</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/13/Hexo-Github实现相册功能/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-
-
-<!-- 网易云跟帖 -->
-
-
-
-  
-    <article id="post-Hexo-Github搭建自己的博客" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/10/Hexo-Github搭建自己的博客/">Hexo+Github搭建自己的博客</a>
-    </h1>
-  
-
-		<!-- 显示阅读和评论数 -->
-		
-		
-        
-        <a href="/2017/04/10/Hexo-Github搭建自己的博客/" class="archive-article-date">
-  	<time datetime="2017-04-10T14:49:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
-</a>
-        
-      </header>
-    
-		<!-- 目录内容 -->
-				
-		<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>最终效果可以查看：<a href="http://lawlite.me/">http://lawlite.me/</a></li>
-<li>后序继续完善，有问题可以联系我或是下面评论</li>
-</ul>
-<h2 id="一、说明"><a href="#一、说明" class="headerlink" title="一、说明"></a>一、说明</h2><ul>
-<li>关于一些基本软件的安装和配置这里不再给出<ul>
-<li>安装<code>NodeJS</code>：<a href="http://nodejs.cn/download/">http://nodejs.cn/download/</a><ul>
-<li>需要配置环境变量</li>
-</ul>
-</li>
-<li>安装<code>git</code>工具：<a href="https://git-for-windows.github.io/">https://git-for-windows.github.io/</a><ul>
-<li>注册<code>github</code>账号</li>
-<li>配置<code>SSH-key</code></li>
-<li>创建名为<code>userName.github.io</code>的仓库,<code>userName</code>是你申请的用户名</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-        
-          <a class="article-more-a" href="/2017/04/10/Hexo-Github搭建自己的博客/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Github</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/10/Hexo-Github搭建自己的博客/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-
-
-<!-- 网易云跟帖 -->
-
-
-
-  
-    <article id="post-致火影" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/24/致火影/">致火影</a>
-    </h1>
-  
-
-		<!-- 显示阅读和评论数 -->
-		
-		
-        
-        <a href="/2017/03/24/致火影/" class="archive-article-date">
-  	<time datetime="2017-03-24T13:57:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-24</time>
-</a>
-        
-      </header>
-    
-		<!-- 目录内容 -->
-				
-		<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/assets/随笔_images/鸣人-雏田.png" alt="enter description here" title="鸣人-雏田"><br> <center> <h1>致火影</h1></center></p>
-<p><center>——只要有树叶飞舞的地方，火就会燃烧。</center ><br>　　昨天就知道火影动漫也完结了，但是没有马上去看，想抽个正式点的时间。<br>
-        
-          <a class="article-more-a" href="/2017/03/24/致火影/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/24/致火影/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-
-
-<!-- 网易云跟帖 -->
-
-
-
-  
-    <article id="post-Python机器学习" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/08/Python机器学习/">Python机器学习</a>
-    </h1>
-  
-
-		<!-- 显示阅读和评论数 -->
-		
-		
-        
-        <a href="/2017/01/08/Python机器学习/" class="archive-article-date">
-  	<time datetime="2017-01-08T15:01:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-08</time>
-</a>
-        
-      </header>
-    
-		<!-- 目录内容 -->
-				
-		<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="机器学习算法Python实现"><a href="#机器学习算法Python实现" class="headerlink" title="机器学习算法Python实现"></a>机器学习算法Python实现</h1><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><ul>
-<li>github地址：<a href="https://github.com/lawlite19/MachineLearning_Python">https://github.com/lawlite19/MachineLearning_Python</a></li>
-<li><strong>因为里面的公式加载出现问题，这里只给出了目录，可以去github中查看</strong><h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2></li>
-</ul>
-<ul>
-<li><a href="#机器学习算法python实现">机器学习算法Python实现</a><ul>
-<li><a href="#一-线性回归">一、线性回归</a><ul>
-<li><a href="#1-代价函数">1、代价函数</a></li>
-<li><a href="#2-梯度下降算法">2、梯度下降算法</a></li>
-<li><a href="#3-均值归一化">3、均值归一化</a></li>
-<li><a href="#4-最终运行结果">4、最终运行结果</a></li>
-<li><a href="#5-使用scikit-learn库中的线性模型实现">5、使用scikit-learn库中的线性模型实现</a>
-        
-          <a class="article-more-a" href="/2017/01/08/Python机器学习/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/08/Python机器学习/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-
-
-<!-- 网易云跟帖 -->
-
-
-
-  
-    <article id="post-Tensorflow学习" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/08/Tensorflow学习/">Tensorflow学习</a>
-    </h1>
-  
-
-		<!-- 显示阅读和评论数 -->
+		<br/>
+		<a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+		<span class="icon-sort"></span>
+		<span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+            阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+		</span>
+		</a>
+		<!-- 网易的评论数，这里先不使用
+		<a class="cloud-tie-join-count" href="javascript:void(0);" style="color:#ef7522;font-size:14px;">
+			<span class="icon-comment"></span>
+			<span class="join-text" style="color:#ef7522;font-size:14px;">参与数:</span>
+			<span class="join-count">0</span>人
+		</a>  -->
 		
 		
         
@@ -639,7 +228,31 @@ var _hmt = _hmt || [];
       </header>
     
 		<!-- 目录内容 -->
-				
+		
+		    <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+            <span class="btn-bg"></span>
+            <span class="btn-text">文章导航</span>
+            </p>
+			<div id="toc-article" class="toc-article">
+			    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+				<strong class="toc-title">文章目录</strong>
+	            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、TensorFlow介绍"><span class="toc-number">1.</span> <span class="toc-text">一、TensorFlow介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、什么是TensorFlow"><span class="toc-number">1.1.</span> <span class="toc-text">1、什么是TensorFlow</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、TensorFlow强大之处"><span class="toc-number">1.2.</span> <span class="toc-text">2、TensorFlow强大之处</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、安装TensorFlow"><span class="toc-number">1.3.</span> <span class="toc-text">3、安装TensorFlow</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、TensorFlow基础架构"><span class="toc-number">2.</span> <span class="toc-text">二、TensorFlow基础架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、处理结构"><span class="toc-number">2.1.</span> <span class="toc-text">1、处理结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、一个例子"><span class="toc-number">2.2.</span> <span class="toc-text">2、一个例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、Session会话控制"><span class="toc-number">2.3.</span> <span class="toc-text">3、Session会话控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、Variable变量"><span class="toc-number">2.4.</span> <span class="toc-text">4、Variable变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、Placeholder传入值"><span class="toc-number">2.5.</span> <span class="toc-text">5、Placeholder传入值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、定义一个神经网络"><span class="toc-number">3.</span> <span class="toc-text">三、定义一个神经网络</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、添加层函数add-layer"><span class="toc-number">3.1.</span> <span class="toc-text">1、添加层函数add_layer()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、构建神经网络"><span class="toc-number">3.2.</span> <span class="toc-text">2、构建神经网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、可视化结果"><span class="toc-number">3.3.</span> <span class="toc-text">3、可视化结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、绘制9张图像"><span class="toc-number">3.4.</span> <span class="toc-text">2、绘制9张图像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、定义函数optimize进行bgd训练"><span class="toc-number">3.5.</span> <span class="toc-text">4、定义函数optimize进行bgd训练</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、定义输出准确度的函数"><span class="toc-number">3.6.</span> <span class="toc-text">5、定义输出准确度的函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6、定义绘制错误预测的图片函数"><span class="toc-number">3.7.</span> <span class="toc-text">6、定义绘制错误预测的图片函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7、定义可视化权重的函数"><span class="toc-number">3.8.</span> <span class="toc-text">7、定义可视化权重的函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8、定义输出confusion-matrix的函数"><span class="toc-number">3.9.</span> <span class="toc-text">8、定义输出confusion_matrix的函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#十：CNN"><span class="toc-number">4.</span> <span class="toc-text">十：CNN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、定义CNN所需要的变量"><span class="toc-number">4.1.</span> <span class="toc-text">1、定义CNN所需要的变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、初始化weights和biases的函数"><span class="toc-number">4.2.</span> <span class="toc-text">2、初始化weights和biases的函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、定义卷积操作和池化（如果使用的话）的函数"><span class="toc-number">4.3.</span> <span class="toc-text">3、定义卷积操作和池化（如果使用的话）的函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、定义将卷积层展开的函数"><span class="toc-number">4.4.</span> <span class="toc-text">4、定义将卷积层展开的函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、定义全连接层的函数"><span class="toc-number">4.5.</span> <span class="toc-text">5、定义全连接层的函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6、定义模型"><span class="toc-number">4.6.</span> <span class="toc-text">6、定义模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7、定义训练的函数optimize，使用bgd"><span class="toc-number">4.7.</span> <span class="toc-text">7、定义训练的函数optimize，使用bgd</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8、定义批量预测的函数，方便输出训练错的图像"><span class="toc-number">4.8.</span> <span class="toc-text">8、定义批量预测的函数，方便输出训练错的图像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9、定义可视化卷积核权重的函数"><span class="toc-number">4.9.</span> <span class="toc-text">9、定义可视化卷积核权重的函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10、定义可视化卷积层输出的函数"><span class="toc-number">4.10.</span> <span class="toc-text">10、定义可视化卷积层输出的函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#十一：使用prettytensor实现CNNModel"><span class="toc-number">5.</span> <span class="toc-text">十一：使用prettytensor实现CNNModel</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、定义模型"><span class="toc-number">5.1.</span> <span class="toc-text">1、定义模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#十二：CNN-保存和加载模型，使用Early-Stopping"><span class="toc-number">6.</span> <span class="toc-text">十二：CNN,保存和加载模型，使用Early Stopping</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、保存模型"><span class="toc-number">6.1.</span> <span class="toc-text">1、保存模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、Early-Stopping"><span class="toc-number">6.2.</span> <span class="toc-text">2、Early Stopping</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、-小批量预测并计算准确率"><span class="toc-number">6.3.</span> <span class="toc-text">3、 小批量预测并计算准确率</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#十二：模型融合"><span class="toc-number">7.</span> <span class="toc-text">十二：模型融合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、将测试集和验证集合并后，并重新划分"><span class="toc-number">7.1.</span> <span class="toc-text">1、将测试集和验证集合并后，并重新划分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、融合模型"><span class="toc-number">7.2.</span> <span class="toc-text">2、融合模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#十二：Cifar-10数据集，使用variable-scope重复使用变量"><span class="toc-number">8.</span> <span class="toc-text">十二：Cifar-10数据集，使用variable_scope重复使用变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、数据集"><span class="toc-number">8.1.</span> <span class="toc-text">1、数据集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、定义placeholder"><span class="toc-number">8.2.</span> <span class="toc-text">2、定义placeholder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、图片处理"><span class="toc-number">8.3.</span> <span class="toc-text">3、图片处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、定义tensorflow计算图"><span class="toc-number">8.4.</span> <span class="toc-text">4、定义tensorflow计算图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、获取权重和每层的输出值信息"><span class="toc-number">8.5.</span> <span class="toc-text">5、获取权重和每层的输出值信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6、保存和加载计算图参数"><span class="toc-number">8.6.</span> <span class="toc-text">6、保存和加载计算图参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7、训练"><span class="toc-number">8.7.</span> <span class="toc-text">7、训练</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#十三、Inception-model-GoogleNet"><span class="toc-number">9.</span> <span class="toc-text">十三、Inception model (GoogleNet)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、下载和加载inception-model"><span class="toc-number">9.1.</span> <span class="toc-text">1、下载和加载inception model</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#十四、迁移学习-Transfer-Learning"><span class="toc-number">10.</span> <span class="toc-text">十四、迁移学习 Transfer Learning</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、准备工作"><span class="toc-number">10.1.</span> <span class="toc-text">1、准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、分析transfer-values"><span class="toc-number">10.2.</span> <span class="toc-text">2、分析transfer values</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-使用PCA主成分分析"><span class="toc-number">10.2.1.</span> <span class="toc-text">(1) 使用PCA主成分分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-使用TSNE主成分分析"><span class="toc-number">10.2.2.</span> <span class="toc-text">(2) 使用TSNE主成分分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、创建我们自己的网络"><span class="toc-number">10.3.</span> <span class="toc-text">3、创建我们自己的网络</span></a></li></ol></li></ol>
+           </div>
+		   <script type="text/javascript">
+			function showToc(){
+				var toc_article = document.getElementById("toc-article");
+				var show_toc_btn = document.getElementById("show-toc-btn");
+				toc_article.setAttribute("style","display:block");
+				show_toc_btn.setAttribute("style","display:none");
+				};
+			function showBtn(){
+				var toc_article = document.getElementById("toc-article");
+				var show_toc_btn = document.getElementById("show-toc-btn");
+				toc_article.setAttribute("style","display:none");
+				show_toc_btn.setAttribute("style","display:block");
+				};
+		   </script>
+        		
 		<!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
@@ -1374,6 +987,37 @@ for i in range(1000):
       
 
       
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/weixin.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
     </div>
     <div class="article-info article-info-index">
       
@@ -1392,199 +1036,121 @@ for i in range(1000):
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/12/08/Tensorflow学习/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://lawlite.me/2016/12/08/Tensorflow学习/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
 
+  
+<nav id="article-nav">
+  
+    <a href="/2016/11/09/Python科学计算/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Python科学计算
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/01/08/Python机器学习/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Python机器学习</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
 
 
 
 
 
+  
+    <div class="duoshuo"></div>
+  
 
 
+
+
+
+
+<section class="duoshuo" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8yODEwMy80Njc2">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
 
 <!-- 网易云跟帖 -->
 
-
-
-  
-    <article id="post-Python科学计算" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/09/Python科学计算/">Python科学计算</a>
-    </h1>
-  
-
-		<!-- 显示阅读和评论数 -->
-		
-		
-        
-        <a href="/2016/11/09/Python科学计算/" class="archive-article-date">
-  	<time datetime="2016-11-09T14:25:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-09</time>
-</a>
-        
-      </header>
-    
-		<!-- 目录内容 -->
-				
-		<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一、Numpy"><a href="#一、Numpy" class="headerlink" title="一、Numpy"></a>一、Numpy</h2><h3 id="1、Numpy特征和导入"><a href="#1、Numpy特征和导入" class="headerlink" title="1、Numpy特征和导入"></a>1、Numpy特征和导入</h3><ul>
-<li>（1）用于多维数组的第三方Python包</li>
-<li>（2）更接近于底层和硬件 (高效)</li>
-<li>（3）专注于科学计算 (方便)</li>
-<li>（4）导入包：<code>import numpy as np</code>     </li>
-</ul>
-        
-          <a class="article-more-a" href="/2016/11/09/Python科学计算/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/11/09/Python科学计算/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-
-
-<!-- 网易云跟帖 -->
-
-
-
-  
-    <article id="post-搭建自己的VPN" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/05/搭建自己的VPN/">搭建自己的VPN</a>
-    </h1>
-  
-
-		<!-- 显示阅读和评论数 -->
-		
-		
-        
-        <a href="/2016/11/05/搭建自己的VPN/" class="archive-article-date">
-  	<time datetime="2016-11-05T09:33:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-05</time>
-</a>
-        
-      </header>
-    
-		<!-- 目录内容 -->
-				
-		<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/assets/blog_images/vpn/vpn_setup_00.png" alt="google" title="vpn_setup_00"></p>
-<h3 id="一、首先租一个服务器"><a href="#一、首先租一个服务器" class="headerlink" title="一、首先租一个服务器"></a>一、首先租一个服务器</h3><ul>
-<li>1、租一个香港的服务器，这里我选的按量付费，如果不使用了释放就可以了，按小时收费的，不过要求你账户上要多于<code>100</code>块钱。
-        
-          <a class="article-more-a" href="/2016/11/05/搭建自己的VPN/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">翻墙</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/11/05/搭建自己的VPN/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-
-
-<!-- 网易云跟帖 -->
-
-
-
-  
-  
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
-  
 
 
           </div>
@@ -1614,8 +1180,8 @@ for i in range(1000):
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
