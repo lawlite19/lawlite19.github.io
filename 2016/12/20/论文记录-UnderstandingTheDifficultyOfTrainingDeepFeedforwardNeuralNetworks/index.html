@@ -6,20 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://lawlite.me">
-  <title>Lawlite的博客</title>
+  <title>论文记录-UnderstandingTheDifficultyOfTrainingDeepFeedforwardNeuralNetworks | Lawlite的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="简历生成器                                                                                                                   请输入图片URL地址：">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Lawlite的博客">
-<meta property="og:url" content="http://lawlite.me/assets/MyResume/template.html">
+  <meta name="description" content="(1) 说明 2010年的一篇论文，说明深度神经网络为什么难以训练，当时只讨论了Sigmoid，tanh和Softsign激活函数 提出了一种初始化权重weights的方法，能够解决训练中梯度消失的问题 但是使用现在的ReLu激活函数，同样使用此初始化方法就会出现问题。">
+<meta name="keywords" content="Paper阅读记录,DeepLearning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文记录-UnderstandingTheDifficultyOfTrainingDeepFeedforwardNeuralNetworks">
+<meta property="og:url" content="http://lawlite.me/2016/12/20/论文记录-UnderstandingTheDifficultyOfTrainingDeepFeedforwardNeuralNetworks/index.html">
 <meta property="og:site_name" content="Lawlite的博客">
-<meta property="og:description" content="简历生成器                                                                                                                   请输入图片URL地址：">
-<meta property="og:image" content="http://lawlite.me/assets/MyResume/static/image/weixin.png">
-<meta property="og:updated_time" content="2017-04-08T03:21:40.584Z">
+<meta property="og:description" content="(1) 说明 2010年的一篇论文，说明深度神经网络为什么难以训练，当时只讨论了Sigmoid，tanh和Softsign激活函数 提出了一种初始化权重weights的方法，能够解决训练中梯度消失的问题 但是使用现在的ReLu激活函数，同样使用此初始化方法就会出现问题。">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/Weights-Initialization/01.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/Weights-Initialization/02.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/Weights-Initialization/03.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/Weights-Initialization/04.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/Weights-Initialization/05.png">
+<meta property="og:updated_time" content="2017-05-08T16:27:52.263Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Lawlite的博客">
-<meta name="twitter:description" content="简历生成器                                                                                                                   请输入图片URL地址：">
-<meta name="twitter:image" content="http://lawlite.me/assets/MyResume/static/image/weixin.png">
+<meta name="twitter:title" content="论文记录-UnderstandingTheDifficultyOfTrainingDeepFeedforwardNeuralNetworks">
+<meta name="twitter:description" content="(1) 说明 2010年的一篇论文，说明深度神经网络为什么难以训练，当时只讨论了Sigmoid，tanh和Softsign激活函数 提出了一种初始化权重weights的方法，能够解决训练中梯度消失的问题 但是使用现在的ReLu激活函数，同样使用此初始化方法就会出现问题。">
+<meta name="twitter:image" content="http://lawlite.me/assets/blog_images/Weights-Initialization/01.png">
   
     <link rel="alternative" href="/atom.xml" title="Lawlite的博客" type="application/atom+xml">
   
@@ -178,7 +183,301 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            [object Promise]
+            <article id="post-论文记录-UnderstandingTheDifficultyOfTrainingDeepFeedforwardNeuralNetworks" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      论文记录-UnderstandingTheDifficultyOfTrainingDeepFeedforwardNeuralNetworks
+    </h1>
+  
+
+		<!-- 显示阅读和评论数 -->
+		
+		
+        
+        <a href="/2016/12/20/论文记录-UnderstandingTheDifficultyOfTrainingDeepFeedforwardNeuralNetworks/" class="archive-article-date">
+  	<time datetime="2016-12-20T11:03:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-20</time>
+</a>
+        
+      </header>
+    
+		<!-- 目录内容 -->
+		
+		    <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+            <span class="btn-bg"></span>
+            <span class="btn-text">文章导航</span>
+            </p>
+			<div id="toc-article" class="toc-article">
+			    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+				<strong class="toc-title">文章目录</strong>
+	            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-说明"><span class="toc-number">1.</span> <span class="toc-text">(1) 说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Sigmoid激励函数实验"><span class="toc-number">2.</span> <span class="toc-text">(2) Sigmoid激励函数实验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-梯度计算和公式推导"><span class="toc-number">3.</span> <span class="toc-text">(3) 梯度计算和公式推导</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-代价函数"><span class="toc-number">3.1.</span> <span class="toc-text">1) 代价函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-公式推导"><span class="toc-number">3.2.</span> <span class="toc-text">2) 公式推导</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-初始化权重方法"><span class="toc-number">4.</span> <span class="toc-text">(4) 初始化权重方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-总结"><span class="toc-number">5.</span> <span class="toc-text">(5) 总结</span></a></li></ol>
+           </div>
+		   <script type="text/javascript">
+			function showToc(){
+				var toc_article = document.getElementById("toc-article");
+				var show_toc_btn = document.getElementById("show-toc-btn");
+				toc_article.setAttribute("style","display:block");
+				show_toc_btn.setAttribute("style","display:none");
+				};
+			function showBtn(){
+				var toc_article = document.getElementById("toc-article");
+				var show_toc_btn = document.getElementById("show-toc-btn");
+				toc_article.setAttribute("style","display:none");
+				show_toc_btn.setAttribute("style","display:block");
+				};
+		   </script>
+        		
+		<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-说明"><a href="#1-说明" class="headerlink" title="(1) 说明"></a>(1) 说明</h3><ul>
+<li><code>2010</code>年的一篇论文，说明<strong>深度神经网络为什么难以训练</strong>，当时只讨论了<strong>Sigmoid，tanh和Softsign激活函数</strong></li>
+<li>提出了一种<strong>初始化权重weights</strong>的方法，能够解决训练中梯度消失的问题<ul>
+<li>但是使用现在的<code>ReLu</code>激活函数，同样使用此初始化方法就会出现问题。<a id="more"></a>
+<h3 id="2-Sigmoid激励函数实验"><a href="#2-Sigmoid激励函数实验" class="headerlink" title="(2) Sigmoid激励函数实验"></a>(2) Sigmoid激励函数实验</h3></li>
+</ul>
+</li>
+<li>说明<ul>
+<li>论文首先通过实验观察激活函数的影响，指出<code>Sigmoid</code>函数是<strong>不适合</strong>作为深度神经网络激活函数的</li>
+<li>因为它的<strong>均值总是大于0</strong>的，如下图，导致后面的隐藏层<code>hidden layer</code>趋于饱和，并且发现饱和的神经元可以自发移出饱和趋于，<strong>但是非常慢</strong>。接着发现一个新的非线性的激活函数是非常有益的。<br><img src="/assets/blog_images/Weights-Initialization/01.png" alt="Sigmoid函数" title="01"></li>
+<li>最后观察每一层激活值和梯度的变化，给出了一种<strong>新的初始化权重的方法</strong>。</li>
+</ul>
+</li>
+<li>实验部分<ul>
+<li>初始化偏置<code>biases</code>为<code>0</code>，权重<code>w</code>服从<strong>均匀分布</strong>，即：<br>$${W_{ij}} \sim U[ - {1 \over {\sqrt n }},{1 \over {\sqrt n }}]$$</li>
+<li>其中<code>n</code>为前一层的神经元个数。然后构建了一个含有<strong>4个隐含层</strong>的神经网络，激活函数使用的是<code>Sigmoid</code></li>
+<li>观察每一层的<strong>激活值的均值和标准差</strong>随着<strong>训练次数</strong>的变化，<code>layer1</code>表示<strong>第一个隐含层的输出</strong>，以此类推。如图所示：<strong>实线表示均值mean value，垂直的条表示标准差。</strong><br><img src="/assets/blog_images/Weights-Initialization/02.png" alt="均值和方差的变化" title="02"></li>
+</ul>
+</li>
+<li>实验的直观理解<ul>
+<li>最后我们使用<code>softmax(b+Wh)</code>作为输出预测的，刚开始训练的时候不能够很好的预测<code>y</code>的值，因此误差梯度会迫使<code>Wh</code>趋于<code>0</code>，所以会是<code>h</code>的值趋于<code>0</code>，<code>h</code>就是上一层的输出，所以激活值很快为<code>0</code>。</li>
+<li>但是对于<code>tanh</code>函数是关于<strong>原点对称</strong>的，图像如下，值趋于<code>0</code>是好的，因为梯度能够<strong>反向传播</strong>回去，但是对于<code>sigmoid</code>函数来说就<strong>趋于饱和</strong>的位置了，梯度很难反向传回去，也就学习不到东西了。<br><img src="/assets/blog_images/Weights-Initialization/03.png" alt="Sigmoid和tanh函数" title="03"></li>
+</ul>
+</li>
+</ul>
+<h3 id="3-梯度计算和公式推导"><a href="#3-梯度计算和公式推导" class="headerlink" title="(3) 梯度计算和公式推导"></a>(3) 梯度计算和公式推导</h3><h4 id="1-代价函数"><a href="#1-代价函数" class="headerlink" title="1) 代价函数"></a>1) 代价函数</h4><ul>
+<li>代价函数使用的是<strong>交叉熵代价函数</strong>，相比对于<strong>二次代价函数</strong>会更好<br><img src="/assets/blog_images/Weights-Initialization/04.png" alt="交叉熵和二次代价函数图像" title="04"> </li>
+<li>二次代价函数较为平坦，所以使用梯度下降会比较慢。<h4 id="2-公式推导"><a href="#2-公式推导" class="headerlink" title="2) 公式推导"></a>2) 公式推导</h4></li>
+<li>符号说明<br>z<sup>i</sup>………………………………第i层的激活值向量<br>s<sup>i</sup>………………………………第i+1层的输入<br>x………………………………输入<br>n<sub>i</sub>………………………………第i层神经元个数<br>W………………………………权重</li>
+<li>可以得到：<br>$${{\rm{s}}^i} = {z^i}{W^i} + {b^i}$$<br>$${z^{i + 1}} = f({s^i})$$</li>
+<li>所以分别对上面两式求偏导可以得到：</li>
+</ul>
+<p>$$\frac{{\partial Cost}}{{\partial s_k^i}} = {f^,}(s_k^i)W_{k, \bullet }^{i + 1}\frac{{\partial Cost}}{{\partial {s^{i + 1}}}}……………………………..(1)$$</p>
+<p>$$\frac{{\partial Cost}}{{\partial w_{l,k}^i}} = z_l^i\frac{{\partial Cost}}{{\partial s_k^i}}………………………………………(2)$$</p>
+<p>推导如下</p>
+<p><img src="/assets/blog_images/Weights-Initialization/05.png" alt="BP推导" title="05"></p>
+<ul>
+<li>上面公式推导说明<ul>
+<li>其中$$\frac{{\partial Cost}}{{\partial {s^{{\rm{i - 1}}}}}} = {\delta ^{i - 1}}$$</li>
+<li>这里<code>W</code>从<code>1</code>开始，上面给出的最终公式是从<code>0</code>开始。</li>
+<li>对权重的偏导（梯度）再乘以输入 z<sup>i</sup> 即可。</li>
+<li>因为我们使用均匀分布进行初始化，所以方差是一样的，对于<code>tanh</code>函数的导数，$${[\tanh (x)]^,} = 1 - {[\tanh (x)]^2}$$</li>
+<li>所以：$${f^,}(s_k^i) \approx 1$$</li>
+<li>实际这里作者假设了<strong>这个区间内激活函数是线性的</strong>，第二篇论文中也有提到。（下面会给出）</li>
+</ul>
+</li>
+<li>根据方差的公式： $Var(x) = E({x^2}) - {E^2}(x)$<ul>
+<li>可以得到： <code>$Var(x) = E({x^2}) - {E^2}(x)$</code></li>
+<li>推导如下：<ul>
+<li><code>$$Var(s) = Var(\sum\limits_i^n {{w_i}{x_i}} ) = \sum\limits_i^n {Var({w_i}{x_i})} $$</code></li>
+<li>$$\begin{array}{l}Var(wx) = E({w^2}{x^2}) - {E^2}(wx)\\{\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt}  = E({w^2})E({x^2}) - {E^2}(w){E^2}(x)\\\;\;\;\;\;\;\;\;\;\;\;\;{\kern 1pt}  = [E({w^2}) - {E^2}(w)][E({x^2}) - {E^2}(x)] + {E^2}(w)[E({x^2}) - {E^2}(x)] + {E^2}(x)[E({w^2}) - {E^2}(w)]\\{\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt}  = Var(w)Var(x) + {E^2}(w)Var(x) + {E^2}(x)Var(w)\end{array}$$</li>
+<li>因为输入的<strong>均值为0</strong>，所以$$E(w) = E(x) = 0$$</li>
+<li>所以：$$Var(wx) = Var(w)Var(x)$$</li>
+<li>又因为下式成立，然后代入上面的式子即可$${f^,}(s_k^i) \approx 1$$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>根据公式（1），所以对S<sup>i</sup>偏导数的方差为：</li>
+</ul>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$$V&#123;\rm&#123;ar&#125;&#125;[\frac&#123;&#123;\partial Cost&#125;&#125;&#123;&#123;\partial &#123;s^i&#125;&#125;&#125;] = Var[\frac&#123;&#123;\partial Cost&#125;&#125;&#123;&#123;\partial &#123;s^n&#125;&#125;&#125;]\prod\limits<span class="number">_</span>&#123;j = i&#125;^n &#123;&#123;n<span class="number">_</span>&#123;j + <span class="number">1</span>&#125;&#125;Var[&#123;W^j&#125;]&#125; $$</div></pre></td></tr></table></figure>
+<ul>
+<li>根据公式（2），代入到对权重<code>w</code>偏导（即为梯度）的方差为：</li>
+</ul>
+<p>$$Var[\frac{{\partial Cost}}{{\partial {w^i}}}] = \prod\limits_{j = 0}^{i - 1} {{n_j}Var[{W^j}]} \prod\limits_{j = i}^{n - 1} {{n_{j + 1}}Var[{W^j}]}  * Var[x]Var[\frac{{\partial Cost}}{{\partial {s^n}}}]$$</p>
+<ul>
+<li>对于正向传播，希望：$$\forall (i,j),Var[{z^i}] = Var[{z^j}]$$<ul>
+<li>从反向传播的角度同样可以有：$$\forall (i,j),Var[\frac{{\partial Cost}}{{\partial {s^i}}}] = Var[\frac{{\partial Cost}}{{\partial {s^j}}}]$$</li>
+<li>就可以转化为：$$\left\{ \begin{array}{l}{n_i}Var[{w^{\rm{i}}}] = 1\\{n_{i + 1}}Var[{w^{\rm{i}}}] = 1\end{array} \right…………………………….(4)$$<ul>
+<li>比如第一种： $$Var[{z^i}] = Var[x]\prod\limits_{j = 0}^{i - 1} {{n_j}Var[{W^j}]} $$ $$V{\rm{ar}}({z^i}) = Var(x)$$</li>
+<li>所以$${n_i}Var[{w^{\rm{i}}}] = 1$$ 第二种情况同理</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>所以将（4）中的两式相加可得：$$Var[{W^i}] = \frac{2}{{{n_i} + {n_{i + 1}}}}$$<ul>
+<li>如果所有层的神经元个数一样时：$$\left\{ \begin{array}{l}Var[\frac{{\partial Cost}}{{\partial {s^i}}}] = {[nVar[W]]^{d - i}}Var[x]\\Var[\frac{{\partial Cost}}{{\partial {w^i}}}] = {[nVar[W]]^d}Var[x]Var[\frac{{\partial Cost}}{{\partial {w^n}}}]\end{array} \right.$$</li>
+<li>可以看到，所有层的梯度的方差都是一样的，但是对于很深层的神经网络还是有可能导致梯度消失。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-初始化权重方法"><a href="#4-初始化权重方法" class="headerlink" title="(4) 初始化权重方法"></a>(4) 初始化权重方法</h3><ul>
+<li>最后提出了一个归一化的初始化方法，因为<code>W</code>服从均匀分布，根据均匀分布的方差公式可以得到：<code>$$\frac{{{{[c - ( - c)]}^2}}}{{12}} = \frac{{{c^2}}}{3}$$</code></li>
+<li>所以得到：<code>$$\frac{2}{{{n_i} + {n_{i + 1}}}} = \frac{{{c^2}}}{3}$$</code></li>
+<li>求出：<code>$$c = \frac{{\sqrt 6 }}{{\sqrt {{n_i} + {n_{i + 1}}} }}$$</code></li>
+<li>所以最终给出初始化权重的方法为：$$W \sim U[ - \frac{{\sqrt 6 }}{{\sqrt {{n_i} + {n_{i + 1}}} }},\frac{{\sqrt 6 }}{{\sqrt {{n_i} + {n_{i + 1}}} }}]$$<h3 id="5-总结"><a href="#5-总结" class="headerlink" title="(5) 总结"></a>(5) 总结</h3></li>
+<li>论文讨论了<code>Sigmoid，tanh</code>激励函数权重初始化的问题，并给出了初始化的方法，- 但是针对<code>ReLu</code>这种激励函数是不适用的，第二篇会提到。</li>
+<li>并且推导过程中假设了激励函数在初始化对应区间上是<strong>线性的</strong>，即假设导数恒为1我感觉也是存在问题的。</li>
+<li>作者给出的实验部分网络的深度还是很有限的，随着网络的不断加深，对应的初始化权重的分布范围还是会不断减小的。可以通过控制学习率参数等方式来进行对应处理。</li>
+</ul>
+
+
+		
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/weixin.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Paper阅读记录</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">DeepLearning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://lawlite.me/2016/12/20/论文记录-UnderstandingTheDifficultyOfTrainingDeepFeedforwardNeuralNetworks/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/01/08/Python机器学习/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Python机器学习
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/12/08/Tensorflow学习/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Tensorflow学习</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
+  
+
+
+
+
+
+
+<!-- 网易云跟帖 -->
+
+
+
           </div>
         </div>
       </div>
@@ -207,7 +506,7 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
