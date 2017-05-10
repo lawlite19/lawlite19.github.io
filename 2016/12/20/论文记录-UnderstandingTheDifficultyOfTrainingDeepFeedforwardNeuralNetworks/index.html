@@ -20,7 +20,7 @@
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/Weights-Initialization/03.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/Weights-Initialization/04.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/Weights-Initialization/05.png">
-<meta property="og:updated_time" content="2017-05-08T16:27:52.263Z">
+<meta property="og:updated_time" content="2017-05-10T16:38:27.990Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文记录-UnderstandingTheDifficultyOfTrainingDeepFeedforwardNeuralNetworks">
 <meta name="twitter:description" content="(1) 说明 2010年的一篇论文，说明深度神经网络为什么难以训练，当时只讨论了Sigmoid，tanh和Softsign激活函数 提出了一种初始化权重weights的方法，能够解决训练中梯度消失的问题 但是使用现在的ReLu激活函数，同样使用此初始化方法就会出现问题。">
@@ -279,10 +279,16 @@ var _hmt = _hmt || [];
 <li>实际这里作者假设了<strong>这个区间内激活函数是线性的</strong>，第二篇论文中也有提到。（下面会给出）</li>
 </ul>
 </li>
-<li>根据方差的公式： $Var(x) = E({x^2}) - {E^2}(x)$<ul>
-<li>可以得到： <code>$Var(x) = E({x^2}) - {E^2}(x)$</code></li>
-<li>推导如下：<ul>
-<li><code>$$Var(s) = Var(\sum\limits_i^n {{w_i}{x_i}} ) = \sum\limits_i^n {Var({w_i}{x_i})} $$</code></li>
+<li><p>根据方差的公式： $$Var(x) = E({x^2}) - {E^2}(x)$$</p>
+<ul>
+<li><p>可以得到: </p>
+
+$$ Var[{z^i}] = Var[x]\prod\limits_{j = 0}^{i - 1} {{n_j}Var[{W^j}]} .............................(3) $$
+  
+</li>
+<li><p>推导如下：</p>
+<ul>
+<li>$$Var(s) = Var(\sum\limits_i^n {{w_i}{x_i}} ) = \sum\limits_i^n {Var({w_i}{x_i})} $$</li>
 <li>$$\begin{array}{l}Var(wx) = E({w^2}{x^2}) - {E^2}(wx)\\{\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt}  = E({w^2})E({x^2}) - {E^2}(w){E^2}(x)\\\;\;\;\;\;\;\;\;\;\;\;\;{\kern 1pt}  = [E({w^2}) - {E^2}(w)][E({x^2}) - {E^2}(x)] + {E^2}(w)[E({x^2}) - {E^2}(x)] + {E^2}(x)[E({w^2}) - {E^2}(w)]\\{\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt}  = Var(w)Var(x) + {E^2}(w)Var(x) + {E^2}(x)Var(w)\end{array}$$</li>
 <li>因为输入的<strong>均值为0</strong>，所以$$E(w) = E(x) = 0$$</li>
 <li>所以：$$Var(wx) = Var(w)Var(x)$$</li>
@@ -293,7 +299,9 @@ var _hmt = _hmt || [];
 </li>
 <li>根据公式（1），所以对S<sup>i</sup>偏导数的方差为：</li>
 </ul>
-<figure class="highlight xquery"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$$V&#123;\rm&#123;ar&#125;&#125;[\frac&#123;&#123;\partial Cost&#125;&#125;&#123;&#123;\partial &#123;s^i&#125;&#125;&#125;] = Var[\frac&#123;&#123;\partial Cost&#125;&#125;&#123;&#123;\partial &#123;s^n&#125;&#125;&#125;]\prod\limits<span class="number">_</span>&#123;j = i&#125;^n &#123;&#123;n<span class="number">_</span>&#123;j + <span class="number">1</span>&#125;&#125;Var[&#123;W^j&#125;]&#125; $$</div></pre></td></tr></table></figure>
+
+$$V{\rm{ar}}[\frac{{\partial Cost}}{{\partial {s^i}}}] = Var[\frac{{\partial Cost}}{{\partial {s^n}}}]\prod\limits_{j = i}^n {{n_{j + 1}}Var[{W^j}]} $$
+
 <ul>
 <li>根据公式（2），代入到对权重<code>w</code>偏导（即为梯度）的方差为：</li>
 </ul>
@@ -301,7 +309,7 @@ var _hmt = _hmt || [];
 <ul>
 <li>对于正向传播，希望：$$\forall (i,j),Var[{z^i}] = Var[{z^j}]$$<ul>
 <li>从反向传播的角度同样可以有：$$\forall (i,j),Var[\frac{{\partial Cost}}{{\partial {s^i}}}] = Var[\frac{{\partial Cost}}{{\partial {s^j}}}]$$</li>
-<li>就可以转化为：$$\left\{ \begin{array}{l}{n_i}Var[{w^{\rm{i}}}] = 1\\{n_{i + 1}}Var[{w^{\rm{i}}}] = 1\end{array} \right…………………………….(4)$$<ul>
+<li>就可以转化为：$$\left{ \begin{array}{l}{n_i}Var[{w^{\rm{i}}}] = 1\{n_{i + 1}}Var[{w^{\rm{i}}}] = 1\end{array} \right…………………………….(4)$$<ul>
 <li>比如第一种： $$Var[{z^i}] = Var[x]\prod\limits_{j = 0}^{i - 1} {{n_j}Var[{W^j}]} $$ $$V{\rm{ar}}({z^i}) = Var(x)$$</li>
 <li>所以$${n_i}Var[{w^{\rm{i}}}] = 1$$ 第二种情况同理</li>
 </ul>
@@ -309,14 +317,14 @@ var _hmt = _hmt || [];
 </ul>
 </li>
 <li>所以将（4）中的两式相加可得：$$Var[{W^i}] = \frac{2}{{{n_i} + {n_{i + 1}}}}$$<ul>
-<li>如果所有层的神经元个数一样时：$$\left\{ \begin{array}{l}Var[\frac{{\partial Cost}}{{\partial {s^i}}}] = {[nVar[W]]^{d - i}}Var[x]\\Var[\frac{{\partial Cost}}{{\partial {w^i}}}] = {[nVar[W]]^d}Var[x]Var[\frac{{\partial Cost}}{{\partial {w^n}}}]\end{array} \right.$$</li>
+<li>如果所有层的神经元个数一样时：$$\left{ \begin{array}{l}Var[\frac{{\partial Cost}}{{\partial {s^i}}}] = {[nVar[W]]^{d - i}}Var[x]\\Var[\frac{{\partial Cost}}{{\partial {w^i}}}] = {[nVar[W]]^d}Var[x]Var[\frac{{\partial Cost}}{{\partial {w^n}}}]\end{array} \right.$$</li>
 <li>可以看到，所有层的梯度的方差都是一样的，但是对于很深层的神经网络还是有可能导致梯度消失。</li>
 </ul>
 </li>
 </ul>
 <h3 id="4-初始化权重方法"><a href="#4-初始化权重方法" class="headerlink" title="(4) 初始化权重方法"></a>(4) 初始化权重方法</h3><ul>
-<li>最后提出了一个归一化的初始化方法，因为<code>W</code>服从均匀分布，根据均匀分布的方差公式可以得到：<code>$$\frac{{{{[c - ( - c)]}^2}}}{{12}} = \frac{{{c^2}}}{3}$$</code></li>
-<li>所以得到：<code>$$\frac{2}{{{n_i} + {n_{i + 1}}}} = \frac{{{c^2}}}{3}$$</code></li>
+<li>最后提出了一个归一化的初始化方法，因为<code>W</code>服从均匀分布，根据均匀分布的方差公式可以得到：$$\frac{{{{[c - ( - c)]}^2}}}{{12}} = \frac{{{c^2}}}{3}$$</li>
+<li>所以得到：$$\frac{2}{{{n_i} + {n_{i + 1}}}} = \frac{{{c^2}}}{3}$$</li>
 <li>求出：<code>$$c = \frac{{\sqrt 6 }}{{\sqrt {{n_i} + {n_{i + 1}}} }}$$</code></li>
 <li>所以最终给出初始化权重的方法为：$$W \sim U[ - \frac{{\sqrt 6 }}{{\sqrt {{n_i} + {n_{i + 1}}} }},\frac{{\sqrt 6 }}{{\sqrt {{n_i} + {n_{i + 1}}} }}]$$<h3 id="5-总结"><a href="#5-总结" class="headerlink" title="(5) 总结"></a>(5) 总结</h3></li>
 <li>论文讨论了<code>Sigmoid，tanh</code>激励函数权重初始化的问题，并给出了初始化的方法，- 但是针对<code>ReLu</code>这种激励函数是不适用的，第二篇会提到。</li>
@@ -536,19 +544,6 @@ MathJax.Hub.Queue(function() {
     }       
 });
 </script>
-<script type="text/javascript">
-$(document).ready(function(){
-  $("code").map(function(){
-    match = /^\$(.*)\$$/.exec($(this).html());
-    if (match){
-      //$(this).after("<span class=mathjax_inline>" + match + "</span>");
-      //$(this).hide();
-      $(this).replaceWith("<span class=hpl_mathjax_inline>" + $(this).html() + "</span>");
-      MathJax.Hub.Queue(["Typeset",MathJax.Hub,$(this).get(0)]);
-    }
-  });
-});
-</script>
 <script src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 
@@ -614,10 +609,6 @@ $(document).ready(function(){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
@@ -626,15 +617,11 @@ $(document).ready(function(){
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -643,6 +630,14 @@ $(document).ready(function(){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">DeepLearning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -802,23 +797,6 @@ $(document).ready(function(){
     </div>
 
 </div>
-  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
