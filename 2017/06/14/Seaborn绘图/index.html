@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://lawlite.me">
+  <title>Seaborn绘图 | Lawlite的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一、介绍与安装1、介绍 官网：http://seaborn.pydata.org/index.html Github: https://github.com/mwaskom/seaborn Seaborn 其实是在matplotlib的基础上进行了更高级的 API 封装，从而使得作图更加容易 在大多数情况下使用seaborn就能做出很具有吸引力的图，而使用matplotlib就能制作具有更多特色的">
+<meta name="keywords" content="Python,可视化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Seaborn绘图">
+<meta property="og:url" content="http://lawlite.me/2017/06/14/Seaborn绘图/index.html">
+<meta property="og:site_name" content="Lawlite的博客">
+<meta property="og:description" content="一、介绍与安装1、介绍 官网：http://seaborn.pydata.org/index.html Github: https://github.com/mwaskom/seaborn Seaborn 其实是在matplotlib的基础上进行了更高级的 API 封装，从而使得作图更加容易 在大多数情况下使用seaborn就能做出很具有吸引力的图，而使用matplotlib就能制作具有更多特色的">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/seaborn_images/seaborn_dis_01.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/seaborn_images/seaborn_kde_01.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/seaborn_images/seaborn_pair_01.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/seaborn_images/seaborn_stripplot_01.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/seaborn_images/seaborn_stripplot_02.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/seaborn_images/seaborn_swarmplot_01.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/seaborn_images/seaborn_boxplot_01.jpg">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/seaborn_images/seaborn_boxplot_02.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/seaborn_images/seaborn_boxplot_03.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/seaborn_images/seaborn_jointplot_01.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/seaborn_images/seaborn_jointplot_02.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/seaborn_images/seaborn_violinplot_02.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/seaborn_images/seaborn_violinplot_01.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/seaborn_images/seaborn_pointplot_01.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/seaborn_images/seaborn_barplot_01.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/seaborn_images/seaborn_countplot_01.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/seaborn_images/seaborn_factorplot_01.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/seaborn_images/seaborn_heatmap_01.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/seaborn_images/seaborn_tsplot_01.png">
+<meta property="og:updated_time" content="2017-06-14T13:26:48.383Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Seaborn绘图">
+<meta name="twitter:description" content="一、介绍与安装1、介绍 官网：http://seaborn.pydata.org/index.html Github: https://github.com/mwaskom/seaborn Seaborn 其实是在matplotlib的基础上进行了更高级的 API 封装，从而使得作图更加容易 在大多数情况下使用seaborn就能做出很具有吸引力的图，而使用matplotlib就能制作具有更多特色的">
+<meta name="twitter:image" content="http://lawlite.me/assets/blog_images/seaborn_images/seaborn_dis_01.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Lawlite的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/assets/img/favicon.ico">
+  
+  <link rel="stylesheet" type="text/css" href="/./main.234bc0.css">
+  <style type="text/css">
+  
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+	var hm = document.createElement("script");
+	hm.src = "https://hm.baidu.com/hm.js?aafd2cc62b94803248a1bee49dbc581f";
+	var s = document.getElementsByTagName("script")[0]; 
+	s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+  
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+<div class="overlay" style="background: #279ADB"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/assets/img/avatar.jpg" class="js-avatar">
+		</a>
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Lawlite</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/tags/随笔/">随笔</a></li>
+	        
+				<li><a href="/photos/">相册</a></li>
+	        
+				<li><a href="/留言板/">留言板</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+    		
+    			
+    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/lawlite19" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="weibo" target="_blank" href="http://weibo.com/5551832260/profile?topnav=1&wvr=6&is_all=1" title="weibo"><i class="icon-weibo"></i></a>
+		        
+					<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/lawlite.me" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
+					<a class="qq" target="_blank" href="/849451478" title="qq"><i class="icon-qq"></i></a>
+		        
+					<a class="twitter" target="_blank" href="https://twitter.com/lawliteWang" title="twitter"><i class="icon-twitter"></i></a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #279ADB"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/assets/img/avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">Lawlite</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/lawlite19" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/5551832260/profile?topnav=1&wvr=6&is_all=1" title="weibo"><i class="icon-weibo"></i></a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/lawlite.me" title="zhihu"><i class="icon-zhihu"></i></a>
+			        
+						<a class="qq" target="_blank" href="/849451478" title="qq"><i class="icon-qq"></i></a>
+			        
+						<a class="twitter" target="_blank" href="https://twitter.com/lawliteWang" title="twitter"><i class="icon-twitter"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 25%"><a href="/">主页</a></li>
+		        
+					<li style="width: 25%"><a href="/tags/随笔/">随笔</a></li>
+		        
+					<li style="width: 25%"><a href="/photos/">相册</a></li>
+		        
+					<li style="width: 25%"><a href="/留言板/">留言板</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-Seaborn绘图" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Seaborn绘图
+    </h1>
+  
+
+		<!-- 显示阅读和评论数 -->
+		
+		<br/>
+		<a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+		<span class="icon-sort"></span>
+		<span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+            阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+		</span>
+		</a>
+		<!-- 网易的评论数，这里先不使用
+		<a class="cloud-tie-join-count" href="javascript:void(0);" style="color:#ef7522;font-size:14px;">
+			<span class="icon-comment"></span>
+			<span class="join-text" style="color:#ef7522;font-size:14px;">参与数:</span>
+			<span class="join-count">0</span>人
+		</a>  -->
+		
+		
+        
+        <a href="/2017/06/14/Seaborn绘图/" class="archive-article-date">
+  	<time datetime="2017-06-14T13:25:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-14</time>
+</a>
+        
+      </header>
+    
+		<!-- 目录内容 -->
+		
+		    <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+            <span class="btn-bg"></span>
+            <span class="btn-text">文章导航</span>
+            </p>
+			<div id="toc-article" class="toc-article">
+			    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+				<strong class="toc-title">文章目录</strong>
+	            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、介绍与安装"><span class="toc-number">1.</span> <span class="toc-text">一、介绍与安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、介绍"><span class="toc-number">1.1.</span> <span class="toc-text">1、介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、安装"><span class="toc-number">1.2.</span> <span class="toc-text">2、安装</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、分布图"><span class="toc-number">2.</span> <span class="toc-text">二、分布图</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、distplot"><span class="toc-number">2.1.</span> <span class="toc-text">1、distplot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、kdeplot"><span class="toc-number">2.2.</span> <span class="toc-text">2、kdeplot</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、pairplot"><span class="toc-number">3.</span> <span class="toc-text">二、pairplot</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、两两作图"><span class="toc-number">3.1.</span> <span class="toc-text">1、两两作图</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、stripplot和swarmplot"><span class="toc-number">4.</span> <span class="toc-text">三、stripplot和swarmplot</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、stripplot"><span class="toc-number">4.1.</span> <span class="toc-text">1、stripplot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、swarmplot"><span class="toc-number">4.2.</span> <span class="toc-text">2、swarmplot</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、boxplot"><span class="toc-number">5.</span> <span class="toc-text">四、boxplot</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、boxplot示意图"><span class="toc-number">5.1.</span> <span class="toc-text">1、boxplot示意图</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、jointplot"><span class="toc-number">6.</span> <span class="toc-text">五、jointplot</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、jointplot"><span class="toc-number">6.1.</span> <span class="toc-text">1、jointplot</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、violinplot"><span class="toc-number">7.</span> <span class="toc-text">六、violinplot</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、小提琴图，和boxplot很像"><span class="toc-number">7.1.</span> <span class="toc-text">1、小提琴图，和boxplot很像</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#七、pointplot-bar"><span class="toc-number">8.</span> <span class="toc-text">七、pointplot, bar</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、pointplot"><span class="toc-number">8.1.</span> <span class="toc-text">1、pointplot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、barplot"><span class="toc-number">8.2.</span> <span class="toc-text">2、barplot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、countplot"><span class="toc-number">8.3.</span> <span class="toc-text">3、countplot</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#八、factorplot"><span class="toc-number">9.</span> <span class="toc-text">八、factorplot</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、可以通过这个函数绘制以上几种图"><span class="toc-number">9.1.</span> <span class="toc-text">1、可以通过这个函数绘制以上几种图</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#九、heatmap"><span class="toc-number">10.</span> <span class="toc-text">九、heatmap</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、heatmap"><span class="toc-number">10.1.</span> <span class="toc-text">1、heatmap</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#十、时序绘图"><span class="toc-number">11.</span> <span class="toc-text">十、时序绘图</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、tsplot"><span class="toc-number">11.1.</span> <span class="toc-text">1、tsplot</span></a></li></ol></li></ol>
+           </div>
+		   <script type="text/javascript">
+			function showToc(){
+				var toc_article = document.getElementById("toc-article");
+				var show_toc_btn = document.getElementById("show-toc-btn");
+				toc_article.setAttribute("style","display:block");
+				show_toc_btn.setAttribute("style","display:none");
+				};
+			function showBtn(){
+				var toc_article = document.getElementById("toc-article");
+				var show_toc_btn = document.getElementById("show-toc-btn");
+				toc_article.setAttribute("style","display:none");
+				show_toc_btn.setAttribute("style","display:block");
+				};
+		   </script>
+        		
+		<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一、介绍与安装"><a href="#一、介绍与安装" class="headerlink" title="一、介绍与安装"></a>一、介绍与安装</h1><h2 id="1、介绍"><a href="#1、介绍" class="headerlink" title="1、介绍"></a>1、介绍</h2><ul>
+<li>官网：<a href="http://seaborn.pydata.org/index.html" target="_blank" rel="external">http://seaborn.pydata.org/index.html</a></li>
+<li>Github: <a href="https://github.com/mwaskom/seaborn" target="_blank" rel="external">https://github.com/mwaskom/seaborn</a></li>
+<li><code>Seaborn</code> 其实是在matplotlib的基础上进行了更高级的 <code>API</code> 封装，从而使得作图更加容易</li>
+<li>在大多数情况下使用<code>seaborn</code>就能做出很具有吸引力的图，而使用<code>matplotlib</code>就能制作具有更多特色的图。应该把<code>Seaborn</code>视为<code>matplotlib</code>的补充<h2 id="2、安装"><a href="#2、安装" class="headerlink" title="2、安装"></a>2、安装</h2></li>
+<li>直接 <code>pip3 install seaborn</code>即可<a id="more"></a>
+<h1 id="二、分布图"><a href="#二、分布图" class="headerlink" title="二、分布图"></a>二、分布图</h1><h2 id="1、distplot"><a href="#1、distplot" class="headerlink" title="1、distplot"></a>1、distplot</h2></li>
+<li>导入包</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#-*- coding: utf-8 -*-</div><div class="line">import numpy as np</div><div class="line">import pandas as pd</div><div class="line">import matplotlib as mpl</div><div class="line">import matplotlib.pyplot as plt</div><div class="line">import seaborn as sns</div><div class="line">#%matplotlib inline  # 为了在jupyter notebook里作图，需要用到这个命令</div></pre></td></tr></table></figure>
+<ul>
+<li>加载 <code>seaborn</code>中的数据集：<code>tips = sns.load_dataset(&#39;tips&#39;)</code></li>
+<li><p>分布图</p>
+<ul>
+<li><code>kde</code>是高斯分布密度图，绘图在0-1之间</li>
+<li><code>hist</code>是否画直方图</li>
+<li><code>rug</code>在X轴上画一些分布线</li>
+<li><code>fit</code>可以制定某个分布进行<strong>拟合</strong></li>
+<li><code>label</code> legend时的值</li>
+<li><code>axlabel</code>制定横轴的说明<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sns.distplot(tips[<span class="string">'total_bill'</span>], bins=None, hist=True, kde=False, rug=True, fit=None, </div><div class="line">            hist_kws=None, kde_kws=None, rug_kws=None, </div><div class="line">            fit_kws=None, <span class="attribute">color</span>=None, vertical=False, </div><div class="line">            norm_hist=False, axlabel=None, label=None, ax=None)</div><div class="line">sns<span class="selector-class">.plt</span><span class="selector-class">.show</span>()</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>拟合分布</p>
+<ul>
+<li>这里使用了<strong>gamma分布</strong>拟合<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">from scipy import stats</div><div class="line">sns.distplot(tips<span class="selector-class">.total_bill</span>, fit=stats<span class="selector-class">.gamma</span>, kde=False)</div><div class="line">sns<span class="selector-class">.plt</span><span class="selector-class">.show</span>()</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/assets/blog_images/seaborn_images/seaborn_dis_01.png" alt="seaborn gamma分布拟合" title="seaborn_dis_01"></p>
+<h2 id="2、kdeplot"><a href="#2、kdeplot" class="headerlink" title="2、kdeplot"></a>2、kdeplot</h2><ul>
+<li>高斯概率密度图<ul>
+<li><code>data2</code>可以是二维的分布</li>
+<li><code>shade</code>是否填充 </li>
+<li><code>kernel</code>核函数，还有很多核函数，比如<strong>cos, biw</strong>等</li>
+<li><code>cumulative</code>累积的作图，最后的值应该是接近<strong>1</strong></li>
+<li><code>gridsize</code>多少个点估计</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ax = sns.kdeplot(tips[<span class="string">'total_bill'</span>], data2=tips<span class="selector-class">.tip</span>, shade=False, vertical=False, </div><div class="line">                kernel=<span class="string">"gau"</span>, bw=<span class="string">"scott"</span>, </div><div class="line">                gridsize=<span class="number">100</span>, cut=<span class="number">3</span>, <span class="attribute">clip</span>=None, </div><div class="line">                legend=True, cumulative=False, </div><div class="line">                shade_lowest=True, ax=None)</div><div class="line">sns<span class="selector-class">.plt</span><span class="selector-class">.show</span>()</div></pre></td></tr></table></figure>
+<p><img src="/assets/blog_images/seaborn_images/seaborn_kde_01.png" alt="二维的分布" title="seaborn_kde_01"></p>
+<h1 id="二、pairplot"><a href="#二、pairplot" class="headerlink" title="二、pairplot"></a>二、pairplot</h1><h2 id="1、两两作图"><a href="#1、两两作图" class="headerlink" title="1、两两作图"></a>1、两两作图</h2><ul>
+<li><code>iris</code> 为例<ul>
+<li><code>data</code>: DataFrame格式的数据</li>
+<li><code>hue</code>: label类别对应的column name</li>
+<li><code>vars</code>: 指定feature的列名</li>
+<li><code>kind</code>: 作图的方式，可以是<strong>reg或scatter</strong></li>
+<li><code>diag_kind</code>: 对角线作图的方式，可以是<strong>hist或kde</strong><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">iris = sns.load_dataset(<span class="string">'iris'</span>)</div><div class="line">g = sns.pairplot(iris, hue=<span class="string">'species'</span>, hue_order=None, palette=None, </div><div class="line">                 vars=list(iris<span class="selector-class">.columns</span>[<span class="number">0</span>:-<span class="number">1</span>]), </div><div class="line">                 x_vars=None, y_vars=None, </div><div class="line">                 kind=<span class="string">"reg"</span>, diag_kind=<span class="string">"hist"</span>, </div><div class="line">                 markers=[<span class="string">'o'</span>,<span class="string">'s'</span>,<span class="string">'D'</span>], size=<span class="number">1.5</span>, aspect=<span class="number">1</span>, </div><div class="line">                 dropna=True, plot_kws=None, </div><div class="line">                 diag_kws=None, grid_kws=None)</div><div class="line">sns<span class="selector-class">.plt</span><span class="selector-class">.show</span>()</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/assets/blog_images/seaborn_images/seaborn_pair_01.png" alt="seaborn pairplot作图" title="seaborn_pair_01"></p>
+<h1 id="三、stripplot和swarmplot"><a href="#三、stripplot和swarmplot" class="headerlink" title="三、stripplot和swarmplot"></a>三、stripplot和swarmplot</h1><h2 id="1、stripplot"><a href="#1、stripplot" class="headerlink" title="1、stripplot"></a>1、stripplot</h2><ul>
+<li>tips为例，查看每天的数据信息<ul>
+<li><code>x</code>: X轴数据</li>
+<li><code>y</code>: Y轴数据</li>
+<li><code>hue</code>: 区分不同种类数据的column name</li>
+<li><code>data</code>: DataFrame类型数据</li>
+<li><code>jitter</code>: 将数据分开点，防止重叠<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">tips = sns.load_dataset(<span class="string">'tips'</span>)</div><div class="line">ax = sns.stripplot(x=<span class="string">'day'</span>, y=<span class="string">'total_bill'</span>, hue=None, data=tips, <span class="attribute">order</span>=None, </div><div class="line">                  hue_order=None, jitter=True, </div><div class="line">                  split=False, orient=None, </div><div class="line">                  <span class="attribute">color</span>=None, palette=None, size=<span class="number">5</span>, </div><div class="line">                  edgecolor=<span class="string">"gray"</span>, linewidth=<span class="number">0</span>, </div><div class="line">                  ax=None)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/assets/blog_images/seaborn_images/seaborn_stripplot_01.png" alt="stripplot 查看每天的数据信息" title="seaborn_stripplot_01"></p>
+<ul>
+<li>查看关于性别消费的信息</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ax = sns.stripplot(x=<span class="string">'sex'</span>, y=<span class="string">'total_bill'</span>, hue=<span class="string">'day'</span>, data=tips, <span class="attribute">order</span>=None, </div><div class="line">                  hue_order=None, jitter=True, </div><div class="line">                  split=False, orient=None, </div><div class="line">                  <span class="attribute">color</span>=None, palette=None, size=<span class="number">5</span>, </div><div class="line">                  edgecolor=<span class="string">"gray"</span>, linewidth=<span class="number">0</span>, </div><div class="line">                  ax=None)</div></pre></td></tr></table></figure>
+<p><img src="/assets/blog_images/seaborn_images/seaborn_stripplot_02.png" alt="sripplot 查看敢于性别消费的信息" title="seaborn_stripplot_02"></p>
+<h2 id="2、swarmplot"><a href="#2、swarmplot" class="headerlink" title="2、swarmplot"></a>2、swarmplot</h2><ul>
+<li>与stripplot类似，只是数据点不会重叠 (适合小数据量)</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">tips = sns.load_dataset(<span class="string">'tips'</span>)</div><div class="line">ax = sns.swarmplot(x=<span class="string">'sex'</span>, y=<span class="string">'total_bill'</span>, hue=<span class="string">'day'</span>, data=tips)</div><div class="line">sns<span class="selector-class">.plt</span><span class="selector-class">.show</span>()</div></pre></td></tr></table></figure>
+<p><img src="/assets/blog_images/seaborn_images/seaborn_swarmplot_01.png" alt="seaborn swarmplot" title="seaborn_swarmplot_01"></p>
+<h1 id="四、boxplot"><a href="#四、boxplot" class="headerlink" title="四、boxplot"></a>四、boxplot</h1><h2 id="1、boxplot示意图"><a href="#1、boxplot示意图" class="headerlink" title="1、boxplot示意图"></a>1、boxplot示意图</h2><p><img src="/assets/blog_images/seaborn_images/seaborn_boxplot_01.jpg" alt="box图" title="seaborn_boxplot_01"></p>
+<ul>
+<li>函数<ul>
+<li><code>x, y</code>：指定X轴，Y轴的columns name值</li>
+<li><code>hue</code>: 指定要区分的类别<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">tips = sns.load_dataset('tips')</div><div class="line">ax = sns.boxplot(x='day', y='total_bill', hue=None, data=tips, order=None, </div><div class="line">                hue_order=None, orient=None, </div><div class="line">                color=None, palette=None, </div><div class="line">                saturation=.75, width=.8, </div><div class="line">                fliersize=5, linewidth=None, </div><div class="line">                whis=1.5, notch=False, ax=None)</div><div class="line">sns.plt.show()</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/assets/blog_images/seaborn_images/seaborn_boxplot_02.png" alt="box图" title="seaborn_boxplot_02"></p>
+<ul>
+<li>可以和上面的stripplot一起用</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">tips = sns.load_dataset('tips')</div><div class="line">ax = sns.boxplot(x='day', y='total_bill', hue=None, data=tips, order=None, </div><div class="line">                hue_order=None, orient=None, </div><div class="line">                color=None, palette=None, </div><div class="line">                saturation=.75, width=.8, </div><div class="line">                fliersize=5, linewidth=None, </div><div class="line">                whis=1.5, notch=False, ax=None)</div><div class="line">sns.stripplot(x='day', y='total_bill', hue=None, data=tips, order=None, </div><div class="line">             hue_order=None, jitter=True, split=False, </div><div class="line">             orient=None, color=None, palette=None, </div><div class="line">             size=5, edgecolor="gray", linewidth=0, </div><div class="line">             ax=None)</div><div class="line">sns.plt.show()</div></pre></td></tr></table></figure>
+<p><img src="/assets/blog_images/seaborn_images/seaborn_boxplot_03.png" alt="seaborn boxplot和stripplot" title="seaborn_boxplot_03"></p>
+<h1 id="五、jointplot"><a href="#五、jointplot" class="headerlink" title="五、jointplot"></a>五、jointplot</h1><h2 id="1、jointplot"><a href="#1、jointplot" class="headerlink" title="1、jointplot"></a>1、jointplot</h2><ul>
+<li>联合作图<ul>
+<li><code>kind</code>: 有<strong>scatter” | “reg” | “resid” | “kde” | “hex</strong><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">tips = sns.load_dataset(<span class="string">'tips'</span>)</div><div class="line">from scipy import stats</div><div class="line">g = sns.jointplot(x=<span class="string">'total_bill'</span>, y=<span class="string">'tip'</span>,</div><div class="line">                  data=tips, kind=<span class="string">"reg"</span>, </div><div class="line">                  stat_func=stats<span class="selector-class">.pearsonr</span>, </div><div class="line">                  <span class="attribute">color</span>=None, size=<span class="number">6</span>, ratio=<span class="number">5</span>, </div><div class="line">                  space=.<span class="number">2</span>, dropna=True, xlim=None, </div><div class="line">                  ylim=None, joint_kws=None, </div><div class="line">                  marginal_kws=None, annot_kws=None)</div><div class="line">sns<span class="selector-class">.plt</span><span class="selector-class">.show</span>()</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/assets/blog_images/seaborn_images/seaborn_jointplot_01.png" alt="jointplot" title="seaborn_jointplot_01"></p>
+<ul>
+<li>可以在基础上再作图<ul>
+<li>plot_joint就是在联合分布上作图</li>
+<li>plot_marginals就是在边缘分布上再作图<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">g = (sns.jointplot(x=<span class="string">'total_bill'</span>, y=<span class="string">'tip'</span>,data=tips).plot_joint(sns.kdeplot))</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/assets/blog_images/seaborn_images/seaborn_jointplot_02.png" alt="joint plot" title="seaborn_jointplot_02"></p>
+<h1 id="六、violinplot"><a href="#六、violinplot" class="headerlink" title="六、violinplot"></a>六、violinplot</h1><h2 id="1、小提琴图，和boxplot很像"><a href="#1、小提琴图，和boxplot很像" class="headerlink" title="1、小提琴图，和boxplot很像"></a>1、小提琴图，和<strong>boxplot</strong>很像</h2><ul>
+<li>对称的<strong>kde图</strong></li>
+<li>中间的白点是<strong>中位数</strong>，黑色粗线对应<strong>分位数</strong><br><img src="/assets/blog_images/seaborn_images/seaborn_violinplot_02.png" alt="小提琴图1" title="seaborn_violinplot_02"></li>
+<li><ul>
+<li><code>inner</code>: 指定图里面用什么划分，有<code>&quot;box&quot;, &quot;quartile&quot;, &quot;point&quot;, &quot;stick&quot;, None</code><ul>
+<li><code>quartile</code>为四分位数划分</li>
+<li><code>stick</code>很像<strong>rug</strong>，就是可以看出密度情况</li>
+</ul>
+</li>
+<li><code>scale</code>: 缩放每个图对应的area, 取值有 <code>&quot;area&quot;, &quot;count&quot;, &quot;width&quot;</code><ul>
+<li><code>area</code>指定每个有相同的area</li>
+<li><code>count</code>会按数量缩放（数量少的就比较<strong>窄扁</strong>）<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">tips = sns.load_dataset('tips')</div><div class="line">ax = sns.violinplot(x='day', y='total_bill', </div><div class="line">                    hue='smoker', data=tips, order=None, </div><div class="line">                    hue_order=None, bw="scott", </div><div class="line">                    cut=2, scale="area", </div><div class="line">                    scale_hue=True, gridsize=100, </div><div class="line">                    width=.8, inner="quartile", </div><div class="line">                    split=False, orient=None, </div><div class="line">                    linewidth=None, color=None, </div><div class="line">                    palette='muted', saturation=.75, </div><div class="line">                    ax=None) </div><div class="line">sns.plt.show()</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/assets/blog_images/seaborn_images/seaborn_violinplot_01.png" alt="小提琴图" title="seaborn_violinplot_01"></p>
+<h1 id="七、pointplot-bar"><a href="#七、pointplot-bar" class="headerlink" title="七、pointplot, bar"></a>七、pointplot, bar</h1><h2 id="1、pointplot"><a href="#1、pointplot" class="headerlink" title="1、pointplot"></a>1、pointplot</h2><ul>
+<li>点图<ul>
+<li><code>estimator</code>：点的取值是，默认是<code>np.mean</code><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">tips = sns.load_dataset(<span class="string">'tips'</span>)</div><div class="line">sns.pointplot(x=<span class="string">'time'</span>, y=<span class="string">'total_bill'</span>, hue=<span class="string">'smoker'</span>, data=tips, <span class="attribute">order</span>=None, </div><div class="line">             hue_order=None, estimator=np<span class="selector-class">.mean</span>, ci=<span class="number">95</span>, </div><div class="line">             n_boot=<span class="number">1000</span>, units=None, markers=<span class="string">"o"</span>, </div><div class="line">             linestyles=<span class="string">"-"</span>, dodge=False, join=True, </div><div class="line">             scale=<span class="number">1</span>, orient=None, <span class="attribute">color</span>=None, </div><div class="line">             palette=None, ax=None, errwidth=None, </div><div class="line">             capsize=None)</div><div class="line">sns<span class="selector-class">.plt</span><span class="selector-class">.show</span>()</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/assets/blog_images/seaborn_images/seaborn_pointplot_01.png" alt="pointplot" title="seaborn_pointplot_01"></p>
+<h2 id="2、barplot"><a href="#2、barplot" class="headerlink" title="2、barplot"></a>2、barplot</h2><ul>
+<li>条形图<ul>
+<li>y轴是<code>mean value</code>，和点图其实差不多<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">tips = sns.load_dataset('tips')</div><div class="line">sns.barplot(x='day', y='total_bill', hue='sex', data=tips, order=None, </div><div class="line">           hue_order=None, estimator=np.mean, ci=95, </div><div class="line">           n_boot=1000, units=None, orient=None, </div><div class="line">           color=None, palette=None, saturation=.75, </div><div class="line">           errcolor=".26", errwidth=None, capsize=None, </div><div class="line">           ax=None)</div><div class="line">sns.plt.show()</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/assets/blog_images/seaborn_images/seaborn_barplot_01.png" alt="bar" title="seaborn_barplot_01"></p>
+<h2 id="3、countplot"><a href="#3、countplot" class="headerlink" title="3、countplot"></a>3、countplot</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">tips = sns.load_dataset(<span class="string">'tips'</span>)</div><div class="line">sns.countplot(x=<span class="string">'day'</span>, hue=<span class="string">'sex'</span>, data=tips)</div><div class="line">sns<span class="selector-class">.plt</span><span class="selector-class">.show</span>()</div></pre></td></tr></table></figure>
+<p><img src="/assets/blog_images/seaborn_images/seaborn_countplot_01.png" alt="count" title="seaborn_countplot_01"></p>
+<h1 id="八、factorplot"><a href="#八、factorplot" class="headerlink" title="八、factorplot"></a>八、factorplot</h1><h2 id="1、可以通过这个函数绘制以上几种图"><a href="#1、可以通过这个函数绘制以上几种图" class="headerlink" title="1、可以通过这个函数绘制以上几种图"></a>1、可以通过这个函数绘制以上几种图</h2><ul>
+<li>指定<code>kind</code>即可，有<code>point</code>, <code>bar</code>, <code>count</code>, <code>box</code>, <code>violin</code>, <code>strip</code></li>
+<li><code>row</code>和<code>col</code>指定绘制的行数和列数，给出一个<strong>种类类型的列名</strong>即可 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">titanic = sns.load_dataset(<span class="string">'titanic'</span>)</div><div class="line">sns.factorplot(x=<span class="string">'age'</span>, y=<span class="string">'embark_town'</span>, </div><div class="line">               hue=<span class="string">'sex'</span>, data=titanic,</div><div class="line">               row=<span class="string">'class'</span>, col=<span class="string">'sex'</span>, </div><div class="line">               col_wrap=None, estimator=np<span class="selector-class">.mean</span>, ci=<span class="number">95</span>, </div><div class="line">               n_boot=<span class="number">1000</span>, units=None, <span class="attribute">order</span>=None, </div><div class="line">               hue_order=None, row_order=None, </div><div class="line">               col_order=None, kind=<span class="string">"box"</span>, size=<span class="number">4</span>, </div><div class="line">               aspect=<span class="number">1</span>, orient=None, <span class="attribute">color</span>=None, </div><div class="line">               palette=None, legend=True, </div><div class="line">               legend_out=True, sharex=True, </div><div class="line">               sharey=True, margin_titles=False, </div><div class="line">               facet_kws=None)</div><div class="line">sns<span class="selector-class">.plt</span><span class="selector-class">.show</span>()</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="/assets/blog_images/seaborn_images/seaborn_factorplot_01.png" alt="factorplot box" title="seaborn_factorplot_01"></p>
+<h1 id="九、heatmap"><a href="#九、heatmap" class="headerlink" title="九、heatmap"></a>九、heatmap</h1><h2 id="1、heatmap"><a href="#1、heatmap" class="headerlink" title="1、heatmap"></a>1、heatmap</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">flight = sns.load_dataset(<span class="string">'flights'</span>)</div><div class="line">flights = flight.pivot(<span class="string">'month'</span>,<span class="string">'year'</span>,<span class="string">'passengers'</span>)</div><div class="line">sns.heatmap(flights, annot=True, fmt=<span class="string">'d'</span>)</div><div class="line">sns<span class="selector-class">.plt</span><span class="selector-class">.show</span>()</div></pre></td></tr></table></figure>
+<p><img src="/assets/blog_images/seaborn_images/seaborn_heatmap_01.png" alt="heatmap" title="seaborn_heatmap_01"></p>
+<h1 id="十、时序绘图"><a href="#十、时序绘图" class="headerlink" title="十、时序绘图"></a>十、时序绘图</h1><h2 id="1、tsplot"><a href="#1、tsplot" class="headerlink" title="1、tsplot"></a>1、tsplot</h2><ul>
+<li>condition: 和<code>hue</code>差不多，指定类别</li>
+<li>estimator: 默认为<code>np.mean</code><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">gammas = sns.load_dataset('gammas')</div><div class="line">sns.tsplot(data=gammas, time='timepoint', unit='subject', </div><div class="line">           condition='ROI', value='BOLD signal', </div><div class="line">           err_style="ci_band", ci=68, interpolate=True, </div><div class="line">           color=None, estimator=np.mean, n_boot=5000, </div><div class="line">           err_palette=None, err_kws=None, legend=True, </div><div class="line">           ax=None)</div><div class="line">sns.plt.show()</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="/assets/blog_images/seaborn_images/seaborn_tsplot_01.png" alt="tsplot" title="seaborn_tsplot_01"></p>
+
+
+		
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/weixin.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">可视化</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://lawlite.me/2017/06/14/Seaborn绘图/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2017/04/17/Hexo-yilia主题实现文章目录和添加视频/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hexo+yilia主题实现文章目录和添加视频</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
+  
+
+
+
+
+
+
+<section class="duoshuo" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8yODEwMy80Njc2">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+
+<!-- 网易云跟帖 -->
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 Lawlite
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+  总访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true,
+		showTags: true
+	}
+</script>
+
+<script>!function(t){function n(r){if(e[r])return e[r].exports;var o=e[r]={exports:{},id:r,loaded:!1};return t[r].call(o.exports,o,o.exports,n),o.loaded=!0,o.exports}var e={};return n.m=t,n.c=e,n.p="./",n(0)}([function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}function o(t,n){var e=/\/|index.html/g;return t.replace(e,"")===n.replace(e,"")}function i(){for(var t=document.querySelectorAll(".js-header-menu li a"),n=window.location.pathname,e=0,r=t.length;e<r;e++){var i=t[e];o(n,i.getAttribute("href"))&&(0,d.default)(i,"active")}}function u(t){for(var n=t.offsetLeft,e=t.offsetParent;null!==e;)n+=e.offsetLeft,e=e.offsetParent;return n}function f(t){for(var n=t.offsetTop,e=t.offsetParent;null!==e;)n+=e.offsetTop,e=e.offsetParent;return n}function c(t,n,e,r,o){var i=u(t),c=f(t)-n;if(c-e<=o){var a=t.$newDom;a||(a=t.cloneNode(!0),(0,h.default)(t,a),t.$newDom=a,a.style.position="fixed",a.style.top=(e||c)+"px",a.style.left=i+"px",a.style.zIndex=r||2,a.style.width="100%",a.style.color="#fff"),a.style.visibility="visible",t.style.visibility="hidden"}else{t.style.visibility="visible";var s=t.$newDom;s&&(s.style.visibility="hidden")}}function a(){var t=document.querySelector(".js-overlay"),n=document.querySelector(".js-header-menu");c(t,document.body.scrollTop,-63,2,0),c(n,document.body.scrollTop,1,3,0)}function s(){document.querySelector("#container").addEventListener("scroll",function(t){a()}),window.addEventListener("scroll",function(t){a()}),a()}function l(){x.default.versions.mobile&&window.screen.width<800&&(i(),s())}var p=e(71),d=r(p),v=e(72),y=(r(v),e(84)),h=r(y),b=e(69),x=r(b),m=e(75),g=r(m),w=e(70);l(),(0,w.addLoadEvent)(function(){g.default.init()}),t.exports={}},function(t,n){var e=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=e)},function(t,n){var e={}.hasOwnProperty;t.exports=function(t,n){return e.call(t,n)}},function(t,n,e){var r=e(49),o=e(15);t.exports=function(t){return r(o(t))}},function(t,n,e){t.exports=!e(8)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,n,e){var r=e(6),o=e(12);t.exports=e(4)?function(t,n,e){return r.f(t,n,o(1,e))}:function(t,n,e){return t[n]=e,t}},function(t,n,e){var r=e(10),o=e(30),i=e(24),u=Object.defineProperty;n.f=e(4)?Object.defineProperty:function(t,n,e){if(r(t),n=i(n,!0),r(e),o)try{return u(t,n,e)}catch(t){}if("get"in e||"set"in e)throw TypeError("Accessors not supported!");return"value"in e&&(t[n]=e.value),t}},function(t,n,e){var r=e(22)("wks"),o=e(13),i=e(1).Symbol,u="function"==typeof i,f=t.exports=function(t){return r[t]||(r[t]=u&&i[t]||(u?i:o)("Symbol."+t))};f.store=r},function(t,n){t.exports=function(t){try{return!!t()}catch(t){return!0}}},function(t,n,e){var r=e(35),o=e(16);t.exports=Object.keys||function(t){return r(t,o)}},function(t,n,e){var r=e(11);t.exports=function(t){if(!r(t))throw TypeError(t+" is not an object!");return t}},function(t,n){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,n){t.exports=function(t,n){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:n}}},function(t,n){var e=0,r=Math.random();t.exports=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++e+r).toString(36))}},function(t,n){var e=t.exports={version:"2.4.0"};"number"==typeof __e&&(__e=e)},function(t,n){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t}},function(t,n){t.exports="constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf".split(",")},function(t,n){t.exports={}},function(t,n){t.exports=!0},function(t,n){n.f={}.propertyIsEnumerable},function(t,n,e){var r=e(6).f,o=e(2),i=e(7)("toStringTag");t.exports=function(t,n,e){t&&!o(t=e?t:t.prototype,i)&&r(t,i,{configurable:!0,value:n})}},function(t,n,e){var r=e(22)("keys"),o=e(13);t.exports=function(t){return r[t]||(r[t]=o(t))}},function(t,n,e){var r=e(1),o="__core-js_shared__",i=r[o]||(r[o]={});t.exports=function(t){return i[t]||(i[t]={})}},function(t,n){var e=Math.ceil,r=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?r:e)(t)}},function(t,n,e){var r=e(11);t.exports=function(t,n){if(!r(t))return t;var e,o;if(n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;if("function"==typeof(e=t.valueOf)&&!r(o=e.call(t)))return o;if(!n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;throw TypeError("Can't convert object to primitive value")}},function(t,n,e){var r=e(1),o=e(14),i=e(18),u=e(26),f=e(6).f;t.exports=function(t){var n=o.Symbol||(o.Symbol=i?{}:r.Symbol||{});"_"==t.charAt(0)||t in n||f(n,t,{value:u.f(t)})}},function(t,n,e){n.f=e(7)},function(t,n,e){var r=e(1),o=e(14),i=e(46),u=e(5),f="prototype",c=function(t,n,e){var a,s,l,p=t&c.F,d=t&c.G,v=t&c.S,y=t&c.P,h=t&c.B,b=t&c.W,x=d?o:o[n]||(o[n]={}),m=x[f],g=d?r:v?r[n]:(r[n]||{})[f];d&&(e=n);for(a in e)s=!p&&g&&void 0!==g[a],s&&a in x||(l=s?g[a]:e[a],x[a]=d&&"function"!=typeof g[a]?e[a]:h&&s?i(l,r):b&&g[a]==l?function(t){var n=function(n,e,r){if(this instanceof t){switch(arguments.length){case 0:return new t;case 1:return new t(n);case 2:return new t(n,e)}return new t(n,e,r)}return t.apply(this,arguments)};return n[f]=t[f],n}(l):y&&"function"==typeof l?i(Function.call,l):l,y&&((x.virtual||(x.virtual={}))[a]=l,t&c.R&&m&&!m[a]&&u(m,a,l)))};c.F=1,c.G=2,c.S=4,c.P=8,c.B=16,c.W=32,c.U=64,c.R=128,t.exports=c},function(t,n){var e={}.toString;t.exports=function(t){return e.call(t).slice(8,-1)}},function(t,n,e){var r=e(11),o=e(1).document,i=r(o)&&r(o.createElement);t.exports=function(t){return i?o.createElement(t):{}}},function(t,n,e){t.exports=!e(4)&&!e(8)(function(){return 7!=Object.defineProperty(e(29)("div"),"a",{get:function(){return 7}}).a})},function(t,n,e){"use strict";var r=e(18),o=e(27),i=e(36),u=e(5),f=e(2),c=e(17),a=e(51),s=e(20),l=e(58),p=e(7)("iterator"),d=!([].keys&&"next"in[].keys()),v="@@iterator",y="keys",h="values",b=function(){return this};t.exports=function(t,n,e,x,m,g,w){a(e,n,x);var O,S,_,j=function(t){if(!d&&t in A)return A[t];switch(t){case y:return function(){return new e(this,t)};case h:return function(){return new e(this,t)}}return function(){return new e(this,t)}},P=n+" Iterator",E=m==h,M=!1,A=t.prototype,T=A[p]||A[v]||m&&A[m],L=T||j(m),N=m?E?j("entries"):L:void 0,C="Array"==n?A.entries||T:T;if(C&&(_=l(C.call(new t)),_!==Object.prototype&&(s(_,P,!0),r||f(_,p)||u(_,p,b))),E&&T&&T.name!==h&&(M=!0,L=function(){return T.call(this)}),r&&!w||!d&&!M&&A[p]||u(A,p,L),c[n]=L,c[P]=b,m)if(O={values:E?L:j(h),keys:g?L:j(y),entries:N},w)for(S in O)S in A||i(A,S,O[S]);else o(o.P+o.F*(d||M),n,O);return O}},function(t,n,e){var r=e(10),o=e(55),i=e(16),u=e(21)("IE_PROTO"),f=function(){},c="prototype",a=function(){var t,n=e(29)("iframe"),r=i.length,o="<",u=">";for(n.style.display="none",e(48).appendChild(n),n.src="javascript:",t=n.contentWindow.document,t.open(),t.write(o+"script"+u+"document.F=Object"+o+"/script"+u),t.close(),a=t.F;r--;)delete a[c][i[r]];return a()};t.exports=Object.create||function(t,n){var e;return null!==t?(f[c]=r(t),e=new f,f[c]=null,e[u]=t):e=a(),void 0===n?e:o(e,n)}},function(t,n,e){var r=e(35),o=e(16).concat("length","prototype");n.f=Object.getOwnPropertyNames||function(t){return r(t,o)}},function(t,n){n.f=Object.getOwnPropertySymbols},function(t,n,e){var r=e(2),o=e(3),i=e(45)(!1),u=e(21)("IE_PROTO");t.exports=function(t,n){var e,f=o(t),c=0,a=[];for(e in f)e!=u&&r(f,e)&&a.push(e);for(;n.length>c;)r(f,e=n[c++])&&(~i(a,e)||a.push(e));return a}},function(t,n,e){t.exports=e(5)},function(t,n,e){var r=e(15);t.exports=function(t){return Object(r(t))}},function(t,n,e){t.exports={default:e(41),__esModule:!0}},function(t,n,e){t.exports={default:e(42),__esModule:!0}},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}n.__esModule=!0;var o=e(39),i=r(o),u=e(38),f=r(u),c="function"==typeof f.default&&"symbol"==typeof i.default?function(t){return typeof t}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":typeof t};n.default="function"==typeof f.default&&"symbol"===c(i.default)?function(t){return"undefined"==typeof t?"undefined":c(t)}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":"undefined"==typeof t?"undefined":c(t)}},function(t,n,e){e(65),e(63),e(66),e(67),t.exports=e(14).Symbol},function(t,n,e){e(64),e(68),t.exports=e(26).f("iterator")},function(t,n){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,n){t.exports=function(){}},function(t,n,e){var r=e(3),o=e(61),i=e(60);t.exports=function(t){return function(n,e,u){var f,c=r(n),a=o(c.length),s=i(u,a);if(t&&e!=e){for(;a>s;)if(f=c[s++],f!=f)return!0}else for(;a>s;s++)if((t||s in c)&&c[s]===e)return t||s||0;return!t&&-1}}},function(t,n,e){var r=e(43);t.exports=function(t,n,e){if(r(t),void 0===n)return t;switch(e){case 1:return function(e){return t.call(n,e)};case 2:return function(e,r){return t.call(n,e,r)};case 3:return function(e,r,o){return t.call(n,e,r,o)}}return function(){return t.apply(n,arguments)}}},function(t,n,e){var r=e(9),o=e(34),i=e(19);t.exports=function(t){var n=r(t),e=o.f;if(e)for(var u,f=e(t),c=i.f,a=0;f.length>a;)c.call(t,u=f[a++])&&n.push(u);return n}},function(t,n,e){t.exports=e(1).document&&document.documentElement},function(t,n,e){var r=e(28);t.exports=Object("z").propertyIsEnumerable(0)?Object:function(t){return"String"==r(t)?t.split(""):Object(t)}},function(t,n,e){var r=e(28);t.exports=Array.isArray||function(t){return"Array"==r(t)}},function(t,n,e){"use strict";var r=e(32),o=e(12),i=e(20),u={};e(5)(u,e(7)("iterator"),function(){return this}),t.exports=function(t,n,e){t.prototype=r(u,{next:o(1,e)}),i(t,n+" Iterator")}},function(t,n){t.exports=function(t,n){return{value:n,done:!!t}}},function(t,n,e){var r=e(9),o=e(3);t.exports=function(t,n){for(var e,i=o(t),u=r(i),f=u.length,c=0;f>c;)if(i[e=u[c++]]===n)return e}},function(t,n,e){var r=e(13)("meta"),o=e(11),i=e(2),u=e(6).f,f=0,c=Object.isExtensible||function(){return!0},a=!e(8)(function(){return c(Object.preventExtensions({}))}),s=function(t){u(t,r,{value:{i:"O"+ ++f,w:{}}})},l=function(t,n){if(!o(t))return"symbol"==typeof t?t:("string"==typeof t?"S":"P")+t;if(!i(t,r)){if(!c(t))return"F";if(!n)return"E";s(t)}return t[r].i},p=function(t,n){if(!i(t,r)){if(!c(t))return!0;if(!n)return!1;s(t)}return t[r].w},d=function(t){return a&&v.NEED&&c(t)&&!i(t,r)&&s(t),t},v=t.exports={KEY:r,NEED:!1,fastKey:l,getWeak:p,onFreeze:d}},function(t,n,e){var r=e(6),o=e(10),i=e(9);t.exports=e(4)?Object.defineProperties:function(t,n){o(t);for(var e,u=i(n),f=u.length,c=0;f>c;)r.f(t,e=u[c++],n[e]);return t}},function(t,n,e){var r=e(19),o=e(12),i=e(3),u=e(24),f=e(2),c=e(30),a=Object.getOwnPropertyDescriptor;n.f=e(4)?a:function(t,n){if(t=i(t),n=u(n,!0),c)try{return a(t,n)}catch(t){}if(f(t,n))return o(!r.f.call(t,n),t[n])}},function(t,n,e){var r=e(3),o=e(33).f,i={}.toString,u="object"==typeof window&&window&&Object.getOwnPropertyNames?Object.getOwnPropertyNames(window):[],f=function(t){try{return o(t)}catch(t){return u.slice()}};t.exports.f=function(t){return u&&"[object Window]"==i.call(t)?f(t):o(r(t))}},function(t,n,e){var r=e(2),o=e(37),i=e(21)("IE_PROTO"),u=Object.prototype;t.exports=Object.getPrototypeOf||function(t){return t=o(t),r(t,i)?t[i]:"function"==typeof t.constructor&&t instanceof t.constructor?t.constructor.prototype:t instanceof Object?u:null}},function(t,n,e){var r=e(23),o=e(15);t.exports=function(t){return function(n,e){var i,u,f=String(o(n)),c=r(e),a=f.length;return c<0||c>=a?t?"":void 0:(i=f.charCodeAt(c),i<55296||i>56319||c+1===a||(u=f.charCodeAt(c+1))<56320||u>57343?t?f.charAt(c):i:t?f.slice(c,c+2):(i-55296<<10)+(u-56320)+65536)}}},function(t,n,e){var r=e(23),o=Math.max,i=Math.min;t.exports=function(t,n){return t=r(t),t<0?o(t+n,0):i(t,n)}},function(t,n,e){var r=e(23),o=Math.min;t.exports=function(t){return t>0?o(r(t),9007199254740991):0}},function(t,n,e){"use strict";var r=e(44),o=e(52),i=e(17),u=e(3);t.exports=e(31)(Array,"Array",function(t,n){this._t=u(t),this._i=0,this._k=n},function(){var t=this._t,n=this._k,e=this._i++;return!t||e>=t.length?(this._t=void 0,o(1)):"keys"==n?o(0,e):"values"==n?o(0,t[e]):o(0,[e,t[e]])},"values"),i.Arguments=i.Array,r("keys"),r("values"),r("entries")},function(t,n){},function(t,n,e){"use strict";var r=e(59)(!0);e(31)(String,"String",function(t){this._t=String(t),this._i=0},function(){var t,n=this._t,e=this._i;return e>=n.length?{value:void 0,done:!0}:(t=r(n,e),this._i+=t.length,{value:t,done:!1})})},function(t,n,e){"use strict";var r=e(1),o=e(2),i=e(4),u=e(27),f=e(36),c=e(54).KEY,a=e(8),s=e(22),l=e(20),p=e(13),d=e(7),v=e(26),y=e(25),h=e(53),b=e(47),x=e(50),m=e(10),g=e(3),w=e(24),O=e(12),S=e(32),_=e(57),j=e(56),P=e(6),E=e(9),M=j.f,A=P.f,T=_.f,L=r.Symbol,N=r.JSON,C=N&&N.stringify,k="prototype",F=d("_hidden"),q=d("toPrimitive"),I={}.propertyIsEnumerable,B=s("symbol-registry"),D=s("symbols"),W=s("op-symbols"),H=Object[k],K="function"==typeof L,R=r.QObject,J=!R||!R[k]||!R[k].findChild,U=i&&a(function(){return 7!=S(A({},"a",{get:function(){return A(this,"a",{value:7}).a}})).a})?function(t,n,e){var r=M(H,n);r&&delete H[n],A(t,n,e),r&&t!==H&&A(H,n,r)}:A,G=function(t){var n=D[t]=S(L[k]);return n._k=t,n},$=K&&"symbol"==typeof L.iterator?function(t){return"symbol"==typeof t}:function(t){return t instanceof L},z=function(t,n,e){return t===H&&z(W,n,e),m(t),n=w(n,!0),m(e),o(D,n)?(e.enumerable?(o(t,F)&&t[F][n]&&(t[F][n]=!1),e=S(e,{enumerable:O(0,!1)})):(o(t,F)||A(t,F,O(1,{})),t[F][n]=!0),U(t,n,e)):A(t,n,e)},Y=function(t,n){m(t);for(var e,r=b(n=g(n)),o=0,i=r.length;i>o;)z(t,e=r[o++],n[e]);return t},Q=function(t,n){return void 0===n?S(t):Y(S(t),n)},X=function(t){var n=I.call(this,t=w(t,!0));return!(this===H&&o(D,t)&&!o(W,t))&&(!(n||!o(this,t)||!o(D,t)||o(this,F)&&this[F][t])||n)},V=function(t,n){if(t=g(t),n=w(n,!0),t!==H||!o(D,n)||o(W,n)){var e=M(t,n);return!e||!o(D,n)||o(t,F)&&t[F][n]||(e.enumerable=!0),e}},Z=function(t){for(var n,e=T(g(t)),r=[],i=0;e.length>i;)o(D,n=e[i++])||n==F||n==c||r.push(n);return r},tt=function(t){for(var n,e=t===H,r=T(e?W:g(t)),i=[],u=0;r.length>u;)!o(D,n=r[u++])||e&&!o(H,n)||i.push(D[n]);return i};K||(L=function(){if(this instanceof L)throw TypeError("Symbol is not a constructor!");var t=p(arguments.length>0?arguments[0]:void 0),n=function(e){this===H&&n.call(W,e),o(this,F)&&o(this[F],t)&&(this[F][t]=!1),U(this,t,O(1,e))};return i&&J&&U(H,t,{configurable:!0,set:n}),G(t)},f(L[k],"toString",function(){return this._k}),j.f=V,P.f=z,e(33).f=_.f=Z,e(19).f=X,e(34).f=tt,i&&!e(18)&&f(H,"propertyIsEnumerable",X,!0),v.f=function(t){return G(d(t))}),u(u.G+u.W+u.F*!K,{Symbol:L});for(var nt="hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables".split(","),et=0;nt.length>et;)d(nt[et++]);for(var nt=E(d.store),et=0;nt.length>et;)y(nt[et++]);u(u.S+u.F*!K,"Symbol",{for:function(t){return o(B,t+="")?B[t]:B[t]=L(t)},keyFor:function(t){if($(t))return h(B,t);throw TypeError(t+" is not a symbol!")},useSetter:function(){J=!0},useSimple:function(){J=!1}}),u(u.S+u.F*!K,"Object",{create:Q,defineProperty:z,defineProperties:Y,getOwnPropertyDescriptor:V,getOwnPropertyNames:Z,getOwnPropertySymbols:tt}),N&&u(u.S+u.F*(!K||a(function(){var t=L();return"[null]"!=C([t])||"{}"!=C({a:t})||"{}"!=C(Object(t))})),"JSON",{stringify:function(t){if(void 0!==t&&!$(t)){for(var n,e,r=[t],o=1;arguments.length>o;)r.push(arguments[o++]);return n=r[1],"function"==typeof n&&(e=n),!e&&x(n)||(n=function(t,n){if(e&&(n=e.call(this,t,n)),!$(n))return n}),r[1]=n,C.apply(N,r)}}}),L[k][q]||e(5)(L[k],q,L[k].valueOf),l(L,"Symbol"),l(Math,"Math",!0),l(r.JSON,"JSON",!0)},function(t,n,e){e(25)("asyncIterator")},function(t,n,e){e(25)("observable")},function(t,n,e){e(62);for(var r=e(1),o=e(5),i=e(17),u=e(7)("toStringTag"),f=["NodeList","DOMTokenList","MediaList","StyleSheetList","CSSRuleList"],c=0;c<5;c++){var a=f[c],s=r[a],l=s&&s.prototype;l&&!l[u]&&o(l,u,a),i[a]=i.Array}},function(t,n){"use strict";var e={versions:function(){var t=window.navigator.userAgent;return{trident:t.indexOf("Trident")>-1,presto:t.indexOf("Presto")>-1,webKit:t.indexOf("AppleWebKit")>-1,gecko:t.indexOf("Gecko")>-1&&t.indexOf("KHTML")==-1,mobile:!!t.match(/AppleWebKit.*Mobile.*/),ios:!!t.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),android:t.indexOf("Android")>-1||t.indexOf("Linux")>-1,iPhone:t.indexOf("iPhone")>-1||t.indexOf("Mac")>-1,iPad:t.indexOf("iPad")>-1,webApp:t.indexOf("Safari")==-1,weixin:t.indexOf("MicroMessenger")==-1}}()};t.exports=e},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}var o=e(40),i=r(o),u=function(){function t(t,n,e){return n||e?String.fromCharCode(n||e):o[t]||t}function n(t){return l[t]}var e=/&quot;|&lt;|&gt;|&amp;|&nbsp;|&apos;|&#(\d+);|&#(\d+)/g,r=/['<> "&]/g,o={"&quot;":'"',"&lt;":"<","&gt;":">","&amp;":"&","&nbsp;":" "},f=/\u00a0/g,c=/<br\s*\/?>/gi,a=/\r?\n/g,s=/\s/g,l={};for(var p in o)l[o[p]]=p;return o["&apos;"]="'",l["'"]="&#39;",{encode:function(t){return t?(""+t).replace(r,n).replace(a,"<br/>").replace(s,"&nbsp;"):""},decode:function(n){return n?(""+n).replace(c,"\n").replace(e,t).replace(f," "):""},encodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},encodeBase16forJSON:function(t){if(!t)return t;t=t.replace(/[\u4E00-\u9FBF]/gi,function(t){return escape(t).replace("%u","\\u")});for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},decodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e+=2)n.push(String.fromCharCode("0x"+t.slice(e,e+2)));return n.join("")},encodeObject:function(t){if(t instanceof Array)for(var n=0,e=t.length;e>n;n++)t[n]=u.encodeObject(t[n]);else if("object"==("undefined"==typeof t?"undefined":(0,i.default)(t)))for(var r in t)t[r]=u.encodeObject(t[r]);else if("string"==typeof t)return u.encode(t);return t},loadScript:function(t){var n=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(n),n.setAttribute("src",t)},addLoadEvent:function(t){var n=window.onload;"function"!=typeof window.onload?window.onload=t:window.onload=function(){n(),t()}}}}();t.exports=u},function(t,n){function e(t,n){t.classList?t.classList.add(n):t.className+=" "+n}t.exports=e},function(t,n){function e(t,n){if(t.classList)t.classList.remove(n);else{var e=new RegExp("(^|\\b)"+n.split(" ").join("|")+"(\\b|$)","gi");t.className=t.className.replace(e," ")}}t.exports=e},,,function(t,n){"use strict";function e(){var t=document.querySelector("#page-nav");if(t&&!document.querySelector("#page-nav .extend.prev")&&(t.innerHTML='<a class="extend prev disabled" rel="prev">&laquo; Prev</a>'+t.innerHTML),t&&!document.querySelector("#page-nav .extend.next")&&(t.innerHTML=t.innerHTML+'<a class="extend next disabled" rel="next">Next &raquo;</a>'),yiliaConfig&&yiliaConfig.open_in_new){var n=document.querySelectorAll(".article-entry a:not(.article-more-a)");n.forEach(function(t){t.setAttribute("target","_blank")})}var e=document.querySelector("#js-aboutme");e&&0!==e.length&&(e.innerHTML=e.innerText)}t.exports={init:e}},,,,,,,,,function(t,n){function e(t,n){if("string"==typeof n)return t.insertAdjacentHTML("afterend",n);var e=t.nextSibling;return e?t.parentNode.insertBefore(n,e):t.parentNode.appendChild(n)}t.exports=e}])</script><script src="/./main.234bc0.js"></script><script>!function(){var e=function(e){var t=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(t),t.setAttribute("src",e)};e("/slider.885efe.js")}()</script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+<script src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">所有文章</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'friends')"><a href="javascript:void(0)" q-class="active:friends">友链</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Github</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Paper阅读记录</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DeepLearning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tensorflow</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            2、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: true
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-friends" q-show="friends">
+  		
+        <ul class="search-ul">
+          
+            <li class="search-li">
+              <a href="http://blog.csdn.net/u013082989" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>My CSDN</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接2</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接3</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接4</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接5</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接6</a>
+            </li>
+          
+        </ul>
+  		
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">研究生一枚</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
