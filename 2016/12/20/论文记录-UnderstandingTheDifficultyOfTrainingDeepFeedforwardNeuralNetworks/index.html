@@ -9,7 +9,7 @@
   <title>论文记录-UnderstandingTheDifficultyOfTrainingDeepFeedforwardNeuralNetworks | Lawlite的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="(1) 说明 2010年的一篇论文，说明深度神经网络为什么难以训练，当时只讨论了Sigmoid，tanh和Softsign激活函数 提出了一种初始化权重weights的方法，能够解决训练中梯度消失的问题 但是使用现在的ReLu激活函数，同样使用此初始化方法就会出现问题。">
-<meta name="keywords" content="Paper阅读记录,DeepLearning">
+<meta name="keywords" content="DeepLearning,Paper阅读记录">
 <meta property="og:type" content="article">
 <meta property="og:title" content="论文记录-UnderstandingTheDifficultyOfTrainingDeepFeedforwardNeuralNetworks">
 <meta property="og:url" content="http://lawlite.me/2016/12/20/论文记录-UnderstandingTheDifficultyOfTrainingDeepFeedforwardNeuralNetworks/index.html">
@@ -20,7 +20,7 @@
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/Weights-Initialization/03.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/Weights-Initialization/04.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/Weights-Initialization/05.png">
-<meta property="og:updated_time" content="2017-05-10T16:38:27.990Z">
+<meta property="og:updated_time" content="2017-06-16T02:17:16.554Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文记录-UnderstandingTheDifficultyOfTrainingDeepFeedforwardNeuralNetworks">
 <meta name="twitter:description" content="(1) 说明 2010年的一篇论文，说明深度神经网络为什么难以训练，当时只讨论了Sigmoid，tanh和Softsign激活函数 提出了一种初始化权重weights的方法，能够解决训练中梯度消失的问题 但是使用现在的ReLu激活函数，同样使用此初始化方法就会出现问题。">
@@ -319,7 +319,7 @@ $$V{\rm{ar}}[\frac{{\partial Cost}}{{\partial {s^i}}}] = Var[\frac{{\partial Cos
 <ul>
 <li>对于正向传播，希望：$$\forall (i,j),Var[{z^i}] = Var[{z^j}]$$<ul>
 <li>从反向传播的角度同样可以有：$$\forall (i,j),Var[\frac{{\partial Cost}}{{\partial {s^i}}}] = Var[\frac{{\partial Cost}}{{\partial {s^j}}}]$$</li>
-<li>就可以转化为：$$\left{ \begin{array}{l}{n_i}Var[{w^{\rm{i}}}] = 1\{n_{i + 1}}Var[{w^{\rm{i}}}] = 1\end{array} \right…………………………….(4)$$<ul>
+<li>就可以转化为：$$\left\{ \begin{array}{l}{n_i}Var[{w^{\rm{i}}}] = 1\\{n_{i + 1}}Var[{w^{\rm{i}}}] = 1\end{array} \right…………………………….(4)$$<ul>
 <li>比如第一种： $$Var[{z^i}] = Var[x]\prod\limits_{j = 0}^{i - 1} {{n_j}Var[{W^j}]} $$ $$V{\rm{ar}}({z^i}) = Var(x)$$</li>
 <li>所以$${n_i}Var[{w^{\rm{i}}}] = 1$$ 第二种情况同理</li>
 </ul>
@@ -327,7 +327,7 @@ $$V{\rm{ar}}[\frac{{\partial Cost}}{{\partial {s^i}}}] = Var[\frac{{\partial Cos
 </ul>
 </li>
 <li>所以将（4）中的两式相加可得：$$Var[{W^i}] = \frac{2}{{{n_i} + {n_{i + 1}}}}$$<ul>
-<li>如果所有层的神经元个数一样时：$$\left{ \begin{array}{l}Var[\frac{{\partial Cost}}{{\partial {s^i}}}] = {[nVar[W]]^{d - i}}Var[x]\\Var[\frac{{\partial Cost}}{{\partial {w^i}}}] = {[nVar[W]]^d}Var[x]Var[\frac{{\partial Cost}}{{\partial {w^n}}}]\end{array} \right.$$</li>
+<li>如果所有层的神经元个数一样时：$$\left\{ \begin{array}{l}Var[\frac{{\partial Cost}}{{\partial {s^i}}}] = {[nVar[W]]^{d - i}}Var[x]\\Var[\frac{{\partial Cost}}{{\partial {w^i}}}] = {[nVar[W]]^d}Var[x]Var[\frac{{\partial Cost}}{{\partial {w^n}}}]\end{array} \right.$$</li>
 <li>可以看到，所有层的梯度的方差都是一样的，但是对于很深层的神经网络还是有可能导致梯度消失。</li>
 </ul>
 </li>
@@ -335,7 +335,7 @@ $$V{\rm{ar}}[\frac{{\partial Cost}}{{\partial {s^i}}}] = Var[\frac{{\partial Cos
 <h3 id="4-初始化权重方法"><a href="#4-初始化权重方法" class="headerlink" title="(4) 初始化权重方法"></a>(4) 初始化权重方法</h3><ul>
 <li>最后提出了一个归一化的初始化方法，因为<code>W</code>服从均匀分布，根据均匀分布的方差公式可以得到：$$\frac{{{{[c - ( - c)]}^2}}}{{12}} = \frac{{{c^2}}}{3}$$</li>
 <li>所以得到：$$\frac{2}{{{n_i} + {n_{i + 1}}}} = \frac{{{c^2}}}{3}$$</li>
-<li>求出：<code>$$c = \frac{{\sqrt 6 }}{{\sqrt {{n_i} + {n_{i + 1}}} }}$$</code></li>
+<li>求出：<code>$$ c = {\sqrt 6 \over \sqrt {n_i + n_{i+1}}} $$</code> </li>
 <li>所以最终给出初始化权重的方法为：$$W \sim U[ - \frac{{\sqrt 6 }}{{\sqrt {{n_i} + {n_{i + 1}}} }},\frac{{\sqrt 6 }}{{\sqrt {{n_i} + {n_{i + 1}}} }}]$$<h3 id="5-总结"><a href="#5-总结" class="headerlink" title="(5) 总结"></a>(5) 总结</h3></li>
 <li>论文讨论了<code>Sigmoid，tanh</code>激励函数权重初始化的问题，并给出了初始化的方法，- 但是针对<code>ReLu</code>这种激励函数是不适用的，第二篇会提到。</li>
 <li>并且推导过程中假设了激励函数在初始化对应区间上是<strong>线性的</strong>，即假设导数恒为1我感觉也是存在问题的。</li>
@@ -387,11 +387,11 @@ $$V{\rm{ar}}[\frac{{\partial Cost}}{{\partial {s^i}}}] = Var[\frac{{\partial Cos
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Paper阅读记录</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">DeepLearning</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">DeepLearning</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Paper阅读记录</a>
         		</li>
       		
 		</ul>
@@ -540,19 +540,22 @@ $$V{\rm{ar}}[\frac{{\partial Cost}}{{\partial {s^i}}}] = Var[\frac{{\partial Cos
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
+    showProcessingMessages: false,
+    messageStyle: "none",
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
     tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-        processEscapes: true,
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        inlineMath:  [ ["$", "$"] ],
+        displayMath: [ ["$$","$$"] ],
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code','a'],
+        ignoreClass:"comment-content"
+    },
+    "HTML-CSS": {
+        availableFonts: ["STIX","TeX"],
+        showMathMenu: false
     }
 });
-
-MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-        all[i].SourceElement().parentNode.className += ' has-jax';                 
-    }       
-});
+MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 </script>
 <script src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
@@ -623,11 +626,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DeepLearning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -651,11 +662,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DeepLearning</a>
+                <a href="javascript:void(0)" class="js-tag color1">Tensorflow</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tensorflow</a>
+                <a href="javascript:void(0)" class="js-tag color5">LSTM</a>
               </li>
             
             <div class="clearfix"></div>
@@ -795,6 +806,23 @@ MathJax.Hub.Queue(function() {
     </div>
 
 </div>
-  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 </body>
 </html>

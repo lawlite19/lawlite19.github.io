@@ -9,7 +9,7 @@
   <title>Tensorflow学习 | Lawlite的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="github地址：https://github.com/lawlite19/MachineLearning_TensorFlow  一、TensorFlow介绍">
-<meta name="keywords" content="Tensorflow">
+<meta name="keywords" content="DeepLearning,Tensorflow">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Tensorflow学习">
 <meta property="og:url" content="http://lawlite.me/2016/12/08/Tensorflow学习/index.html">
@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/lawlite19/MachineLearning_TensorFlow/master/images/08_transfer_learning_flowchart.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/lawlite19/MachineLearning_TensorFlow/master/images/08_transfer_learning_pca_visualize.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/lawlite19/MachineLearning_TensorFlow/master/images/08_transfer_learning_pca_visualize_02.png">
-<meta property="og:updated_time" content="2017-05-09T15:07:05.832Z">
+<meta property="og:updated_time" content="2017-06-16T02:12:57.245Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tensorflow学习">
 <meta name="twitter:description" content="github地址：https://github.com/lawlite19/MachineLearning_TensorFlow  一、TensorFlow介绍">
@@ -1041,6 +1041,10 @@ for i in range(1000):
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">DeepLearning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Tensorflow</a>
         		</li>
       		
@@ -1211,19 +1215,22 @@ for i in range(1000):
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
+    showProcessingMessages: false,
+    messageStyle: "none",
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
     tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-        processEscapes: true,
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        inlineMath:  [ ["$", "$"] ],
+        displayMath: [ ["$$","$$"] ],
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code','a'],
+        ignoreClass:"comment-content"
+    },
+    "HTML-CSS": {
+        availableFonts: ["STIX","TeX"],
+        showMathMenu: false
     }
 });
-
-MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-        all[i].SourceElement().parentNode.className += ' has-jax';                 
-    }       
-});
+MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 </script>
 <script src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
@@ -1294,11 +1301,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DeepLearning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1322,11 +1337,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DeepLearning</a>
+                <a href="javascript:void(0)" class="js-tag color1">Tensorflow</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tensorflow</a>
+                <a href="javascript:void(0)" class="js-tag color5">LSTM</a>
               </li>
             
             <div class="clearfix"></div>
@@ -1466,6 +1481,23 @@ MathJax.Hub.Queue(function() {
     </div>
 
 </div>
-  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 </body>
 </html>
