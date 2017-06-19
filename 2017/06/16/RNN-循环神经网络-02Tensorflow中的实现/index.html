@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_14.jpg">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_14.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_15.png">
-<meta property="og:updated_time" content="2017-06-19T08:42:36.597Z">
+<meta property="og:updated_time" content="2017-06-19T12:06:50.201Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RNN-循环神经网络-02-Tensorflow中的实现">
 <meta name="twitter:description" content="关于基本的RNN和LSTM的概念和BPTT算法可以查看这里 参考文章： https://r2rt.com/recurrent-neural-networks-in-tensorflow-i.html https://r2rt.com/styles-of-truncated-backpropagation.html    一、源代码实现一个binary例子1、例子描述(1) 数据描述 输入数据X是">
@@ -274,9 +274,9 @@ var _hmt = _hmt || [];
 <ul>
 <li>输出数据<code>Y</code>：<ul>
 <li>在时刻<code>t</code>，<code>50%</code>的概率是<code>1</code>，<code>50%</code>的概率是<code>0</code>；</li>
-<li>如果$X_{t-1}$是<code>1</code>，则$Y_{t}$ <code>100%</code>是<code>1</code>（增加<code>50%</code>）；</li>
+<li>如果$X_{t-3}$是<code>1</code>，则$Y_{t}$ <code>100%</code>是<code>1</code>（增加<code>50%</code>）；</li>
 <li>如果$X_{t-8}$是<code>1</code>，则$Y_{t}$ <code>25%</code>是<code>1</code>（减少<code>25%</code>）；<ul>
-<li>所以如果$X_{t-1}$和$X_{t-8}$都是<code>1</code>，则$Y_{t}$ <code>50%+50%-25%=75%</code>的概率是<code>1</code></li>
+<li>所以如果$X_{t-3}$和$X_{t-8}$都是<code>1</code>，则$Y_{t}$ <code>50%+50%-25%=75%</code>的概率是<code>1</code></li>
 </ul>
 </li>
 </ul>
@@ -786,11 +786,11 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
+                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Paper阅读记录</a>
+                <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -802,7 +802,7 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
+                <a href="javascript:void(0)" class="js-tag color5">Paper阅读记录</a>
               </li>
              
               <li class="article-tag-list-item">
