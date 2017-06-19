@@ -6,19 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://lawlite.me">
-  <title>Keras学习 | Lawlite的博客</title>
+  <title>RNN-循环神经网络-02-Tensorflow中的实现 | Lawlite的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、Keras概述1、介绍 Keras 是一个兼容 Theano 和 Tensorflow 的神经网络高级包 用他来组件一个神经网络更加快速, 几条语句就搞定 Keras 可以再在 Windows 和 MacOS 或者 Linux 上运行 网站：https://keras.io/">
-<meta name="keywords" content="Python,DeepLearning">
+  <meta name="description" content="关于基本的RNN和LSTM的概念和BPTT算法可以查看这里 参考文章： https://r2rt.com/recurrent-neural-networks-in-tensorflow-i.html https://r2rt.com/styles-of-truncated-backpropagation.html    一、源代码实现一个binary例子1、例子描述(1) 数据描述 输入数据X是">
+<meta name="keywords" content="Python,DeepLearning,RNN">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Keras学习">
-<meta property="og:url" content="http://lawlite.me/2017/02/14/Keras学习/index.html">
+<meta property="og:title" content="RNN-循环神经网络-02-Tensorflow中的实现">
+<meta property="og:url" content="http://lawlite.me/2017/06/16/RNN-循环神经网络-02Tensorflow中的实现/index.html">
 <meta property="og:site_name" content="Lawlite的博客">
-<meta property="og:description" content="一、Keras概述1、介绍 Keras 是一个兼容 Theano 和 Tensorflow 的神经网络高级包 用他来组件一个神经网络更加快速, 几条语句就搞定 Keras 可以再在 Windows 和 MacOS 或者 Linux 上运行 网站：https://keras.io/">
-<meta property="og:updated_time" content="2017-06-16T02:08:24.929Z">
+<meta property="og:description" content="关于基本的RNN和LSTM的概念和BPTT算法可以查看这里 参考文章： https://r2rt.com/recurrent-neural-networks-in-tensorflow-i.html https://r2rt.com/styles-of-truncated-backpropagation.html    一、源代码实现一个binary例子1、例子描述(1) 数据描述 输入数据X是">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_11.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_13.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_truncated_bptt_16.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_truncated_bptt_tensorflow_style17.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_14.jpg">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_14.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_15.png">
+<meta property="og:updated_time" content="2017-06-19T08:42:36.597Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Keras学习">
-<meta name="twitter:description" content="一、Keras概述1、介绍 Keras 是一个兼容 Theano 和 Tensorflow 的神经网络高级包 用他来组件一个神经网络更加快速, 几条语句就搞定 Keras 可以再在 Windows 和 MacOS 或者 Linux 上运行 网站：https://keras.io/">
+<meta name="twitter:title" content="RNN-循环神经网络-02-Tensorflow中的实现">
+<meta name="twitter:description" content="关于基本的RNN和LSTM的概念和BPTT算法可以查看这里 参考文章： https://r2rt.com/recurrent-neural-networks-in-tensorflow-i.html https://r2rt.com/styles-of-truncated-backpropagation.html    一、源代码实现一个binary例子1、例子描述(1) 数据描述 输入数据X是">
+<meta name="twitter:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_11.png">
   
     <link rel="alternative" href="/atom.xml" title="Lawlite的博客" type="application/atom+xml">
   
@@ -187,14 +195,14 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Keras学习" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-RNN-循环神经网络-02Tensorflow中的实现" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Keras学习
+      RNN-循环神经网络-02-Tensorflow中的实现
     </h1>
   
 
@@ -216,8 +224,8 @@ var _hmt = _hmt || [];
 		
 		
         
-        <a href="/2017/02/14/Keras学习/" class="archive-article-date">
-  	<time datetime="2017-02-14T12:25:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-14</time>
+        <a href="/2017/06/16/RNN-循环神经网络-02Tensorflow中的实现/" class="archive-article-date">
+  	<time datetime="2017-06-16T12:59:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-16</time>
 </a>
         
       </header>
@@ -231,7 +239,7 @@ var _hmt = _hmt || [];
 			<div id="toc-article" class="toc-article">
 			    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
 				<strong class="toc-title">文章目录</strong>
-	            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、Keras概述"><span class="toc-number">1.</span> <span class="toc-text">一、Keras概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、介绍"><span class="toc-number">1.1.</span> <span class="toc-text">1、介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、安装Keras"><span class="toc-number">1.2.</span> <span class="toc-text">2、安装Keras</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、搭建神经网络"><span class="toc-number">2.</span> <span class="toc-text">二、搭建神经网络</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、一个神经网络例子"><span class="toc-number">2.1.</span> <span class="toc-text">1、一个神经网络例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、手写数字识别例子–mnist"><span class="toc-number">2.2.</span> <span class="toc-text">2、手写数字识别例子–mnist</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、卷积神经网络CNN–mnist"><span class="toc-number">2.3.</span> <span class="toc-text">3、卷积神经网络CNN–mnist</span></a></li></ol></li></ol>
+	            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、源代码实现一个binary例子"><span class="toc-number">1.</span> <span class="toc-text">一、源代码实现一个binary例子</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、例子描述"><span class="toc-number">1.1.</span> <span class="toc-text">1、例子描述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-数据描述"><span class="toc-number">1.1.1.</span> <span class="toc-text">(1) 数据描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-损失函数"><span class="toc-number">1.1.2.</span> <span class="toc-text">(2) 损失函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、网络结构"><span class="toc-number">1.2.</span> <span class="toc-text">2、网络结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、Tensorflow中RNN-BPTT实现方式"><span class="toc-number">1.3.</span> <span class="toc-text">3、Tensorflow中RNN BPTT实现方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-截断反向传播（truncated-backpropagation）"><span class="toc-number">1.3.0.1.</span> <span class="toc-text">1) 截断反向传播（truncated backpropagation）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-tensorflow中的BPTT算法实现"><span class="toc-number">1.3.1.</span> <span class="toc-text">2) tensorflow中的BPTT算法实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-关于这个例子，tensorflow风格的实现"><span class="toc-number">1.3.2.</span> <span class="toc-text">3) 关于这个例子，tensorflow风格的实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、自己实现例子中的RNN"><span class="toc-number">1.4.</span> <span class="toc-text">4、自己实现例子中的RNN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-实现过程"><span class="toc-number">1.4.1.</span> <span class="toc-text">1) 实现过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-实验结果"><span class="toc-number">1.4.2.</span> <span class="toc-text">2) 实验结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、使用Tensorflow的cell实现"><span class="toc-number">1.5.</span> <span class="toc-text">5、使用Tensorflow的cell实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-使用static-rnn方式"><span class="toc-number">1.5.1.</span> <span class="toc-text">1) 使用static rnn方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-使用dynamic-rnn方式"><span class="toc-number">1.5.2.</span> <span class="toc-text">2) 使用dynamic_rnn方式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">2.</span> <span class="toc-text">Reference</span></a></li></ol>
            </div>
 		   <script type="text/javascript">
 			function showToc(){
@@ -251,91 +259,211 @@ var _hmt = _hmt || [];
 		<!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="一、Keras概述"><a href="#一、Keras概述" class="headerlink" title="一、Keras概述"></a>一、Keras概述</h2><h3 id="1、介绍"><a href="#1、介绍" class="headerlink" title="1、介绍"></a>1、介绍</h3><ul>
-<li><code>Keras</code> 是一个兼容 <code>Theano</code> 和 <code>Tensorflow</code> 的神经网络高级包</li>
-<li>用他来组件一个神经网络更加快速, 几条语句就搞定</li>
-<li><code>Keras</code> 可以再在 <code>Windows</code> 和 <code>MacOS</code> 或者 <code>Linux</code> 上运行</li>
-<li>网站：<a href="https://keras.io/" target="_blank" rel="external">https://keras.io/</a></li>
+        <ul>
+<li>关于基本的<code>RNN</code>和<code>LSTM</code>的概念和<code>BPTT</code>算法可以<a href="http://lawlite.me/2017/06/14/RNN-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-01/">查看这里</a></li>
+<li>参考文章：<ul>
+<li><a href="https://r2rt.com/recurrent-neural-networks-in-tensorflow-i.html" target="_blank" rel="external">https://r2rt.com/recurrent-neural-networks-in-tensorflow-i.html</a></li>
+<li><a href="https://r2rt.com/styles-of-truncated-backpropagation.html" target="_blank" rel="external">https://r2rt.com/styles-of-truncated-backpropagation.html</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="一、源代码实现一个binary例子"><a href="#一、源代码实现一个binary例子" class="headerlink" title="一、源代码实现一个binary例子"></a>一、源代码实现一个<code>binary</code>例子</h1><h2 id="1、例子描述"><a href="#1、例子描述" class="headerlink" title="1、例子描述"></a>1、例子描述</h2><h3 id="1-数据描述"><a href="#1-数据描述" class="headerlink" title="(1) 数据描述"></a>(1) 数据描述</h3><ul>
+<li>输入数据<code>X</code>是<strong>二进制的一串序列</strong>, 在<code>t</code>时刻，有<code>50%</code>的概率是<code>1</code>，<code>50%</code>的概率是<code>0</code>，比如：<code>X=[1,1,0,0,1,0.....]</code> </li>
 </ul>
 <a id="more"></a>
-<h3 id="2、安装Keras"><a href="#2、安装Keras" class="headerlink" title="2、安装Keras"></a>2、安装Keras</h3><ul>
-<li>需要事先安装好<code>numpy</code>和<code>scipy</code></li>
-<li>直接pip安装：<code>pip install keras</code></li>
-<li><code>Keras</code>有两个<strong>backend</strong>,就是是基于什么进行运算的，一个是<strong>Tensorflow</strong>，一个是<strong>Theano</strong></li>
-<li><p>通过修改配置文件永久修改</p>
 <ul>
-<li>默认配置是<strong>Tensorflow</strong>，这里改为<strong>Theano</strong></li>
-<li>Windows在用户的文件夹下有个配置文件：<code>C:\Users\bob\.keras</code>文件夹下的<code>keras.json</code>文件</li>
-<li>修改即可<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;image_dim_ordering&quot;: &quot;tf&quot;, </div><div class="line">  &quot;epsilon&quot;: 1e-07, </div><div class="line">  &quot;floatx&quot;: &quot;float32&quot;, </div><div class="line">  &quot;backend&quot;: &quot;theano&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li>输出数据<code>Y</code>：<ul>
+<li>在时刻<code>t</code>，<code>50%</code>的概率是<code>1</code>，<code>50%</code>的概率是<code>0</code>；</li>
+<li>如果$X_{t-1}$是<code>1</code>，则$Y_{t}$ <code>100%</code>是<code>1</code>（增加<code>50%</code>）；</li>
+<li>如果$X_{t-8}$是<code>1</code>，则$Y_{t}$ <code>25%</code>是<code>1</code>（减少<code>25%</code>）；<ul>
+<li>所以如果$X_{t-1}$和$X_{t-8}$都是<code>1</code>，则$Y_{t}$ <code>50%+50%-25%=75%</code>的概率是<code>1</code></li>
+</ul>
 </li>
 </ul>
 </li>
-<li><p>修改当前脚本的环境变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import os </div><div class="line">os.environ[&apos;KERAS_BACKEND&apos;]=&apos;tensorflow&apos;  # 或者theano</div><div class="line">import keras</div></pre></td></tr></table></figure>
+<li>所以，输出数据是有两个<strong>依赖关系</strong>的</li>
+</ul>
+<h3 id="2-损失函数"><a href="#2-损失函数" class="headerlink" title="(2) 损失函数"></a>(2) 损失函数</h3><ul>
+<li>使用<code>cross-entropy</code>损失函数进行训练</li>
+<li>这里例子很简单，<strong>根据数据生成的规则</strong>，我们可以简单的计算一下不同情况下的<code>cross-entropy</code>值</li>
+<li><strong>[1]</strong> 如果<code>rnn</code><strong>没有学到两个依赖关系</strong>, 则最终预测正确的概率是<code>62.5%</code>，<code>cross entropy</code>值为<strong>0.66</strong>计算如下<ul>
+<li>${X_{t-3}}=\{ {\matrix{<br>{1} \rightarrow X_{t-8}=\{  {\matrix{<br>{ 1 \rightarrow 0.5+0.5-0.25=0.75} \cr<br>{ 0 \rightarrow 0.5+0.5=1 \quad \quad \quad \quad} \cr<br>}} \cr<br>{0} \rightarrow X_{t-8} = \{ {\matrix{<br>{1 \rightarrow 0.5-0.25=0.25 } \quad \quad\cr<br>{0 \rightarrow 0.5 \quad \quad \quad \quad \quad \quad \quad \quad} \cr<br>}}\cr<br>}}$</li>
+<li>所以正确预测<code>1</code>的概率为：<code>(0.75+1+0.25+0.5)/4=0.625</code></li>
+<li>所以<code>cross entropy</code>值为：<code>-[plog(p)+(1-p)log(1-p)]=0.66</code></li>
+</ul>
+</li>
+<li><strong>[2]</strong> 如果<code>rnn</code>学到<strong>第一个</strong>依赖关系，<code>50%</code>的情况下预测准确度为<code>87.5%</code>，<code>50%</code>的情况下预测准确度为<code>62.5%</code>，<code>cross entropy</code>值为<strong>0.52</strong><ul>
+<li>因为<code>X</code>是随机生成，<code>0/1</code>各占<code>50%</code>,想象生成了很多的数，根据<strong>大数定律</strong>，<code>50%</code>的情况是<code>1</code>，对应到 <strong>[1]</strong> 中的<strong>上面</strong>的情况就是:<code>(0.75+1)/2=0.875</code>的概率预测正确，其余的<code>50%</code>就和<strong>[1]</strong>中一样了（去除学到的一个依赖，其余就是没有学到依赖）<code>62.5%</code></li>
+<li>损失值：<code>-0.5 * (0.875 * .log(0.875) + 0.125 * log(0.125))-0.5 * (0.625 * np.log(0.625) + 0.375 * log(0.375)))=0.52</code></li>
+</ul>
+</li>
+<li><strong>[3]</strong> 如果<code>rnn</code>两个依赖都学到了，则<code>25%</code>的情况下<code>100%</code>预测正确，<code>25%</code>的情况下<code>50%</code>预测正确，<code>50%</code>的情况向<code>75%</code>预测正确，<code>cross entropy</code>值为<strong>0.45</strong><ul>
+<li><code>1/4</code>的情况就是$X_{t-3}=1 和 X_{t-8}=0$ <code>100%</code>预测正确 </li>
+<li><code>1/4</code>的情况就是$X_{t-3}=0 和 X_{t-8}=0$ <code>50%</code>预测正确</li>
+<li><code>1/2</code>的情况<code>75%</code>预测正确（0.5+0.5-0.25）</li>
+<li>损失值：<code>-0.50 * (0.75 * np.log(0.75) + 0.25 * np.log(0.25)) - 0.25 * (2 * 0.50 * np.log (0.50)) - 0.25 * (0) = 0.45</code></li>
+</ul>
 </li>
 </ul>
-<h2 id="二、搭建神经网络"><a href="#二、搭建神经网络" class="headerlink" title="二、搭建神经网络"></a>二、搭建神经网络</h2><h3 id="1、一个神经网络例子"><a href="#1、一个神经网络例子" class="headerlink" title="1、一个神经网络例子"></a>1、一个神经网络例子</h3><ul>
-<li><p>导入包</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import keras</div><div class="line">import numpy as np</div><div class="line">from keras.models import Sequential   # Sequential顺序建立</div><div class="line">from keras.layers import Dense        # 全连接层</div><div class="line">import matplotlib.pyplot as plt</div></pre></td></tr></table></figure>
+<h2 id="2、网络结构"><a href="#2、网络结构" class="headerlink" title="2、网络结构"></a>2、网络结构</h2><ul>
+<li>根据时刻<code>t</code>的输入向量$X_t$和时刻<code>t-1</code>的状态向量<code>state</code> $S_{t-1}$计算得出当前的状态向量$S_t$和输出的结果概率向量$P_t$</li>
+<li>Label数据是<code>Y</code></li>
+<li><p>所以有：$${S_t} = {tanh(W(X_t \bigoplus S_{t-1})) + b_s}$$ $${P_t = softmax(US_t + b_p)}$$</p>
+<ul>
+<li>这里$\bigoplus$表示<strong>向量的拼接</strong></li>
+<li><p>$W \in R^{d \times (2+d)}, {b_s} \in R^d , U \in R^{2 \times d}, b_p \in R^2$ </p>
+<ul>
+<li><code>d</code>是 <code>state</code> 向量的长度</li>
+<li>W是二维的矩阵，因为是将$X_t 和 S_{t-1}$拼接起来和<strong>W</strong>运算的，<code>2</code>对应输入的<strong>X</strong> <code>one-hot</code>之后，所以是<code>2</code></li>
+<li><code>U</code>是最后输出预测的权值</li>
+</ul>
 </li>
-<li><p>制造数据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;制造数据，并且显示&apos;&apos;&apos;</div><div class="line">X = np.linspace(-1,1,200)</div><div class="line">np.random.shuffle(X)</div><div class="line">Y = 0.5 * X + 2 + np.random.normal(0,0.05,(200,))</div><div class="line">plt.scatter(X,Y)</div><div class="line">plt.show()</div><div class="line">X_train,Y_train = X[:160],Y[:160]</div><div class="line">X_test,Y_test = X[160:],Y[160:]</div></pre></td></tr></table></figure>
-</li>
-<li><p>建立模型</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;建立模型&apos;&apos;&apos;</div><div class="line">    model = Sequential()   # 通过Sequential建立model</div><div class="line">    model.add(Dense(output_dim=1, input_dim=1))   # model.add添加神经层，指定输入和输出维度</div></pre></td></tr></table></figure>
-</li>
-<li><p>激活模型</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;激活模型&apos;&apos;&apos;</div><div class="line">    model.compile(optimizer=&apos;sgd&apos;, loss=&apos;mse&apos;)</div></pre></td></tr></table></figure>
-</li>
-<li><p>训练模型</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">for i in range(500):</div><div class="line">    cost = model.train_on_batch(X_train,Y_train)  # 使用批训练</div><div class="line">    if i % 50 == 0:</div><div class="line">        print(cost)</div></pre></td></tr></table></figure>
-</li>
-<li><p>测试集的cost误差</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cost = model.evaluate(X_test, Y_test, batch_size=40)</div><div class="line">print(cost)</div></pre></td></tr></table></figure>
-</li>
-<li><p>学到的权重和偏置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;输出学到的权重和偏置&apos;&apos;&apos;</div><div class="line">    W,b = model.layers[0].get_weights()</div><div class="line">    print(W,b)</div></pre></td></tr></table></figure>
-</li>
-<li><p>预测</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Y_pred = model.predict(X_test)</div></pre></td></tr></table></figure>
+<li><p>初始化<code>state</code> $S_{-1}$ 为<strong>0向量</strong></p>
 </li>
 </ul>
-<h3 id="2、手写数字识别例子–mnist"><a href="#2、手写数字识别例子–mnist" class="headerlink" title="2、手写数字识别例子–mnist"></a>2、手写数字识别例子–mnist</h3><ul>
-<li><p>导入包：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">import keras</div><div class="line">from keras.datasets import mnist</div><div class="line">from keras.utils import np_utils</div><div class="line">import numpy as np</div><div class="line">from keras.models import Sequential   # Sequential顺序建立</div><div class="line">from keras.layers import Dense,Activation  # 全连接层</div><div class="line">from keras.optimizers import RMSprop</div></pre></td></tr></table></figure>
-</li>
-<li><p>加载并预处理数据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;加载和预处理数据&apos;&apos;&apos;</div><div class="line">(X_train,y_train),(X_test,y_test) = mnist.load_data()   # 下载数据集，windows在当前用户的对应目录下：C:\Users\bob\.keras\datasets</div><div class="line">X_train = X_train.reshape(X_train.shape[0],-1)/255      # X_train是(60000, 28, 28)，reshape一下变成(60000,784),然后在标准化</div><div class="line">X_test  = X_test.reshape(X_test.shape[0],-1)/255</div><div class="line">y_train = np_utils.to_categorical(y_train,nb_classes=10) # y_train对应的数字1，2，3....转换为0/1映射</div><div class="line">y_test  = np_utils.to_categorical(y_test,nb_classes=10)</div></pre></td></tr></table></figure>
-</li>
-<li><p>建立模型</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;建立模型&apos;&apos;&apos;</div><div class="line">model = Sequential(layers=[</div><div class="line">    Dense(output_dim=32,input_dim=784),   # 第一层，输入为784维，输出为32维</div><div class="line">    Activation(&apos;relu&apos;),                   # 激励函数为relu</div><div class="line">    Dense(10),                            # 第二层，这里不需要指定输入层维度，全连接会使用上一层的输出，这里即32</div><div class="line">    Activation(&apos;softmax&apos;),                # 激励函数，也是最后的预测函数使用softmax</div><div class="line">    ])</div></pre></td></tr></table></figure>
-</li>
-<li><p>激活模型</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;定义optimizer&apos;&apos;&apos;</div><div class="line">rmsprop = RMSprop()</div><div class="line">&apos;&apos;&apos;激活模型&apos;&apos;&apos;</div><div class="line">model.compile(optimizer=rmsprop, </div><div class="line">              loss=&apos;categorical_crossentropy&apos;,   # 分类中使用交叉熵损失函数</div><div class="line">              metrics=[&apos;accuracy&apos;])              # 计算准确度</div></pre></td></tr></table></figure>
-</li>
-<li><p>训练模型</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">model.fit(X_train,y_train,nb_epoch=2,batch_size=100)  # nb_epoch整个训练集训练次数</div></pre></td></tr></table></figure>
-</li>
-<li><p>测试集上预测信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;测试集测试训练出的模型&apos;&apos;&apos;</div><div class="line">loss,accuracy = model.evaluate(X_test,y_test)</div><div class="line">print(&apos;loss:&apos;,loss)</div><div class="line">print(&apos;accuracy&apos;,accuracy)</div></pre></td></tr></table></figure>
 </li>
 </ul>
-<h3 id="3、卷积神经网络CNN–mnist"><a href="#3、卷积神经网络CNN–mnist" class="headerlink" title="3、卷积神经网络CNN–mnist"></a>3、卷积神经网络CNN–mnist</h3><ul>
-<li><p>导入包</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">import keras</div><div class="line">from keras.datasets import mnist</div><div class="line">from keras.utils import np_utils</div><div class="line">import numpy as np</div><div class="line">from keras.models import Sequential   # Sequential顺序建立</div><div class="line">from keras.layers import Dense,Activation,Convolution2D,MaxPooling2D,Flatten</div><div class="line">from keras.optimizers import RMSprop,Adam</div></pre></td></tr></table></figure>
+<p><img src="/assets/blog_images/RNN/RNN_11.png" alt="RNN结构" title="RNN_11"></p>
+<ul>
+<li>需要注意的是 <code>cell</code> 并<strong>不一定是只有一个neuron unit，而是有n个hidden units</strong><ul>
+<li>下图的<code>state size=4</code></li>
+</ul>
 </li>
-<li><p>建立模型</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">model = Sequential()</div><div class="line">## 第一层卷积</div><div class="line">model.add(Convolution2D(nb_filter=32,    # 32个filter，即从32个特征提取</div><div class="line">                        nb_row=5,        # patch大小</div><div class="line">                        nb_col=5, </div><div class="line">                        border_mode=&apos;same&apos;, </div><div class="line">                        dim_ordering=&apos;th&apos;,  # theano使用th,TensorFlow使用tf</div><div class="line">                        input_shape=(1,28,28,)  # 输入的大小，1表示输入的channel通道，由于是黑白图所以是1,若是rgb是3个通道</div><div class="line">                        ))</div><div class="line">## 第一层激活层</div><div class="line">model.add(Activation(&apos;relu&apos;))</div><div class="line">## 第一层池化层</div><div class="line">model.add(MaxPooling2D(</div><div class="line">    pool_size=(2,2),    # 2x2的大小</div><div class="line">    strides=(2,2),      # 步长为2，纵向和横向</div><div class="line">    border_mode=&apos;same&apos;</div><div class="line">))</div><div class="line">### 第二层卷积层</div><div class="line">model.add(Convolution2D(nb_filter=64,      # 不需要指定输入的大小了</div><div class="line">                        nb_row=5,</div><div class="line">                        nb_col=5, </div><div class="line">                       border_mode=&apos;same&apos;</div><div class="line">                       ))</div><div class="line">### 第二层激活层</div><div class="line">model.add(Activation(&apos;relu&apos;))</div><div class="line">### 第二层池化层</div><div class="line">model.add(MaxPooling2D(border_mode=&apos;same&apos;))</div><div class="line">#### 全连接层</div><div class="line">model.add(Flatten())   # 展开</div><div class="line">model.add(Dense(output_dim=1024))  # 输出维度为1024</div><div class="line">model.add(Activation(&apos;relu&apos;))</div><div class="line">model.add(Dense(output_dim=10))    # 最终输出为10类</div><div class="line">model.add(Activation(&apos;softmax&apos;))</div></pre></td></tr></table></figure>
+</ul>
+<p><img src="/assets/blog_images/RNN/RNN_13.png" alt="RNN详细的结构" title="RNN_13"></p>
+<h2 id="3、Tensorflow中RNN-BPTT实现方式"><a href="#3、Tensorflow中RNN-BPTT实现方式" class="headerlink" title="3、Tensorflow中RNN BPTT实现方式"></a>3、Tensorflow中RNN BPTT实现方式</h2><h4 id="1-截断反向传播（truncated-backpropagation）"><a href="#1-截断反向传播（truncated-backpropagation）" class="headerlink" title="1) 截断反向传播（truncated backpropagation）"></a>1) 截断反向传播（truncated backpropagation）</h4><ul>
+<li>假设我们训练含有<code>1000000</code>个数据的序列，如果<strong>全部训练</strong>的话，整个的序列都feed进<code>RNN</code>中，容易造成梯度消失或爆炸的问题</li>
+<li>所以解决的方法就是<code>truncated backpropagation</code>，我们将序列<strong>截断</strong>来进行训练(<code>num_steps</code>)</li>
+</ul>
+<h3 id="2-tensorflow中的BPTT算法实现"><a href="#2-tensorflow中的BPTT算法实现" class="headerlink" title="2) tensorflow中的BPTT算法实现"></a>2) tensorflow中的BPTT算法实现</h3><ul>
+<li>一般截断的反向传播是：在当前时间<code>t</code>,往前反向传播<code>num_steps</code>步即可<ul>
+<li>如下图，长度为<code>6</code>的序列，截断步数是<code>3</code></li>
+</ul>
 </li>
-<li><p>激活模型</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">adam = Adam()</div><div class="line">model.compile(optimizer=adam,     # 使用adam的optimizer</div><div class="line">              loss=&apos;categorical_crossentropy&apos;,</div><div class="line">              metrics=[&apos;accuracy&apos;])</div></pre></td></tr></table></figure>
+</ul>
+<p><img src="/assets/blog_images/RNN/RNN_truncated_bptt_16.png" alt="一般的截断反向传播" title="RNN_truncated_bptt_16"></p>
+<ul>
+<li>但是<code>Tensorflow</code>中的实现并不是这样(如下图)<ul>
+<li>它是将长度为<code>6</code>的序列分为了<strong>两部分</strong>，每一部分长度为<code>3</code></li>
+<li>前一部分计算得到的<code>final state</code>用于下一部分计算的<code>initial state</code></li>
+</ul>
 </li>
-<li><p>训练模型</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">model.fit(X_train, y_train)</div></pre></td></tr></table></figure>
+</ul>
+<p><img src="/assets/blog_images/RNN/RNN_truncated_bptt_tensorflow_style17.png" alt="tensorflow 风格的bptt" title="RNN_truncated_bptt_tensorflow_style17"></p>
+<ul>
+<li>所以<code>tensorflow</code>风格的反向传播并没有有效的反向传播<code>num_steps</code>步(对比一般的方式，依赖关系变的弱一些)<ul>
+<li>所以比如想要学习有<code>8</code>依赖关系的序列（我们的例子中就是），<strong>一般要设置的大于8</strong></li>
+</ul>
 </li>
-<li><p>测试集计算结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;测试集模型&apos;&apos;&apos;</div><div class="line">loss,accuracy = model.evaluate(X_test,y_test)</div><div class="line">print(&quot;loss&quot;,loss)</div><div class="line">print(&apos;accuracy&apos;,accuracy)</div></pre></td></tr></table></figure>
+<li>另外，有人做实验比较了两种方式<a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.56.7941&amp;rep=rep1&amp;type=pdf" target="_blank" rel="external">here</a>，发现一般的实现方式中的<code>n</code>步和<code>Tensorflow</code>中截断设置为<code>2n</code>的<strong>结果相似</strong></li>
+</ul>
+<h3 id="3-关于这个例子，tensorflow风格的实现"><a href="#3-关于这个例子，tensorflow风格的实现" class="headerlink" title="3) 关于这个例子，tensorflow风格的实现"></a>3) 关于这个例子，tensorflow风格的实现</h3><ul>
+<li>如下图，<code>num_steps=5, state_size=4</code>，就是<strong>截断反向传播的步数</strong>truncated backprop steps是<code>5</code>步，<code>state_size</code>就是<code>cell</code>中的神经元的个数</li>
+<li>如果需要截断的步数增多，可以适当增加<code>state_size</code>来记录更多的信息<ul>
+<li>好比传统的神经网络，就是增加隐藏层的神经元个数</li>
+</ul>
 </li>
+<li>途中的注释是下面的列子代码中定义变量的<code>shape</code>, 可以对照参考</li>
+</ul>
+<p><img src="/assets/blog_images/RNN/RNN_14.jpg" alt="例子，num_steps=5,state_size=4" title="RNN_14"></p>
+<h2 id="4、自己实现例子中的RNN"><a href="#4、自己实现例子中的RNN" class="headerlink" title="4、自己实现例子中的RNN"></a>4、自己实现例子中的<code>RNN</code></h2><ul>
+<li>全部代码：<a href="https://github.com/lawlite19/Blog-Back-Up/blob/master/code/rnn/rnn_implement.py" target="_blank" rel="external">https://github.com/lawlite19/Blog-Back-Up/blob/master/code/rnn/rnn_implement.py</a></li>
+</ul>
+<h3 id="1-实现过程"><a href="#1-实现过程" class="headerlink" title="1) 实现过程"></a>1) 实现过程</h3><ul>
+<li>导入包：</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">import numpy as np</div><div class="line">import tensorflow as tf</div><div class="line">from tensorflow<span class="selector-class">.python</span> import debug as tf_debug</div><div class="line">import matplotlib<span class="selector-class">.pyplot</span> as plt</div></pre></td></tr></table></figure>
+<ul>
+<li><p>超参数</p>
+<ul>
+<li>这里<code>num_steps=5</code>就是只能记忆<strong>5步</strong>, 所以只能学习到一个依赖(因为至少8步才能学到第二个依赖)，我们看结果最后的<code>cross entropy</code>是否在<code>0.52</code>左右<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="string">''</span><span class="string">'超参数'</span><span class="string">''</span></div><div class="line">num_steps = <span class="number">5</span></div><div class="line">batch_size = <span class="number">200</span></div><div class="line">num_classes = <span class="number">2</span></div><div class="line">state_size = <span class="number">4</span></div><div class="line">learning_rate = <span class="number">0.1</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>生成数据</p>
+<ul>
+<li>就是按照我们描述的规则</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">'''生成数据</div><div class="line">就是按照文章中提到的规则，这里生成1000000个</div><div class="line">'''</div><div class="line">def gen_data(size=1000000):</div><div class="line">    X = np.array(np.random.choice(2, size=(size,)))</div><div class="line">    Y = []</div><div class="line">    '''根据规则生成Y'''</div><div class="line">    for i in range(size):   </div><div class="line">        threshold = 0.5</div><div class="line">        if X[i-3] == 1:</div><div class="line">            threshold += 0.5</div><div class="line">        if X[i-8] == 1:</div><div class="line">            threshold -=0.25</div><div class="line">        if np.random.rand() &gt; threshold:</div><div class="line">            Y.append(0)</div><div class="line">        else:</div><div class="line">            Y.append(1)</div><div class="line">    return X, np.array(Y)</div></pre></td></tr></table></figure>
+<ul>
+<li>生成<code>batch</code>数据，因为我们使用<code>sgd</code>训练</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">'''生成batch数据'''</div><div class="line">def gen_batch(raw_data, batch_size, num_step):</div><div class="line">    raw_x, raw_y = raw_data</div><div class="line">    data_length = len(raw_x)</div><div class="line">    batch_patition_length = data_length // batch_size                         # -&gt;5000</div><div class="line">    data_x = np.zeros([batch_size, batch_patition_length], dtype=np.int32)    # -&gt;(200, 5000)</div><div class="line">    data_y = np.zeros([batch_size, batch_patition_length], dtype=np.int32)    # -&gt;(200, 5000)</div><div class="line">    '''填到矩阵的对应位置'''</div><div class="line">    for i in range(batch_size):</div><div class="line">        data_x[i] = raw_x[batch_patition_length*i:batch_patition_length*(i+1)]# 每一行取batch_patition_length个数，即5000</div><div class="line">        data_y[i] = raw_y[batch_patition_length*i:batch_patition_length*(i+1)]</div><div class="line">    epoch_size = batch_patition_length // num_steps                           # -&gt;5000/5=1000 就是每一轮的大小</div><div class="line">    for i in range(epoch_size):   # 抽取 epoch_size 个数据</div><div class="line">        x = data_x[:, i * num_steps:(i + 1) * num_steps]                      # -&gt;(200, 5)</div><div class="line">        y = data_y[:, i * num_steps:(i + 1) * num_steps]</div><div class="line">        yield (x, y)    # yield 是生成器，生成器函数在生成值后会自动挂起并暂停他们的执行和状态（最后就是for循环结束后的结果，共有1000个(x, y)）</div><div class="line">def gen_epochs(n, num_steps):</div><div class="line">    for i in range(n):</div><div class="line">        yield gen_batch(gen_data(), batch_size, num_steps)</div></pre></td></tr></table></figure>
+<ul>
+<li><p>定义RNN的输入</p>
+<ul>
+<li>这里每个数需要<code>one-hot</code>处理</li>
+<li><code>unstack</code>方法就是将<code>n</code>维的数据拆成若开个<code>n-1</code>的数据，<code>axis</code>指定根据哪个维度拆的，比如<code>(200,5,2)</code>三维数据，按<code>axis=1</code>会有<code>5</code>个<code>(200,2)</code>的二维数据<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="string">''</span><span class="string">'定义placeholder'</span><span class="string">''</span></div><div class="line">x = tf.placeholder(tf<span class="selector-class">.int32</span>, [batch_size, num_steps], name=<span class="string">"x"</span>)</div><div class="line">y = tf.placeholder(tf<span class="selector-class">.int32</span>, [batch_size, num_steps], name=<span class="string">'y'</span>)</div><div class="line">init_state = tf.zeros([batch_size, state_size])</div><div class="line"><span class="string">''</span><span class="string">'RNN输入'</span><span class="string">''</span></div><div class="line">x_one_hot = tf.one_hot(x, num_classes)</div><div class="line">rnn_inputs = tf.unstack(x_one_hot, axis=<span class="number">1</span>)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>定义<code>RNN</code>的<code>cell</code>（<strong>关键步骤</strong>）</p>
+<ul>
+<li>这里关于<code>name_scope</code>和<code>variable_scope</code>的用法可以<a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-12-scope/" target="_blank" rel="external">查看这里</a><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">'''定义RNN cell'''</div><div class="line">with tf.variable_scope('rnn_cell'):</div><div class="line">    W = tf.get_variable('W', [num_classes + state_size, state_size])</div><div class="line">    b = tf.get_variable('b', [state_size], initializer=tf.constant_initializer(0.0))</div><div class="line">    </div><div class="line">def rnn_cell(rnn_input, state):</div><div class="line">    with tf.variable_scope('rnn_cell', reuse=True):</div><div class="line">        W = tf.get_variable('W', [num_classes+state_size, state_size])</div><div class="line">        b = tf.get_variable('b', [state_size], initializer=tf.constant_initializer(0.0))</div><div class="line">    return tf.tanh(tf.matmul(tf.concat([rnn_input, state],1),W) + b)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>将<code>cell</code>添加到计算图中</p>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">'''将rnn cell添加到计算图中'''</div><div class="line">state = init_state</div><div class="line">rnn_outputs = []</div><div class="line">for rnn_input in rnn_inputs:</div><div class="line">    state = rnn_cell(rnn_input, state)  # state会重复使用，循环</div><div class="line">    rnn_outputs.append(state)</div><div class="line">final_state = rnn_outputs[-1]        # 得到最后的state</div></pre></td></tr></table></figure>
+<ul>
+<li><p>定义预测，损失函数，和优化方法</p>
+<ul>
+<li><code>sparse_softmax_cross_entropy_with_logits</code>会自动<code>one-hot</code><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="string">''</span><span class="string">'预测，损失，优化'</span><span class="string">''</span></div><div class="line">with tf.variable_scope(<span class="string">'softmax'</span>):</div><div class="line">    W = tf.get_variable(<span class="string">'W'</span>, [state_size, num_classes])</div><div class="line">    <span class="selector-tag">b</span> = tf.get_variable(<span class="string">'b'</span>, [num_classes], initializer=tf.constant_initializer(<span class="number">0.0</span>))</div><div class="line">logits = [tf.matmul(rnn_output, W) + <span class="selector-tag">b</span> <span class="keyword">for</span> rnn_output <span class="keyword">in</span> rnn_outputs]</div><div class="line">predictions = [tf<span class="selector-class">.nn</span><span class="selector-class">.softmax</span>(logit) <span class="keyword">for</span> logit <span class="keyword">in</span> logits]</div><div class="line"></div><div class="line">y_as_list = tf.unstack(y, num=num_steps, axis=<span class="number">1</span>)</div><div class="line">losses = [tf<span class="selector-class">.nn</span><span class="selector-class">.sparse_softmax_cross_entropy_with_logits</span>(labels=<span class="selector-tag">label</span>,logits=logit) <span class="keyword">for</span> logit, <span class="selector-tag">label</span> <span class="keyword">in</span> zip(logits, y_as_list)]</div><div class="line">total_loss = tf.reduce_mean(losses)</div><div class="line">train_step = tf<span class="selector-class">.train</span><span class="selector-class">.AdagradOptimizer</span>(learning_rate).minimize(total_loss)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>训练网络</p>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">'''训练网络'''</div><div class="line">def train_rnn(num_epochs, num_steps, state_size=4, verbose=True):</div><div class="line">    with tf.Session() as sess:</div><div class="line">        sess.run(tf.global_variables_initializer())</div><div class="line">        #sess = tf_debug.LocalCLIDebugWrapperSession(sess)</div><div class="line">        training_losses = []</div><div class="line">        for idx, epoch in enumerate(gen_epochs(num_epochs, num_steps)):</div><div class="line">            training_loss = 0</div><div class="line">            training_state = np.zeros((batch_size, state_size))   # -&gt;(200, 4)</div><div class="line">            if verbose:</div><div class="line">                print('\nepoch', idx)</div><div class="line">            for step, (X, Y) in enumerate(epoch):</div><div class="line">                tr_losses, training_loss_, training_state, _ = \</div><div class="line">                    sess.run([losses, total_loss, final_state, train_step], feed_dict=&#123;x:X, y:Y, init_state:training_state&#125;)</div><div class="line">                training_loss += training_loss_</div><div class="line">                if step % 100 == 0 and step &gt; 0:</div><div class="line">                    if verbose:</div><div class="line">                        print('第 &#123;0&#125; 步的平均损失 &#123;1&#125;'.format(step, training_loss/100))</div><div class="line">                    training_losses.append(training_loss/100)</div><div class="line">                    training_loss = 0</div><div class="line">    return training_losses</div></pre></td></tr></table></figure>
+<ul>
+<li>显示结果</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">training_losses = train_rnn(num_epochs=<span class="number">1</span>, num_steps=num_steps, state_size=state_size)</div><div class="line"><span class="function"><span class="title">print</span><span class="params">(training_losses[<span class="number">0</span>])</span></span></div><div class="line">plt.plot(training_losses)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<h3 id="2-实验结果"><a href="#2-实验结果" class="headerlink" title="2) 实验结果"></a>2) 实验结果</h3><ul>
+<li><code>num_steps=5, state=4</code><ul>
+<li>可以看到初试的损失值大约<code>0.66</code>, 最后学到一个依赖关系，最终损失值<code>0.52</code>左右</li>
+</ul>
+</li>
+</ul>
+<p><img src="/assets/blog_images/RNN/RNN_14.png" alt="num_step=5结果，只学到一个依赖" title="RNN_14"></p>
+<ul>
+<li><code>num_step=10, state=16</code><ul>
+<li>学到了两个依赖，最终损失值接近<code>0.45</code></li>
+</ul>
+</li>
+</ul>
+<p><img src="/assets/blog_images/RNN/RNN_15.png" alt="num_step=10,学到两个依赖" title="RNN_15"></p>
+<h2 id="5、使用Tensorflow的cell实现"><a href="#5、使用Tensorflow的cell实现" class="headerlink" title="5、使用Tensorflow的cell实现"></a>5、使用Tensorflow的cell实现</h2><h3 id="1-使用static-rnn方式"><a href="#1-使用static-rnn方式" class="headerlink" title="1) 使用static rnn方式"></a>1) 使用<code>static rnn</code>方式</h3><ul>
+<li>将我们之前自己实现的<code>cell</code>和添加到计算图中步骤改为如下即可</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cell = tf<span class="selector-class">.contrib</span><span class="selector-class">.rnn</span><span class="selector-class">.BasicRNNCell</span>(num_units=state_size)</div><div class="line">rnn_outputs, final_state = tf<span class="selector-class">.contrib</span><span class="selector-class">.rnn</span><span class="selector-class">.static_rnn</span>(cell=cell, inputs=rnn_inputs, </div><div class="line">                                                    initial_state=init_state)</div></pre></td></tr></table></figure>
+<h3 id="2-使用dynamic-rnn方式"><a href="#2-使用dynamic-rnn方式" class="headerlink" title="2) 使用dynamic_rnn方式"></a>2) 使用<code>dynamic_rnn</code>方式</h3><ul>
+<li><p>这里仅仅替换<code>cell</code>就不行了，<code>RNN</code>输入</p>
+<ul>
+<li>直接就是<strong>三维</strong>的形式<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="string">''</span><span class="string">'RNN输入'</span><span class="string">''</span></div><div class="line">rnn_inputs = tf.one_hot(x, num_classes)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>使用<code>dynamic_rnn</code></p>
+</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cell = tf<span class="selector-class">.contrib</span><span class="selector-class">.rnn</span><span class="selector-class">.BasicRNNCell</span>(num_units=state_size)</div><div class="line">rnn_outputs, final_state = tf<span class="selector-class">.nn</span><span class="selector-class">.dynamic_rnn</span>(cell, rnn_inputs, initial_state=init_state)</div></pre></td></tr></table></figure>
+<ul>
+<li>预测，损失<ul>
+<li>由于<code>rnn_inputs</code>是三维的，所以先<strong>转成二维的</strong>，计算结束后再转换回三维<code>[batch_size, num_steps, num_classes]</code><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">    '''因为rnn_outputs是三维的，这里需要将其转成2维的，</div><div class="line">       矩阵运算后再转换回来[batch_size, num_steps, num_classes]'''</div><div class="line">logits = tf.reshape(tf.matmul(tf.reshape(rnn_outputs, [-1, state_size]), W) +b, \</div><div class="line">                    shape=[batch_size, num_steps, num_classes])</div><div class="line">predictions = tf.nn.softmax(logits)</div><div class="line"></div><div class="line">y_as_list = tf.unstack(y, num=num_steps, axis=1)</div><div class="line">losses = tf.nn.sparse_softmax_cross_entropy_with_logits(labels=y,logits=logits)</div><div class="line">total_loss = tf.reduce_mean(losses)</div><div class="line">train_step = tf.train.AdagradOptimizer(learning_rate).minimize(total_loss)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="https://r2rt.com/recurrent-neural-networks-in-tensorflow-i.html" target="_blank" rel="external">https://r2rt.com/recurrent-neural-networks-in-tensorflow-i.html</a></li>
+<li><a href="https://r2rt.com/styles-of-truncated-backpropagation.html" target="_blank" rel="external">https://r2rt.com/styles-of-truncated-backpropagation.html</a></li>
+<li><a href="https://web.stanford.edu/class/psych209a/ReadingsByDate/02_25/Williams%20Zipser95RecNets.pdf" target="_blank" rel="external">https://web.stanford.edu/class/psych209a/ReadingsByDate/02_25/Williams%20Zipser95RecNets.pdf</a></li>
 </ul>
 
 
@@ -388,6 +516,10 @@ var _hmt = _hmt || [];
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">DeepLearning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">RNN</a>
         		</li>
       		
 		</ul>
@@ -443,7 +575,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://lawlite.me/2017/02/14/Keras学习/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://lawlite.me/2017/06/16/RNN-循环神经网络-02Tensorflow中的实现/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -457,18 +589,9 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/2017/03/24/致火影/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          致火影
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/02/10/Theano学习/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Theano学习</div>
+    <a href="/2017/06/14/RNN-循环神经网络和LSTM-01基础/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">循环神经网络RNN和LSTM_01</div>
       <i class="icon-circle-right"></i>
     </a>
   

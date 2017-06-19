@@ -12,7 +12,7 @@
 <meta name="keywords" content="DeepLearning,RNN,LSTM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="循环神经网络RNN和LSTM_01">
-<meta property="og:url" content="http://lawlite.me/2017/06/14/RNN-循环神经网络-01/index.html">
+<meta property="og:url" content="http://lawlite.me/2017/06/14/RNN-循环神经网络和LSTM-01基础/index.html">
 <meta property="og:site_name" content="Lawlite的博客">
 <meta property="og:description" content="一、介绍1、什么是RNN 传统的神经网络是层与层之间是全连接的，但是每层之间的神经元是没有连接的（其实是假设各个数据之间是独立的） 这种结构不善于处理序列化的问题。比如要预测句子中的下一个单词是什么，这往往与前面的单词有很大的关联，因为句子里面的单词并不是独立的。   RNN 的结构说明当前的的输出与前面的输出也有关，即隐层之间的节点不再是无连接的，而是有连接的 基本的结构如图，可以看到有个循环的">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/rnn_01.jpg">
@@ -25,7 +25,7 @@
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_09.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_10.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_LSTM_08.png">
-<meta property="og:updated_time" content="2017-06-16T06:58:47.385Z">
+<meta property="og:updated_time" content="2017-06-16T07:12:58.947Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="循环神经网络RNN和LSTM_01">
 <meta name="twitter:description" content="一、介绍1、什么是RNN 传统的神经网络是层与层之间是全连接的，但是每层之间的神经元是没有连接的（其实是假设各个数据之间是独立的） 这种结构不善于处理序列化的问题。比如要预测句子中的下一个单词是什么，这往往与前面的单词有很大的关联，因为句子里面的单词并不是独立的。   RNN 的结构说明当前的的输出与前面的输出也有关，即隐层之间的节点不再是无连接的，而是有连接的 基本的结构如图，可以看到有个循环的">
@@ -198,7 +198,7 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-RNN-循环神经网络-01" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-RNN-循环神经网络和LSTM-01基础" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -227,7 +227,7 @@ var _hmt = _hmt || [];
 		
 		
         
-        <a href="/2017/06/14/RNN-循环神经网络-01/" class="archive-article-date">
+        <a href="/2017/06/14/RNN-循环神经网络和LSTM-01基础/" class="archive-article-date">
   	<time datetime="2017-06-14T15:42:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-14</time>
 </a>
         
@@ -561,7 +561,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://lawlite.me/2017/06/14/RNN-循环神经网络-01/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://lawlite.me/2017/06/14/RNN-循环神经网络和LSTM-01基础/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -574,6 +574,15 @@ var _hmt = _hmt || [];
 
   
 <nav id="article-nav">
+  
+    <a href="/2017/06/16/RNN-循环神经网络-02Tensorflow中的实现/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          RNN-循环神经网络-02-Tensorflow中的实现
+        
+      </div>
+    </a>
   
   
     <a href="/2017/06/14/Seaborn绘图/" id="article-nav-older" class="article-nav-link-wrap">
@@ -768,11 +777,15 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
+                <a href="javascript:void(0)" class="js-tag color5">LSTM</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Paper阅读记录</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -784,15 +797,11 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Paper阅读记录</a>
+                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Tensorflow</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">LSTM</a>
               </li>
             
             <div class="clearfix"></div>

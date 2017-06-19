@@ -187,14 +187,14 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-RNN-循环神经网络-01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-RNN-循环神经网络-02Tensorflow中的实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/14/RNN-循环神经网络-01/">循环神经网络RNN和LSTM_01</a>
+      <a class="article-title" href="/2017/06/16/RNN-循环神经网络-02Tensorflow中的实现/">RNN-循环神经网络-02-Tensorflow中的实现</a>
     </h1>
   
 
@@ -202,7 +202,101 @@ var _hmt = _hmt || [];
 		
 		
         
-        <a href="/2017/06/14/RNN-循环神经网络-01/" class="archive-article-date">
+        <a href="/2017/06/16/RNN-循环神经网络-02Tensorflow中的实现/" class="archive-article-date">
+  	<time datetime="2017-06-16T12:59:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-16</time>
+</a>
+        
+      </header>
+    
+		<!-- 目录内容 -->
+				
+		<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>关于基本的<code>RNN</code>和<code>LSTM</code>的概念和<code>BPTT</code>算法可以<a href="http://lawlite.me/2017/06/14/RNN-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-01/">查看这里</a></li>
+<li>参考文章：<ul>
+<li><a href="https://r2rt.com/recurrent-neural-networks-in-tensorflow-i.html" target="_blank" rel="external">https://r2rt.com/recurrent-neural-networks-in-tensorflow-i.html</a></li>
+<li><a href="https://r2rt.com/styles-of-truncated-backpropagation.html" target="_blank" rel="external">https://r2rt.com/styles-of-truncated-backpropagation.html</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="一、源代码实现一个binary例子"><a href="#一、源代码实现一个binary例子" class="headerlink" title="一、源代码实现一个binary例子"></a>一、源代码实现一个<code>binary</code>例子</h1><h2 id="1、例子描述"><a href="#1、例子描述" class="headerlink" title="1、例子描述"></a>1、例子描述</h2><h3 id="1-数据描述"><a href="#1-数据描述" class="headerlink" title="(1) 数据描述"></a>(1) 数据描述</h3><ul>
+<li>输入数据<code>X</code>是<strong>二进制的一串序列</strong>, 在<code>t</code>时刻，有<code>50%</code>的概率是<code>1</code>，<code>50%</code>的概率是<code>0</code>，比如：<code>X=[1,1,0,0,1,0.....]</code> </li>
+</ul>
+        
+          <a class="article-more-a" href="/2017/06/16/RNN-循环神经网络-02Tensorflow中的实现/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">DeepLearning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">RNN</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/06/16/RNN-循环神经网络-02Tensorflow中的实现/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+<!-- 网易云跟帖 -->
+
+
+
+  
+    <article id="post-RNN-循环神经网络和LSTM-01基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/14/RNN-循环神经网络和LSTM-01基础/">循环神经网络RNN和LSTM_01</a>
+    </h1>
+  
+
+		<!-- 显示阅读和评论数 -->
+		
+		
+        
+        <a href="/2017/06/14/RNN-循环神经网络和LSTM-01基础/" class="archive-article-date">
   	<time datetime="2017-06-14T15:42:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-14</time>
 </a>
         
@@ -224,7 +318,7 @@ var _hmt = _hmt || [];
 </li>
 </ul>
         
-          <a class="article-more-a" href="/2017/06/14/RNN-循环神经网络-01/#more">more >></a>
+          <a class="article-more-a" href="/2017/06/14/RNN-循环神经网络和LSTM-01基础/#more">more >></a>
         
       
 
@@ -256,7 +350,7 @@ var _hmt = _hmt || [];
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/06/14/RNN-循环神经网络-01/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/06/14/RNN-循环神经网络和LSTM-01基础/">展开全文 >></a>
         </p>
       
 
@@ -803,97 +897,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-Theano学习" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/10/Theano学习/">Theano学习</a>
-    </h1>
-  
-
-		<!-- 显示阅读和评论数 -->
-		
-		
-        
-        <a href="/2017/02/10/Theano学习/" class="archive-article-date">
-  	<time datetime="2017-02-10T13:25:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-10</time>
-</a>
-        
-      </header>
-    
-		<!-- 目录内容 -->
-				
-		<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一、Theano概述"><a href="#一、Theano概述" class="headerlink" title="一、Theano概述"></a>一、Theano概述</h2><h3 id="1、介绍"><a href="#1、介绍" class="headerlink" title="1、介绍"></a>1、介绍</h3><ul>
-<li><code>Theano</code> 是神经网络python机器学习的模块，和 <code>Tensowflow</code> 类似</li>
-<li>可以在MacOS、Linux、Windows上运行</li>
-<li>theano 可以使用 GPU 进行运算</li>
-<li>网址：<a href="http://deeplearning.net/software/theano/" target="_blank" rel="external">http://deeplearning.net/software/theano/</a> </li>
-</ul>
-<h3 id="2、安装"><a href="#2、安装" class="headerlink" title="2、安装"></a>2、安装</h3><ul>
-<li>Windows上直接：<code>pip install theano</code><ul>
-<li>可能提示个警告：<code>WARNING (theano.configdefaults): g++ not detected ! Theano will be unable to execute optimized C-implementations (for both CPU and GPU) and will default to Python implementations. Performance will be severely degraded. To remove this warning, set Theano flags cxx to an empty string.</code></li>
-</ul>
-</li>
-</ul>
-        
-          <a class="article-more-a" href="/2017/02/10/Theano学习/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">DeepLearning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/02/10/Theano学习/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-
-
-<!-- 网易云跟帖 -->
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1047,11 +1050,15 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
+                <a href="javascript:void(0)" class="js-tag color5">LSTM</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Paper阅读记录</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1063,15 +1070,11 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Paper阅读记录</a>
+                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Tensorflow</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">LSTM</a>
               </li>
             
             <div class="clearfix"></div>
