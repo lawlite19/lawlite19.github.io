@@ -8,22 +8,21 @@
   <link rel="dns-prefetch" href="http://lawlite.me">
   <title>论文记录-UnderstandingTheDifficultyOfTrainingDeepFeedforwardNeuralNetworks | Lawlite的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="(1) 说明 2010年的一篇论文，说明深度神经网络为什么难以训练，当时只讨论了Sigmoid，tanh和Softsign激活函数 提出了一种初始化权重weights的方法，能够解决训练中梯度消失的问题 但是使用现在的ReLu激活函数，同样使用此初始化方法就会出现问题。">
+  <meta name="description" content="1、说明 2010年的一篇论文，说明深度神经网络为什么难以训练，当时只讨论了Sigmoid，tanh和Softsign激活函数 提出了一种初始化权重weights的方法，能够解决训练中梯度消失的问题 但是使用现在的ReLu激活函数，同样使用此初始化方法就会出现问题。">
 <meta name="keywords" content="DeepLearning,Paper阅读记录">
 <meta property="og:type" content="article">
 <meta property="og:title" content="论文记录-UnderstandingTheDifficultyOfTrainingDeepFeedforwardNeuralNetworks">
 <meta property="og:url" content="http://lawlite.me/2016/12/20/论文记录-UnderstandingTheDifficultyOfTrainingDeepFeedforwardNeuralNetworks/index.html">
 <meta property="og:site_name" content="Lawlite的博客">
-<meta property="og:description" content="(1) 说明 2010年的一篇论文，说明深度神经网络为什么难以训练，当时只讨论了Sigmoid，tanh和Softsign激活函数 提出了一种初始化权重weights的方法，能够解决训练中梯度消失的问题 但是使用现在的ReLu激活函数，同样使用此初始化方法就会出现问题。">
+<meta property="og:description" content="1、说明 2010年的一篇论文，说明深度神经网络为什么难以训练，当时只讨论了Sigmoid，tanh和Softsign激活函数 提出了一种初始化权重weights的方法，能够解决训练中梯度消失的问题 但是使用现在的ReLu激活函数，同样使用此初始化方法就会出现问题。">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/Weights-Initialization/01.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/Weights-Initialization/02.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/Weights-Initialization/03.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/Weights-Initialization/04.png">
-<meta property="og:image" content="http://lawlite.me/assets/blog_images/Weights-Initialization/05.png">
-<meta property="og:updated_time" content="2017-06-16T02:17:16.554Z">
+<meta property="og:updated_time" content="2017-06-22T08:43:28.877Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文记录-UnderstandingTheDifficultyOfTrainingDeepFeedforwardNeuralNetworks">
-<meta name="twitter:description" content="(1) 说明 2010年的一篇论文，说明深度神经网络为什么难以训练，当时只讨论了Sigmoid，tanh和Softsign激活函数 提出了一种初始化权重weights的方法，能够解决训练中梯度消失的问题 但是使用现在的ReLu激活函数，同样使用此初始化方法就会出现问题。">
+<meta name="twitter:description" content="1、说明 2010年的一篇论文，说明深度神经网络为什么难以训练，当时只讨论了Sigmoid，tanh和Softsign激活函数 提出了一种初始化权重weights的方法，能够解决训练中梯度消失的问题 但是使用现在的ReLu激活函数，同样使用此初始化方法就会出现问题。">
 <meta name="twitter:image" content="http://lawlite.me/assets/blog_images/Weights-Initialization/01.png">
   
     <link rel="alternative" href="/atom.xml" title="Lawlite的博客" type="application/atom+xml">
@@ -219,7 +218,7 @@ var _hmt = _hmt || [];
 			<div id="toc-article" class="toc-article">
 			    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
 				<strong class="toc-title">文章目录</strong>
-	            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-说明"><span class="toc-number">1.</span> <span class="toc-text">(1) 说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Sigmoid激励函数实验"><span class="toc-number">2.</span> <span class="toc-text">(2) Sigmoid激励函数实验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-梯度计算和公式推导"><span class="toc-number">3.</span> <span class="toc-text">(3) 梯度计算和公式推导</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-代价函数"><span class="toc-number">3.1.</span> <span class="toc-text">1) 代价函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-公式推导"><span class="toc-number">3.2.</span> <span class="toc-text">2) 公式推导</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-初始化权重方法"><span class="toc-number">4.</span> <span class="toc-text">(4) 初始化权重方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-总结"><span class="toc-number">5.</span> <span class="toc-text">(5) 总结</span></a></li></ol>
+	            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、说明"><span class="toc-number">1.</span> <span class="toc-text">1、说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、Sigmoid激励函数实验"><span class="toc-number">2.</span> <span class="toc-text">2、Sigmoid激励函数实验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、梯度计算和公式推导"><span class="toc-number">3.</span> <span class="toc-text">3、梯度计算和公式推导</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-代价函数"><span class="toc-number">3.1.</span> <span class="toc-text">1) 代价函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-公式推导"><span class="toc-number">3.2.</span> <span class="toc-text">2) 公式推导</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、初始化权重方法"><span class="toc-number">4.</span> <span class="toc-text">4、初始化权重方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、总结"><span class="toc-number">5.</span> <span class="toc-text">5、总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reference"><span class="toc-number">6.</span> <span class="toc-text">Reference</span></a></li></ol>
            </div>
 		   <script type="text/javascript">
 			function showToc(){
@@ -239,13 +238,15 @@ var _hmt = _hmt || [];
 		<!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="1-说明"><a href="#1-说明" class="headerlink" title="(1) 说明"></a>(1) 说明</h3><ul>
+        <h3 id="1、说明"><a href="#1、说明" class="headerlink" title="1、说明"></a>1、说明</h3><ul>
 <li><code>2010</code>年的一篇论文，说明<strong>深度神经网络为什么难以训练</strong>，当时只讨论了<strong>Sigmoid，tanh和Softsign激活函数</strong></li>
 <li>提出了一种<strong>初始化权重weights</strong>的方法，能够解决训练中梯度消失的问题<ul>
-<li>但是使用现在的<code>ReLu</code>激活函数，同样使用此初始化方法就会出现问题。<a id="more"></a>
-<h3 id="2-Sigmoid激励函数实验"><a href="#2-Sigmoid激励函数实验" class="headerlink" title="(2) Sigmoid激励函数实验"></a>(2) Sigmoid激励函数实验</h3></li>
+<li>但是使用现在的<code>ReLu</code>激活函数，同样使用此初始化方法就会出现问题。</li>
 </ul>
 </li>
+</ul>
+<a id="more"></a>
+<h3 id="2、Sigmoid激励函数实验"><a href="#2、Sigmoid激励函数实验" class="headerlink" title="2、Sigmoid激励函数实验"></a>2、<code>Sigmoid</code>激励函数实验</h3><ul>
 <li>说明<ul>
 <li>论文首先通过实验观察激活函数的影响，指出<code>Sigmoid</code>函数是<strong>不适合</strong>作为深度神经网络激活函数的</li>
 <li>因为它的<strong>均值总是大于0</strong>的，如下图，导致后面的隐藏层<code>hidden layer</code>趋于饱和，并且发现饱和的神经元可以自发移出饱和趋于，<strong>但是非常慢</strong>。接着发现一个新的非线性的激活函数是非常有益的。<br><img src="/assets/blog_images/Weights-Initialization/01.png" alt="Sigmoid函数" title="01"></li>
@@ -253,89 +254,86 @@ var _hmt = _hmt || [];
 </ul>
 </li>
 <li>实验部分<ul>
-<li>初始化偏置<code>biases</code>为<code>0</code>，权重<code>w</code>服从<strong>均匀分布</strong>，即：<br>$${W_{ij}} \sim U[ - {1 \over {\sqrt n }},{1 \over {\sqrt n }}]$$</li>
+<li>初始化偏置<code>biases</code>为<code>0</code>，权重<code>w</code>服从<strong>均匀分布</strong>，即：<br>$${{W_{ij}} \sim U[ - {1 \over {\sqrt n }},{1 \over {\sqrt n }}]}$$</li>
 <li>其中<code>n</code>为前一层的神经元个数。然后构建了一个含有<strong>4个隐含层</strong>的神经网络，激活函数使用的是<code>Sigmoid</code></li>
 <li>观察每一层的<strong>激活值的均值和标准差</strong>随着<strong>训练次数</strong>的变化，<code>layer1</code>表示<strong>第一个隐含层的输出</strong>，以此类推。如图所示：<strong>实线表示均值mean value，垂直的条表示标准差。</strong><br><img src="/assets/blog_images/Weights-Initialization/02.png" alt="均值和方差的变化" title="02"></li>
 </ul>
 </li>
 <li>实验的直观理解<ul>
-<li>最后我们使用<code>softmax(b+Wh)</code>作为输出预测的，刚开始训练的时候不能够很好的预测<code>y</code>的值，因此误差梯度会迫使<code>Wh</code>趋于<code>0</code>，所以会是<code>h</code>的值趋于<code>0</code>，<code>h</code>就是上一层的输出，所以激活值很快为<code>0</code>。</li>
+<li>最后我们使用 ${Softmax(b+Wh)}$ 作为输出预测的，刚开始训练的时候不能够很好的预测<code>y</code>的值，因此误差梯度会迫使<code>Wh</code>趋于<code>0</code>，所以会是<code>h</code>的值趋于<code>0</code>，<code>h</code>就是上一层的输出，所以激活值很快为<code>0</code>。</li>
 <li>但是对于<code>tanh</code>函数是关于<strong>原点对称</strong>的，图像如下，值趋于<code>0</code>是好的，因为梯度能够<strong>反向传播</strong>回去，但是对于<code>sigmoid</code>函数来说就<strong>趋于饱和</strong>的位置了，梯度很难反向传回去，也就学习不到东西了。<br><img src="/assets/blog_images/Weights-Initialization/03.png" alt="Sigmoid和tanh函数" title="03"></li>
 </ul>
 </li>
 </ul>
-<h3 id="3-梯度计算和公式推导"><a href="#3-梯度计算和公式推导" class="headerlink" title="(3) 梯度计算和公式推导"></a>(3) 梯度计算和公式推导</h3><h4 id="1-代价函数"><a href="#1-代价函数" class="headerlink" title="1) 代价函数"></a>1) 代价函数</h4><ul>
+<h3 id="3、梯度计算和公式推导"><a href="#3、梯度计算和公式推导" class="headerlink" title="3、梯度计算和公式推导"></a>3、梯度计算和公式推导</h3><h4 id="1-代价函数"><a href="#1-代价函数" class="headerlink" title="1) 代价函数"></a>1) 代价函数</h4><ul>
 <li>代价函数使用的是<strong>交叉熵代价函数</strong>，相比对于<strong>二次代价函数</strong>会更好<br><img src="/assets/blog_images/Weights-Initialization/04.png" alt="交叉熵和二次代价函数图像" title="04"> </li>
 <li>二次代价函数较为平坦，所以使用梯度下降会比较慢。<h4 id="2-公式推导"><a href="#2-公式推导" class="headerlink" title="2) 公式推导"></a>2) 公式推导</h4></li>
-<li>符号说明<br>z<sup>i</sup>………………………………第i层的激活值向量<br>s<sup>i</sup>………………………………第i+1层的输入<br>x………………………………输入<br>n<sub>i</sub>………………………………第i层神经元个数<br>W………………………………权重</li>
-<li>可以得到：<br>$${{\rm{s}}^i} = {z^i}{W^i} + {b^i}$$<br>$${z^{i + 1}} = f({s^i})$$</li>
-<li>所以分别对上面两式求偏导可以得到：</li>
+<li>符号说明<br>${z^i}$………………………………第i层的激活值向量<br>${s^i}$………………………………第i+1层的输入<br>$X$………………………………输入<br>${n_i}$………………………………第i层神经元个数<br>$W$………………………………权重</li>
+<li>可以得到：<br>$${s^i = {z^i}{W^i} + {b^i}}$$<br>$${z^{i + 1} = f({s^i})}$$</li>
+<li>所以分别对上面两式求偏导可以得到：<br>$${{\partial Cost \over \partial s_k^i}=f^{'}W_{k,\bullet}^{i+1}}{ \partial Cost \over \partial s^{i+1}}…………………………….(1)$$</li>
 </ul>
-<p>$$\frac{{\partial Cost}}{{\partial s_k^i}} = {f^,}(s_k^i)W_{k, \bullet }^{i + 1}\frac{{\partial Cost}}{{\partial {s^{i + 1}}}}……………………………..(1)$$</p>
-<p>$$\frac{{\partial Cost}}{{\partial w_{l,k}^i}} = z_l^i\frac{{\partial Cost}}{{\partial s_k^i}}………………………………………(2)$$</p>
-<p>推导如下</p>
-<p><img src="/assets/blog_images/Weights-Initialization/05.png" alt="BP推导" title="05"></p>
+<p>$${{\partial Cost \over \partial w_{l,k}^i} = z_l^i}{\partial Cost \over \partial s_k^i}........................................(2)$$
+
+
+推导如下
+
+![BP推导][5]
+- 上面公式推导说明
+  - 其中 $${{\partial Cost \over \partial s^{i-1}}={\delta ^{i-1}}}$$</p>
 <ul>
-<li>上面公式推导说明<ul>
-<li>其中$$\frac{{\partial Cost}}{{\partial {s^{{\rm{i - 1}}}}}} = {\delta ^{i - 1}}$$</li>
 <li>这里<code>W</code>从<code>1</code>开始，上面给出的最终公式是从<code>0</code>开始。</li>
-<li>对权重的偏导（梯度）再乘以输入 z<sup>i</sup> 即可。</li>
-<li>因为我们使用均匀分布进行初始化，所以方差是一样的，对于<code>tanh</code>函数的导数，$${[\tanh (x)]^,} = 1 - {[\tanh (x)]^2}$$</li>
+<li>对权重的偏导（梯度）再乘以输入 ${z^i}$ 即可。</li>
+<li>因为我们使用均匀分布进行初始化，所以方差是一样的，对于<code>tanh</code>函数的导数，$${[\tanh (x)]^{‘}} = 1 - {[\tanh (x)]^2}$$</li>
 <li>所以：$${f^,}(s_k^i) \approx 1$$</li>
-<li>实际这里作者假设了<strong>这个区间内激活函数是线性的</strong>，第二篇论文中也有提到。（下面会给出）</li>
+<li>实际这里作者假设了<strong>这个区间内激活函数是线性的</strong>，第二篇论文中也有提到。（下面会给出）<ul>
+<li>根据方差的公式： $$Var(x) = E({x^2}) - {E^2}(x)$$</li>
 </ul>
 </li>
-<li><p>根据方差的公式： $$Var(x) = E({x^2}) - {E^2}(x)$$</p>
-<ul>
-<li><p>可以得到: </p>
-
-$$ Var[{z^i}] = Var[x]\prod\limits_{j = 0}^{i - 1} {{n_j}Var[{W^j}]} .............................(3) $$
-  
+<li><p>可以得到: $${Var[z^i] = Var[x] \prod\limits_{j=0}^{i-1}n_j Var[W^j]}…………………………(3)$$</p>
 </li>
 <li><p>推导如下：</p>
 <ul>
-<li>$$Var(s) = Var(\sum\limits_i^n {{w_i}{x_i}} ) = \sum\limits_i^n {Var({w_i}{x_i})} $$</li>
-<li>$$\begin{array}{l}Var(wx) = E({w^2}{x^2}) - {E^2}(wx)\\{\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt}  = E({w^2})E({x^2}) - {E^2}(w){E^2}(x)\\\;\;\;\;\;\;\;\;\;\;\;\;{\kern 1pt}  = [E({w^2}) - {E^2}(w)][E({x^2}) - {E^2}(x)] + {E^2}(w)[E({x^2}) - {E^2}(x)] + {E^2}(x)[E({w^2}) - {E^2}(w)]\\{\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt} {\kern 1pt}  = Var(w)Var(x) + {E^2}(w)Var(x) + {E^2}(x)Var(w)\end{array}$$</li>
-<li>因为输入的<strong>均值为0</strong>，所以$$E(w) = E(x) = 0$$</li>
-<li>所以：$$Var(wx) = Var(w)Var(x)$$</li>
-<li>又因为下式成立，然后代入上面的式子即可$${f^,}(s_k^i) \approx 1$$</li>
+<li>${Var(s) = Var(\sum\limits_i^n w_i x_i)}=\sum\limits_i^n Var(w_ix_i)$</li>
+<li>${Var(wx) = E(w^2x^2) - E^2(wx)} \\<br>\quad\quad\quad\quad=E(w^2)E(x^2) - E^2(w)E^2(x) \\<br>\quad\quad\quad\quad=[E(w^2)-E^2(w)][E(x^2)-E^2(x)] + E^2(w)[E(x^2)-E^2(x)] + E^2(x)[E(w^2)-E^2(w)] \\<br>\quad\quad\quad\quad=Var(w)Var(x)+E^2Var(x)+E^2Var(w)$</li>
+<li>因为输入的<strong>均值为0</strong>，所以$${E(w) = E(x) = 0}$$</li>
+<li>所以：$${Var(wx) = Var(w)Var(x)}$$</li>
+<li>又因为${f^{‘}(s_k^i) \approx 1}$成立，然后代入上面的式子即可</li>
+<li>根据<strong>公式（1）</strong>，所以对${S^i}$偏导数的方差为：$${Var[{\partial Cost \over \partial s^i}]} = {Var[{\partial Cost \over \partial s^n}]}{\prod\limits_{j=i}^n}{n_{j+1}Var[W^j]}$$</li>
 </ul>
 </li>
 </ul>
-</li>
-<li>根据公式（1），所以对S<sup>i</sup>偏导数的方差为：</li>
-</ul>
-
-$$V{\rm{ar}}[\frac{{\partial Cost}}{{\partial {s^i}}}] = Var[\frac{{\partial Cost}}{{\partial {s^n}}}]\prod\limits_{j = i}^n {{n_{j + 1}}Var[{W^j}]} $$
-
 <ul>
-<li>根据公式（2），代入到对权重<code>w</code>偏导（即为梯度）的方差为：</li>
-</ul>
-<p>$$Var[\frac{{\partial Cost}}{{\partial {w^i}}}] = \prod\limits_{j = 0}^{i - 1} {{n_j}Var[{W^j}]} \prod\limits_{j = i}^{n - 1} {{n_{j + 1}}Var[{W^j}]}  * Var[x]Var[\frac{{\partial Cost}}{{\partial {s^n}}}]$$</p>
+<li><p>根据<strong>公式（2）</strong>，代入到对权重<code>w</code>偏导（即为梯度）的方差为: $${Var[{\partial Cost \over \partial w^i}]} = {\prod \limits_{j=0}^{i-1} n_j Var[W^j]}{\prod \limits_{j=i}^{n-1} n_{j+1}Var[W^j] \ast Var[x] Var[{\partial Cost \over \partial s^n}]}$$</p>
+</li>
+<li><p>对于正向传播，希望：$$\forall (i,j),Var[{z^i}] = Var[{z^j}]$$</p>
 <ul>
-<li>对于正向传播，希望：$$\forall (i,j),Var[{z^i}] = Var[{z^j}]$$<ul>
-<li>从反向传播的角度同样可以有：$$\forall (i,j),Var[\frac{{\partial Cost}}{{\partial {s^i}}}] = Var[\frac{{\partial Cost}}{{\partial {s^j}}}]$$</li>
-<li>就可以转化为：$$\left\{ \begin{array}{l}{n_i}Var[{w^{\rm{i}}}] = 1\\{n_{i + 1}}Var[{w^{\rm{i}}}] = 1\end{array} \right…………………………….(4)$$<ul>
-<li>比如第一种： $$Var[{z^i}] = Var[x]\prod\limits_{j = 0}^{i - 1} {{n_j}Var[{W^j}]} $$ $$V{\rm{ar}}({z^i}) = Var(x)$$</li>
-<li>所以$${n_i}Var[{w^{\rm{i}}}] = 1$$ 第二种情况同理</li>
+<li>从反向传播的角度同样可以有：$${\forall (i,j), Var[{\partial Cost \over \partial s^i}]} = Var[{\partial Cost \over \partial s^j}]$$</li>
+<li>就可以转化为：$$\left\{ {\matrix{<br>{n_iVar[w^i]}=1  \cr<br>{n_{i+1}Var[w^i]}=1  \cr<br>} }…………………………(4) \right.$$<ul>
+<li>比如第一种(公式（3）)： $${Var[z^i] = Var[x] \prod\limits_{j=0}^{i-1}n_j Var[W^j]}$$ $$Var(z^i) = Var(x)$$</li>
+<li>所以${n_i}Var[{w^i}] = 1$ ，第二种情况同理</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>所以将（4）中的两式相加可得：$$Var[{W^i}] = \frac{2}{{{n_i} + {n_{i + 1}}}}$$<ul>
-<li>如果所有层的神经元个数一样时：$$\left\{ \begin{array}{l}Var[\frac{{\partial Cost}}{{\partial {s^i}}}] = {[nVar[W]]^{d - i}}Var[x]\\Var[\frac{{\partial Cost}}{{\partial {w^i}}}] = {[nVar[W]]^d}Var[x]Var[\frac{{\partial Cost}}{{\partial {w^n}}}]\end{array} \right.$$</li>
-<li>可以看到，所有层的梯度的方差都是一样的，但是对于很深层的神经网络还是有可能导致梯度消失。</li>
+<li>所以将 <strong>（4）</strong> 中的两式相加可得：$${Var[{W^i}]}={2 \over {n_i + n_{i+1}}}$$<ul>
+<li>如果所有层的神经元个数一样时：$$\left\{ {\matrix{<br>{Var[{\partial Cost \over \partial s^i}] = [nVar[W]]^{d-i}Var[x]} \cr<br>{Var[{\partial Cost \over \partial w^i}] = [nVar[w]]^{d}Var[x]Var[{\partial Cost \over \partial w^n}]} \cr<br>}} \right.$$</li>
+<li>可以看到，所有层的梯度的方差都是一样的。但是对于很深层的神经网络还是有可能导致梯度消失。</li>
 </ul>
 </li>
 </ul>
-<h3 id="4-初始化权重方法"><a href="#4-初始化权重方法" class="headerlink" title="(4) 初始化权重方法"></a>(4) 初始化权重方法</h3><ul>
-<li>最后提出了一个归一化的初始化方法，因为<code>W</code>服从均匀分布，根据均匀分布的方差公式可以得到：$$\frac{{{{[c - ( - c)]}^2}}}{{12}} = \frac{{{c^2}}}{3}$$</li>
-<li>所以得到：$$\frac{2}{{{n_i} + {n_{i + 1}}}} = \frac{{{c^2}}}{3}$$</li>
-<li>求出：<code>$$ c = {\sqrt 6 \over \sqrt {n_i + n_{i+1}}} $$</code> </li>
-<li>所以最终给出初始化权重的方法为：$$W \sim U[ - \frac{{\sqrt 6 }}{{\sqrt {{n_i} + {n_{i + 1}}} }},\frac{{\sqrt 6 }}{{\sqrt {{n_i} + {n_{i + 1}}} }}]$$<h3 id="5-总结"><a href="#5-总结" class="headerlink" title="(5) 总结"></a>(5) 总结</h3></li>
+<h3 id="4、初始化权重方法"><a href="#4、初始化权重方法" class="headerlink" title="4、初始化权重方法"></a>4、初始化权重方法</h3><ul>
+<li>最后提出了一个归一化的初始化方法，因为<code>W</code>服从均匀分布，根据均匀分布的方差公式可以得到：$${[c-(-c)]^2 \over 12} = {c^2 \over 3}$$</li>
+<li>所以得到：$${2 \over {n_i + n_{i+1}} =}{ c^2 \over 3}$$</li>
+<li>求出: <code> </code>$$c={\sqrt 6 \over \sqrt {n_i + n_{i+1}}}$$</li>
+<li>所以最终给出初始化权重的方法为：$${W \sim U[-{{\sqrt 6}\over {\sqrt n_i+n_{i+1}}},{\sqrt 6 \over \sqrt {n_i + n_{i+1}}}]}$$</li>
+</ul>
+<h3 id="5、总结"><a href="#5、总结" class="headerlink" title="5、总结"></a>5、总结</h3><ul>
 <li>论文讨论了<code>Sigmoid，tanh</code>激励函数权重初始化的问题，并给出了初始化的方法，- 但是针对<code>ReLu</code>这种激励函数是不适用的，第二篇会提到。</li>
 <li>并且推导过程中假设了激励函数在初始化对应区间上是<strong>线性的</strong>，即假设导数恒为1我感觉也是存在问题的。</li>
 <li>作者给出的实验部分网络的深度还是很有限的，随着网络的不断加深，对应的初始化权重的分布范围还是会不断减小的。可以通过控制学习率参数等方式来进行对应处理。</li>
+</ul>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
+<li><a href="http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf" target="_blank" rel="external">http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf</a></li>
 </ul>
 
 
@@ -618,7 +616,7 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -626,7 +624,7 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -634,7 +632,7 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
+                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -642,11 +640,11 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
+                <a href="javascript:void(0)" class="js-tag color4">GRU</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Paper阅读记录</a>
+                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -654,11 +652,15 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color5">Paper阅读记录</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">

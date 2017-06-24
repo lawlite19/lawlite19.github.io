@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://lawlite.me">
+  <title>RNN-LSTM循环神经网络-03Tensorflow进阶实现 | Lawlite的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="全部代码：点击这里查看 关于Tensorflow实现一个简单的二元序列的例子可以点击这里查看 关于RNN和LSTM的基础可以查看这里 这篇博客主要包含以下内容 训练一个RNN模型逐字符生成文本数据(最后的部分) 使用Tensorflow的scan函数实现dynamic_rnn动态创建的效果 使用multiple RNN创建多层的RNN 实现Dropout和Layer Normalization的">
+<meta name="keywords" content="Python,DeepLearning,RNN,LSTM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RNN-LSTM循环神经网络-03Tensorflow进阶实现">
+<meta property="og:url" content="http://lawlite.me/2017/06/21/RNN-LSTM循环神经网络-03Tensorflow进阶实现/index.html">
+<meta property="og:site_name" content="Lawlite的博客">
+<meta property="og:description" content="全部代码：点击这里查看 关于Tensorflow实现一个简单的二元序列的例子可以点击这里查看 关于RNN和LSTM的基础可以查看这里 这篇博客主要包含以下内容 训练一个RNN模型逐字符生成文本数据(最后的部分) 使用Tensorflow的scan函数实现dynamic_rnn动态创建的效果 使用multiple RNN创建多层的RNN 实现Dropout和Layer Normalization的">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_list_tensor19.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_LSTM_27.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_LSTM_28.png">
+<meta property="og:updated_time" content="2017-06-24T07:04:52.558Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RNN-LSTM循环神经网络-03Tensorflow进阶实现">
+<meta name="twitter:description" content="全部代码：点击这里查看 关于Tensorflow实现一个简单的二元序列的例子可以点击这里查看 关于RNN和LSTM的基础可以查看这里 这篇博客主要包含以下内容 训练一个RNN模型逐字符生成文本数据(最后的部分) 使用Tensorflow的scan函数实现dynamic_rnn动态创建的效果 使用multiple RNN创建多层的RNN 实现Dropout和Layer Normalization的">
+<meta name="twitter:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_list_tensor19.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Lawlite的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/assets/img/favicon.ico">
+  
+  <link rel="stylesheet" type="text/css" href="/./main.234bc0.css">
+  <style type="text/css">
+  
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+	var hm = document.createElement("script");
+	hm.src = "https://hm.baidu.com/hm.js?aafd2cc62b94803248a1bee49dbc581f";
+	var s = document.getElementsByTagName("script")[0]; 
+	s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+  
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+<div class="overlay" style="background: #279ADB"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/assets/img/avatar.jpg" class="js-avatar">
+		</a>
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Lawlite</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/tags/随笔/">随笔</a></li>
+	        
+				<li><a href="/photos/">相册</a></li>
+	        
+				<li><a href="/留言板/">留言板</a></li>
+	        
+				<li><a href="http://lawlite.me/archives/">归档</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+    		
+    			
+    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/lawlite19" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/lawlite.me" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
+					<a class="qq" target="_blank" href="/849451478" title="qq"><i class="icon-qq"></i></a>
+		        
+					<a class="twitter" target="_blank" href="https://twitter.com/lawliteWang" title="twitter"><i class="icon-twitter"></i></a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #279ADB"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/assets/img/avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">Lawlite</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/lawlite19" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/lawlite.me" title="zhihu"><i class="icon-zhihu"></i></a>
+			        
+						<a class="qq" target="_blank" href="/849451478" title="qq"><i class="icon-qq"></i></a>
+			        
+						<a class="twitter" target="_blank" href="https://twitter.com/lawliteWang" title="twitter"><i class="icon-twitter"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 20%"><a href="/">主页</a></li>
+		        
+					<li style="width: 20%"><a href="/tags/随笔/">随笔</a></li>
+		        
+					<li style="width: 20%"><a href="/photos/">相册</a></li>
+		        
+					<li style="width: 20%"><a href="/留言板/">留言板</a></li>
+		        
+					<li style="width: 20%"><a href="http://lawlite.me/archives/">归档</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-RNN-LSTM循环神经网络-03Tensorflow进阶实现" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      RNN-LSTM循环神经网络-03Tensorflow进阶实现
+    </h1>
+  
+
+		<!-- 显示阅读和评论数 -->
+		
+		<br/>
+		<a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+		<span class="icon-sort"></span>
+		<span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+            阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+		</span>
+		</a>
+		<!-- 网易的评论数，这里先不使用
+		<a class="cloud-tie-join-count" href="javascript:void(0);" style="color:#ef7522;font-size:14px;">
+			<span class="icon-comment"></span>
+			<span class="join-text" style="color:#ef7522;font-size:14px;">参与数:</span>
+			<span class="join-count">0</span>人
+		</a>  -->
+		
+		
+        
+        <a href="/2017/06/21/RNN-LSTM循环神经网络-03Tensorflow进阶实现/" class="archive-article-date">
+  	<time datetime="2017-06-21T08:54:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-21</time>
+</a>
+        
+      </header>
+    
+		<!-- 目录内容 -->
+		
+		    <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+            <span class="btn-bg"></span>
+            <span class="btn-text">文章导航</span>
+            </p>
+			<div id="toc-article" class="toc-article">
+			    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+				<strong class="toc-title">文章目录</strong>
+	            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、模型说明和数据处理"><span class="toc-number">1.</span> <span class="toc-text">一、模型说明和数据处理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、模型说明"><span class="toc-number">1.1.</span> <span class="toc-text">1、模型说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、数据处理"><span class="toc-number">1.2.</span> <span class="toc-text">2、数据处理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、使用tf-scan函数和dynamic-rnn"><span class="toc-number">2.</span> <span class="toc-text">二、使用tf.scan函数和dynamic_rnn</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、为什么使用tf-scan和dynamic-rnn"><span class="toc-number">2.1.</span> <span class="toc-text">1、为什么使用tf.scan和dynamic_rnn</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、使用list的方式-static-rnn"><span class="toc-number">2.2.</span> <span class="toc-text">2、使用list的方式(static_rnn)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、dynamic-rnn的使用"><span class="toc-number">2.3.</span> <span class="toc-text">3、dynamic_rnn的使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、tf-scan实现的方式"><span class="toc-number">2.4.</span> <span class="toc-text">4、tf.scan实现的方式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、关于多层RNN"><span class="toc-number">3.</span> <span class="toc-text">三、关于多层RNN</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、结构"><span class="toc-number">3.1.</span> <span class="toc-text">1、结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、代码"><span class="toc-number">3.2.</span> <span class="toc-text">2、代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、Dropout操作"><span class="toc-number">4.</span> <span class="toc-text">四、Dropout操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、一层的cell"><span class="toc-number">4.1.</span> <span class="toc-text">1、一层的cell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、多层cell"><span class="toc-number">4.2.</span> <span class="toc-text">2、多层cell</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、层标准化-Layer-Normalization"><span class="toc-number">5.</span> <span class="toc-text">五、层标准化 (Layer Normalization)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、说明"><span class="toc-number">5.1.</span> <span class="toc-text">1、说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、代码-1"><span class="toc-number">5.2.</span> <span class="toc-text">2、代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、生成文本"><span class="toc-number">6.</span> <span class="toc-text">六、生成文本</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、说明-1"><span class="toc-number">6.1.</span> <span class="toc-text">1、说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、代码-2"><span class="toc-number">6.2.</span> <span class="toc-text">2、代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">7.</span> <span class="toc-text">Reference</span></a></li></ol>
+           </div>
+		   <script type="text/javascript">
+			function showToc(){
+				var toc_article = document.getElementById("toc-article");
+				var show_toc_btn = document.getElementById("show-toc-btn");
+				toc_article.setAttribute("style","display:block");
+				show_toc_btn.setAttribute("style","display:none");
+				};
+			function showBtn(){
+				var toc_article = document.getElementById("toc-article");
+				var show_toc_btn = document.getElementById("show-toc-btn");
+				toc_article.setAttribute("style","display:none");
+				show_toc_btn.setAttribute("style","display:block");
+				};
+		   </script>
+        		
+		<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>全部代码：<a href="https://github.com/lawlite19/Blog-Back-Up/tree/master/code/rnn/rnn_tensorflow" target="_blank" rel="external">点击这里查看</a></li>
+<li>关于<code>Tensorflow</code>实现一个简单的<strong>二元序列的例子</strong>可以<a href="http://lawlite.me/2017/06/16/RNN-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-02Tensorflow%E4%B8%AD%E7%9A%84%E5%AE%9E%E7%8E%B0/">点击这里查看</a></li>
+<li>关于<code>RNN</code>和<code>LSTM</code>的基础可以<a href="http://lawlite.me/2017/06/14/RNN-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8CLSTM-01%E5%9F%BA%E7%A1%80/">查看这里</a></li>
+<li>这篇博客主要包含以下内容<ul>
+<li>训练一个<code>RNN</code>模型<strong>逐字符生成文本数据</strong>(最后的部分)</li>
+<li>使用<code>Tensorflow</code>的<code>scan</code>函数实现<code>dynamic_rnn</code><strong>动态创建</strong>的效果</li>
+<li>使用<code>multiple RNN</code>创建<strong>多层</strong>的<code>RNN</code></li>
+<li>实现<code>Dropout</code>和<code>Layer Normalization</code>的功能</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h1 id="一、模型说明和数据处理"><a href="#一、模型说明和数据处理" class="headerlink" title="一、模型说明和数据处理"></a>一、模型说明和数据处理</h1><h2 id="1、模型说明"><a href="#1、模型说明" class="headerlink" title="1、模型说明"></a>1、模型说明</h2><ul>
+<li>我们要使用<code>RNN</code>学习一个语言模型(<code>language model</code>)去生成字符序列</li>
+<li><code>githbub</code>上有别人实现好的<ul>
+<li><code>Torch</code>中的实现：<a href="https://github.com/karpathy/char-rnn" target="_blank" rel="external">https://github.com/karpathy/char-rnn</a></li>
+<li><code>Tensorflow</code>中的实现：<a href="https://github.com/sherjilozair/char-rnn-tensorflow" target="_blank" rel="external">https://github.com/sherjilozair/char-rnn-tensorflow</a></li>
+</ul>
+</li>
+<li>接下来我们来看如何实现<h2 id="2、数据处理"><a href="#2、数据处理" class="headerlink" title="2、数据处理"></a>2、数据处理</h2></li>
+<li>数据集使用<em>莎士比亚</em>的一段文集，<a href="https://raw.githubusercontent.com/jcjohnson/torch-rnn/master/data/tiny-shakespeare.txt" target="_blank" rel="external">点击这里查看</a>, 实际也可以使用别的</li>
+<li><strong>大小写字符</strong>视为<strong>不同</strong>的字符</li>
+<li>下载并读取数据</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="string">''</span><span class="string">'下载数据并读取数据'</span><span class="string">''</span></div><div class="line">file_url = <span class="string">'https://raw.githubusercontent.com/jcjohnson/torch-rnn/master/data/tiny-shakespeare.txt'</span></div><div class="line">file_name = <span class="string">'tinyshakespeare.txt'</span></div><div class="line"><span class="keyword">if</span> not os<span class="selector-class">.path</span><span class="selector-class">.exists</span>(file_name):</div><div class="line">    urllib<span class="selector-class">.request</span><span class="selector-class">.urlretrieve</span>(file_url, filename=file_name)</div><div class="line">with open(file_name, <span class="string">'r'</span>) as f:</div><div class="line">    raw_data = f.read()</div><div class="line">    print(<span class="string">"数据长度"</span>, len(raw_data))</div></pre></td></tr></table></figure>
+<ul>
+<li><p>处理字符数据，转换为数字</p>
+<ul>
+<li>使用<code>set</code>去重，得到所有的唯一字符</li>
+<li>然后一个字符对应一个数字（使用字典）</li>
+<li>然后遍历原始数据，得到所有字符对应的数字<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">'''处理字符数据，转换为数字'''</div><div class="line">vocab = set(raw_data)                    # 使用set去重，这里就是去除重复的字母(大小写是区分的)</div><div class="line">vocab_size = len(vocab)      </div><div class="line">idx_to_vocab = dict(enumerate(vocab))    # 这里将set转为了字典，每个字符对应了一个数字0,1,2,3..........(vocab_size-1)</div><div class="line">vocab_to_idx = dict(zip(idx_to_vocab.values(), idx_to_vocab.keys())) # 这里将字典的(key, value)转换成(value, key)</div><div class="line"></div><div class="line">data = [vocab_to_idx[c] for c in raw_data]   # 处理raw_data, 根据字符，得到对应的value,就是数字</div><div class="line">del raw_data</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>生成<code>batch</code>数据</p>
+<ul>
+<li><code>Tensorflow models</code>给出的<strong>PTB模型</strong>：<a href="https://github.com/tensorflow/models/tree/master/tutorials/rnn/ptb" target="_blank" rel="external">https://github.com/tensorflow/models/tree/master/tutorials/rnn/ptb</a></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">'''超参数'''</div><div class="line">num_steps=200             # 学习的步数</div><div class="line">batch_size=32</div><div class="line">state_size=100            # cell的size</div><div class="line">num_classes = vocab_size</div><div class="line">learning_rate = 1e-4</div><div class="line"></div><div class="line">def gen_epochs(num_epochs, num_steps, batch_size):</div><div class="line">    for i in range(num_epochs):</div><div class="line">        yield reader.ptb_iterator_oldversion(data, batch_size, num_steps)</div></pre></td></tr></table></figure>
+<ul>
+<li><ul>
+<li>ptb_iterator函数实现：<ul>
+<li>返回数据<code>X,Y</code>的<code>shape=[batch_size, num_steps]</code><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">def ptb_iterator_oldversion(raw_data, batch_size, num_steps):</div><div class="line">  """Iterate on the raw PTB data.</div><div class="line">  This generates batch_size pointers into the raw PTB data, and allows</div><div class="line">  minibatch iteration along these pointers.</div><div class="line">  Args:</div><div class="line">  raw_data: one of the raw data outputs from ptb_raw_data.</div><div class="line">  batch_size: int, the batch size.</div><div class="line">  num_steps: int, the number of unrolls.</div><div class="line">  Yields:</div><div class="line">  Pairs of the batched data, each a matrix of shape [batch_size, num_steps].</div><div class="line">  The second element of the tuple is the same data time-shifted to the</div><div class="line">  right by one.</div><div class="line">  Raises:</div><div class="line">  ValueError: if batch_size or num_steps are too high.</div><div class="line">  """</div><div class="line">  raw_data = np.array(raw_data, dtype=np.int32)</div><div class="line">  </div><div class="line">  data_len = len(raw_data)</div><div class="line">  batch_len = data_len // batch_size</div><div class="line">  data = np.zeros([batch_size, batch_len], dtype=np.int32)</div><div class="line">  for i in range(batch_size):</div><div class="line">    data[i] = raw_data[batch_len * i:batch_len * (i + 1)]</div><div class="line">  </div><div class="line">  epoch_size = (batch_len - 1) // num_steps</div><div class="line">  </div><div class="line">  if epoch_size == 0:</div><div class="line">    raise ValueError("epoch_size == 0, decrease batch_size or num_steps")</div><div class="line">  </div><div class="line">  for i in range(epoch_size):</div><div class="line">    x = data[:, i*num_steps:(i+1)*num_steps]</div><div class="line">    y = data[:, i*num_steps+1:(i+1)*num_steps+1]</div><div class="line">    yield (x, y)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="二、使用tf-scan函数和dynamic-rnn"><a href="#二、使用tf-scan函数和dynamic-rnn" class="headerlink" title="二、使用tf.scan函数和dynamic_rnn"></a>二、使用<code>tf.scan</code>函数和<code>dynamic_rnn</code></h1><h2 id="1、为什么使用tf-scan和dynamic-rnn"><a href="#1、为什么使用tf-scan和dynamic-rnn" class="headerlink" title="1、为什么使用tf.scan和dynamic_rnn"></a>1、为什么使用<code>tf.scan</code>和<code>dynamic_rnn</code></h2><ul>
+<li>之前我们<a href="http://lawlite.me/2017/06/16/RNN-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-02Tensorflow%E4%B8%AD%E7%9A%84%E5%AE%9E%E7%8E%B0/#1-实现过程">实现的第一个例子</a>中没有用<code>dynamic_rnn</code>的部分是将输入的三维数据<code>[batch_size,num_steps, state_size]</code>按<code>num_steps</code>维度进行拆分，然后每计算一步都存到<code>list</code>列表中，如下图</li>
+</ul>
+<p><img src="/assets/blog_images/RNN/RNN_list_tensor19.png" alt="计算之后存到list中" title="RNN_list_tensor19"></p>
+<ul>
+<li>这种构建方式<strong>很耗时</strong>，在我们例子中没有体现出来，但是如果我们要<strong>学习的步数</strong>很大(<code>num_steps</code>，也可以说要学习的依赖关系很长），如果再使用<strong>深层的RNN</strong>，这种就不合适了</li>
+<li><p>为了方便比较和<code>dynamic_rnn</code>的运行耗时，下面还是给出使用<code>list</code></p>
+<h2 id="2、使用list的方式-static-rnn"><a href="#2、使用list的方式-static-rnn" class="headerlink" title="2、使用list的方式(static_rnn)"></a>2、使用<code>list</code>的方式(<code>static_rnn</code>)</h2></li>
+<li><p>构建计算图</p>
+<ul>
+<li>我这里<code>tensorflow</code>的版本是<code>1.2.0</code>，与<code>1.0</code> 些许不一样</li>
+<li>和之前的例子差不多，这里不再累述<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">'''使用list的方式'''</div><div class="line">def build_basic_rnn_graph_with_list(</div><div class="line">    state_size = state_size,</div><div class="line">    num_classes = num_classes,</div><div class="line">    batch_size = batch_size,</div><div class="line">    num_steps = num_steps,</div><div class="line">    num_layers = 3,</div><div class="line">    learning_rate = learning_rate):</div><div class="line"></div><div class="line">    reset_graph()</div><div class="line"></div><div class="line">    x = tf.placeholder(tf.int32, [batch_size, num_steps], name='x')</div><div class="line">    y = tf.placeholder(tf.int32, [batch_size, num_steps], name='y')</div><div class="line"></div><div class="line">    x_one_hot = tf.one_hot(x, num_classes)   # (batch_size, num_steps, num_classes)</div><div class="line">    '''这里按第二维拆开num_steps*(batch_size, num_classes)'''</div><div class="line">    rnn_inputs = [tf.squeeze(i,squeeze_dims=[1]) for i in tf.split(x_one_hot, num_steps, 1)]</div><div class="line"></div><div class="line">    cell = tf.nn.rnn_cell.BasicRNNCell(state_size)</div><div class="line">    init_state = cell.zero_state(batch_size, tf.float32)</div><div class="line">    '''使用static_rnn方式'''</div><div class="line">    rnn_outputs, final_state = tf.contrib.rnn.static_rnn(cell=cell, inputs=rnn_inputs, </div><div class="line">                                                        initial_state=init_state)</div><div class="line">    #rnn_outputs, final_state = tf.nn.rnn(cell, rnn_inputs, initial_state=init_state) # tensorflow 1.0的方式</div><div class="line">    with tf.variable_scope('softmax'):</div><div class="line">        W = tf.get_variable('W', [state_size, num_classes])</div><div class="line">        b = tf.get_variable('b', [num_classes], initializer=tf.constant_initializer(0.0))</div><div class="line">    logits = [tf.matmul(rnn_output, W) + b for rnn_output in rnn_outputs]</div><div class="line"></div><div class="line">    y_as_list = [tf.squeeze(i, squeeze_dims=[1]) for i in tf.split(y, num_steps, 1)]</div><div class="line"></div><div class="line">    #loss_weights = [tf.ones([batch_size]) for i in range(num_steps)]</div><div class="line">    losses = tf.nn.sparse_softmax_cross_entropy_with_logits(labels=y_as_list, </div><div class="line">                                                  logits=logits)</div><div class="line">    #losses = tf.nn.seq2seq.sequence_loss_by_example(logits, y_as_list, loss_weights)  # tensorflow 1.0的方式</div><div class="line">    total_loss = tf.reduce_mean(losses)</div><div class="line">    train_step = tf.train.AdamOptimizer(learning_rate).minimize(total_loss)</div><div class="line"></div><div class="line">    return dict(</div><div class="line">        x = x,</div><div class="line">        y = y,</div><div class="line">        init_state = init_state,</div><div class="line">        final_state = final_state,</div><div class="line">        total_loss = total_loss,</div><div class="line">        train_step = train_step</div><div class="line">    )</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>训练神经网络函数</p>
+<ul>
+<li>和之前例子类似<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">'''训练rnn网络的函数'''</div><div class="line">def train_rnn(g, num_epochs, num_steps=num_steps, batch_size=batch_size, verbose=True, save=False):</div><div class="line">    tf.set_random_seed(2345)</div><div class="line">    with tf.Session() as sess:</div><div class="line">        sess.run(tf.initialize_all_variables())</div><div class="line">        training_losses = []</div><div class="line">        for idx, epoch in enumerate(gen_epochs(num_epochs, num_steps, batch_size)):</div><div class="line">            training_loss = 0</div><div class="line">            steps = 0</div><div class="line">            training_state = None</div><div class="line">            for X, Y in epoch:</div><div class="line">                steps += 1</div><div class="line">                feed_dict = &#123;g['x']: X, g['y']: Y&#125;</div><div class="line">                if training_state is not None:</div><div class="line">                    feed_dict[g['init_state']] = training_state</div><div class="line">                training_loss_, training_state, _ = sess.run([g['total_loss'],</div><div class="line">                                                           g['final_state'],</div><div class="line">                                                           g['train_step']],</div><div class="line">                                                          feed_dict=feed_dict)</div><div class="line">                training_loss += training_loss_ </div><div class="line">            if verbose:</div><div class="line">                print('epoch: &#123;0&#125;的平均损失值：&#123;1&#125;'.format(idx, training_loss/steps))</div><div class="line">            training_losses.append(training_loss/steps)</div><div class="line">        </div><div class="line">        if isinstance(save, str):</div><div class="line">            g['saver'].save(sess, save)</div><div class="line">    return training_losses</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>调用执行：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">start_time = <span class="selector-tag">time</span>.time()</div><div class="line">g = build_basic_rnn_graph_with_list()</div><div class="line"><span class="function"><span class="title">print</span><span class="params">(<span class="string">"构建图耗时"</span>, time.time()</span></span>-start_time)</div><div class="line">start_time = <span class="selector-tag">time</span>.time()</div><div class="line"><span class="function"><span class="title">train_rnn</span><span class="params">(g, <span class="number">3</span>)</span></span></div><div class="line"><span class="function"><span class="title">print</span><span class="params">(<span class="string">"训练耗时："</span>, time.time()</span></span>-start_time)</div></pre></td></tr></table></figure>
+</li>
+<li><p>运行结果</p>
+<ul>
+<li>构建计算图耗时: <code>113.43532419204712</code></li>
+<li><code>3</code>个<code>epoch</code>运行耗时：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">epoch: 0的平均损失值：3.6314958388777985</div><div class="line">epoch: 1的平均损失值：3.287133811534136</div><div class="line">epoch: 2的平均损失值：3.250853428895446</div><div class="line">训练耗时： 84.2816972732544</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>可以看出在<strong>构建图的时候非常耗时</strong>，这里仅仅<strong>一层的cell</strong></p>
+</li>
+</ul>
+<h2 id="3、dynamic-rnn的使用"><a href="#3、dynamic-rnn的使用" class="headerlink" title="3、dynamic_rnn的使用"></a>3、<code>dynamic_rnn</code>的使用</h2><ul>
+<li>之前在我们<a href="http://lawlite.me/2017/06/16/RNN-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-02Tensorflow%E4%B8%AD%E7%9A%84%E5%AE%9E%E7%8E%B0/#2-%E4%BD%BF%E7%94%A8dynamic-rnn%E6%96%B9%E5%BC%8F">第一个例子</a>中实际已经使用过了，这里使用<code>MultiRNNCell</code>实现<strong>多层cell</strong>，具体下面再讲</li>
+<li>构建模型：<ul>
+<li><code>tf.nn.embedding_lookup(params, ids)</code>函数是在<code>params</code>中查找<code>ids</code>的<strong>表示</strong>， 和在<code>matrix</code>中用<code>array</code>索引类似, 这里是在<strong>二维embeddings</strong>中找<strong>二维的ids</strong>, <code>ids</code>每一行中的一个数对应<code>embeddings</code>中的一行，所以最后是<code>[batch_size, num_steps, state_size]</code>，关于具体的输出可以<a href="https://gist.github.com/lawlite19/02a598c6d9b91a53d0a38fd081f9cbc4" target="_blank" rel="external">查看这里</a></li>
+<li>这里我认为就是某个<strong>字母的表示</strong>,之前上面我们的<code>statci_rnn</code>就是<code>one-hot</code>来表示的</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">'''使用dynamic_rnn方式</div><div class="line">   - 之前我们自己实现的cell和static_rnn的例子都是将得到的tensor使用list存起来，这种方式构建计算图时很慢</div><div class="line">   - dynamic可以在运行时构建计算图</div><div class="line">'''</div><div class="line">def build_multilayer_lstm_graph_with_dynamic_rnn(</div><div class="line">    state_size = state_size,</div><div class="line">    num_classes = num_classes,</div><div class="line">    batch_size = batch_size,</div><div class="line">    num_steps = num_steps,</div><div class="line">    num_layers = 3,</div><div class="line">    learning_rate = learning_rate</div><div class="line">    ):</div><div class="line">    reset_graph()</div><div class="line">    x = tf.placeholder(tf.int32, [batch_size, num_steps], name='x')</div><div class="line">    y = tf.placeholder(tf.int32, [batch_size, num_steps], name='y')</div><div class="line">    embeddings = tf.get_variable(name='embedding_matrix', shape=[num_classes, state_size])</div><div class="line">    '''这里的输入是三维的[batch_size, num_steps, state_size]</div><div class="line">        - embedding_lookup(params, ids)函数是在params中查找ids的表示， 和在matrix中用array索引类似,</div><div class="line">          这里是在二维embeddings中找二维的ids, ids每一行中的一个数对应embeddings中的一行，所以最后是[batch_size, num_steps, state_size]</div><div class="line">    '''</div><div class="line">    rnn_inputs = tf.nn.embedding_lookup(params=embeddings, ids=x)</div><div class="line">    cell = tf.nn.rnn_cell.LSTMCell(num_units=state_size, state_is_tuple=True)</div><div class="line">    cell = tf.nn.rnn_cell.MultiRNNCell(cells=[cell]*num_layers, state_is_tuple=True)</div><div class="line">    init_state = cell.zero_state(batch_size, dtype=tf.float32)</div><div class="line">    '''使用dynamic_rnn方式'''</div><div class="line">    rnn_outputs, final_state = tf.nn.dynamic_rnn(cell=cell, inputs=rnn_inputs, </div><div class="line">                                                 initial_state=init_state)    </div><div class="line">    with tf.variable_scope('softmax'):</div><div class="line">        W = tf.get_variable('W', [state_size, num_classes])</div><div class="line">        b = tf.get_variable('b', [num_classes], initializer=tf.constant_initializer(0.0))</div><div class="line">    </div><div class="line">    rnn_outputs = tf.reshape(rnn_outputs, [-1, state_size])   # 转成二维的矩阵</div><div class="line">    y_reshape = tf.reshape(y, [-1])</div><div class="line">    logits = tf.matmul(rnn_outputs, W) + b                    # 进行矩阵运算</div><div class="line">    total_loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=y_reshape))</div><div class="line">    train_step = tf.train.AdamOptimizer(learning_rate).minimize(total_loss)</div><div class="line">    </div><div class="line">    return dict(x = x,</div><div class="line">                y = y,</div><div class="line">                init_state = init_state,</div><div class="line">                final_state = final_state,</div><div class="line">                total_loss = total_loss,</div><div class="line">                train_step = train_step)</div></pre></td></tr></table></figure>
+<ul>
+<li>调用执行即可</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">start_time = <span class="selector-tag">time</span>.time()</div><div class="line">g = build_multilayer_lstm_graph_with_dynamic_rnn()</div><div class="line"><span class="function"><span class="title">print</span><span class="params">(<span class="string">"构建图耗时"</span>, time.time()</span></span>-start_time)</div><div class="line">start_time = <span class="selector-tag">time</span>.time()</div><div class="line"><span class="function"><span class="title">train_rnn</span><span class="params">(g, <span class="number">3</span>)</span></span></div><div class="line"><span class="function"><span class="title">print</span><span class="params">(<span class="string">"训练耗时："</span>, time.time()</span></span>-start_time)</div></pre></td></tr></table></figure>
+<ul>
+<li>运行结果（注意这是<strong>3层的LSTM</strong>）：<ul>
+<li>构建计算图耗时 <code>7.616888523101807</code>，相比第一种<code>static_rnn</code>很快</li>
+<li>训练耗时(这是<strong>3层的LSTM</strong>，所以还是挺慢的)：<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">epoch: <span class="number">0</span>的平均损失值：<span class="number">3.604653576324726</span></div><div class="line">epoch: <span class="number">1</span>的平均损失值：<span class="number">3.3202743626188957</span></div><div class="line">epoch: <span class="number">2</span>的平均损失值：<span class="number">3.3155322650383257</span></div><div class="line">训练耗时： <span class="number">303.5468375682831</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="4、tf-scan实现的方式"><a href="#4、tf-scan实现的方式" class="headerlink" title="4、tf.scan实现的方式"></a>4、<code>tf.scan</code>实现的方式</h2><ul>
+<li>如果你不了解<code>tf.scan</code>，建议看下<a href="https://www.tensorflow.org/api_docs/python/tf/scan" target="_blank" rel="external">官方API</a>, 还是有点复杂的。<ul>
+<li>或者Youtube上有个介绍，<a href="https://www.youtube.com/watch?v=A6qJMB3stE4&amp;t=621s" target="_blank" rel="external">点击这里查看</a></li>
+</ul>
+</li>
+<li><code>scan</code>是个高阶函数，<strong>一般的计算方式是</strong>：给定一个<strong>序列</strong>$[x_0, x_1,…..,x_n]$和<strong>初试状态</strong>$y_{-1}$,根据$y_t = f(x_t, y_{t-1})$ 计算得到<strong>最终序列</strong>$[y_0, y_1,……,y_n]$</li>
+<li>构建计算图<ul>
+<li><code>tf.transpose(rnn_inputs, [1,0,2])</code>  是将<code>rnn_inputs</code>的<strong>第一个和第二个维度调换</strong>，即变成<code>[num_steps,batch_size, state_size]</code>, 在<code>dynamic_rnn</code>函数有个<strong>time_major参数</strong>，就是指定<code>num_steps</code>是否在第一个维度上，默认是<code>false</code>的,即不在第一维 </li>
+<li><code>tf.scan</code>会将<code>elems</code>按照<strong>第一维拆开</strong>，所以一次就是一个<code>step</code>的数据（和我们<code>static_rnn</code>的例子类似） </li>
+<li><strong>参数a</strong>的结构和<strong>initializer的结构一致</strong>，所以<code>a[1]</code>就是对应的<code>state</code>，<code>cell</code>需要传入<code>x</code>和<code>state</code>计算 </li>
+<li>每次迭代<code>cell</code>返回的是一个<code>rnn_output, shape=(batch_size,state_size)</code>和对应的<code>state</code>,<code>num_steps</code>之后的<code>rnn_outputs</code>的<code>shape</code>就是<code>(num_steps, batch_size, state_size)</code> ，<code>state</code>同理</li>
+<li>每次输入的<code>x</code>都会得到的<code>state--&gt;(final_states)</code>，我们只要的最后的<code>final_state</code> </li>
+</ul>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">'''使用scan实现dynamic_rnn的效果'''</div><div class="line">def build_multilayer_lstm_graph_with_scan(</div><div class="line">    state_size = state_size,</div><div class="line">    num_classes = num_classes,</div><div class="line">    batch_size = batch_size,</div><div class="line">    num_steps = num_steps,</div><div class="line">    num_layers = 3,</div><div class="line">    learning_rate = learning_rate</div><div class="line">    ):</div><div class="line">    reset_graph()</div><div class="line">    x = tf.placeholder(tf.int32, [batch_size, num_steps], name='x')</div><div class="line">    y = tf.placeholder(tf.int32, [batch_size, num_steps], name='y')</div><div class="line">    embeddings = tf.get_variable(name='embedding_matrix', shape=[num_classes, state_size])</div><div class="line">    '''这里的输入是三维的[batch_size, num_steps, state_size]'''</div><div class="line">    rnn_inputs = tf.nn.embedding_lookup(params=embeddings, ids=x)</div><div class="line">    '''构建多层的cell, 先构建一个cell, 然后使用MultiRNNCell函数构建即可'''</div><div class="line">    cell = tf.nn.rnn_cell.LSTMCell(num_units=state_size, state_is_tuple=True)</div><div class="line">    cell = tf.nn.rnn_cell.MultiRNNCell(cells=[cell]*num_layers, state_is_tuple=True)  </div><div class="line">    init_state = cell.zero_state(batch_size, dtype=tf.float32)</div><div class="line">    '''使用tf.scan方式</div><div class="line">       - tf.transpose(rnn_inputs, [1,0,2])  是将rnn_inputs的第一个和第二个维度调换，即[num_steps,batch_size, state_size],</div><div class="line">           在dynamic_rnn函数有个time_major参数，就是指定num_steps是否在第一个维度上，默认是false的,即不在第一维</div><div class="line">       - tf.scan会将elems按照第一维拆开，所以一次就是一个step的数据（和我们static_rnn的例子类似）</div><div class="line">       - a的结构和initializer的结构一致，所以a[1]就是对应的state，cell需要传入x和state计算</div><div class="line">       - 每次迭代cell返回的是一个rnn_output(batch_size,state_size)和对应的state,num_steps之后的rnn_outputs的shape就是(num_steps, batch_size, state_size)</div><div class="line">       - 每次输入的x都会得到的state(final_states)，我们只要的最后的final_state</div><div class="line">    '''</div><div class="line">    def testfn(a, x):</div><div class="line">        return cell(x, a[1])</div><div class="line">    rnn_outputs, final_states = tf.scan(fn=testfn, elems=tf.transpose(rnn_inputs, [1,0,2]),</div><div class="line">                                        initializer=(tf.zeros([batch_size,state_size]),init_state)</div><div class="line">                                        )</div><div class="line">    '''或者使用lambda的方式'''</div><div class="line">    #rnn_outputs, final_states = tf.scan(lambda a,x: cell(x, a[1]), tf.transpose(rnn_inputs, [1,0,2]),</div><div class="line">                                        #initializer=(tf.zeros([batch_size, state_size]),init_state))</div><div class="line">    final_state = tuple([tf.nn.rnn_cell.LSTMStateTuple(</div><div class="line">        tf.squeeze(tf.slice(c, [num_steps-1,0,0], [1,batch_size,state_size])),</div><div class="line">        tf.squeeze(tf.slice(h, [num_steps-1,0,0], [1,batch_size,state_size]))) for c, h in final_states])</div><div class="line"></div><div class="line">    with tf.variable_scope('softmax'):</div><div class="line">        W = tf.get_variable('W', [state_size, num_classes])</div><div class="line">        b = tf.get_variable('b', [num_classes], initializer=tf.constant_initializer(0.0))</div><div class="line">    </div><div class="line">    rnn_outputs = tf.reshape(rnn_outputs, [-1, state_size])</div><div class="line">    y_reshape = tf.reshape(y, [-1])</div><div class="line">    logits = tf.matmul(rnn_outputs, W) + b</div><div class="line">    total_loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=y_reshape))</div><div class="line">    train_step = tf.train.AdamOptimizer(learning_rate).minimize(total_loss)</div><div class="line">    </div><div class="line">    return dict(x = x,</div><div class="line">                y = y,</div><div class="line">                init_state = init_state,</div><div class="line">                final_state = final_state,</div><div class="line">                total_loss = total_loss,</div><div class="line">                train_step = train_step)</div></pre></td></tr></table></figure>
+<ul>
+<li>运行结果<ul>
+<li>构建计算图耗时: <code>8.685610055923462</code> （比<code>dynamic_rnn</code>稍微慢一点）</li>
+<li>训练耗时（和<code>dynamic_rnn</code>耗时差不多）</li>
+</ul>
+</li>
+<li>使用<code>scan</code>的方式只比<code>dynamic_rnn</code>慢一点点，但是对我们来说更加灵活和清楚执行的过程。也方便我们修改代码（比如从<code>state</code>的<code>t-2</code>时刻跳过一个时刻直接到<code>t</code>）</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">epoch: <span class="number">0</span>的平均损失值：<span class="number">3.6226147892831384</span></div><div class="line">epoch: <span class="number">1</span>的平均损失值：<span class="number">3.3211338095281318</span></div><div class="line">epoch: <span class="number">2</span>的平均损失值：<span class="number">3.3158331972429123</span></div><div class="line">训练耗时： <span class="number">303.2535448074341</span></div></pre></td></tr></table></figure>
+<h1 id="三、关于多层RNN"><a href="#三、关于多层RNN" class="headerlink" title="三、关于多层RNN"></a>三、关于多层<code>RNN</code></h1><h2 id="1、结构"><a href="#1、结构" class="headerlink" title="1、结构"></a>1、结构</h2><ul>
+<li><code>LSTM</code>中包含两个<code>state</code>,一个是<code>c</code>记忆单元（<code>memory cell</code>），另外一个是<code>h</code>隐藏状态(<code>hidden state</code>), 在<code>Tensorflow</code>中是以<code>tuple</code>元组的形式，所以才有上面构建<code>dynamic_rnn</code>时的参数<code>state_is_tuple</code>的参数，这种方式执行更快</li>
+<li>多层的结构如下图<br><img src="/assets/blog_images/RNN/RNN_LSTM_27.png" alt="多层RNN" title="RNN_LSTM_27"></li>
+<li>我们可以将其<strong>包装起来</strong>, 看起来像一个<code>cell</code>一样<br><img src="/assets/blog_images/RNN/RNN_LSTM_28.png" alt="包装 cell" title="RNN_LSTM_28"></li>
+</ul>
+<h2 id="2、代码"><a href="#2、代码" class="headerlink" title="2、代码"></a>2、代码</h2><ul>
+<li><code>Tensorflow</code>中的实现就是使用<code>tf.nn.rnn_cell.MultiRNNCell</code><ul>
+<li>声明一个<code>cell</code></li>
+<li><code>MultiRNNCell</code>中传入<code>[cell]*num_layers</code>就可以了</li>
+<li>注意如果是<code>LSTM</code>，定义参数<code>state_is_tuple=True</code><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cell = tf<span class="selector-class">.nn</span><span class="selector-class">.rnn_cell</span><span class="selector-class">.LSTMCell</span>(num_units=state_size, state_is_tuple=True)</div><div class="line">cell = tf<span class="selector-class">.nn</span><span class="selector-class">.rnn_cell</span><span class="selector-class">.MultiRNNCell</span>(cells=[cell]*num_layers, state_is_tuple=True)</div><div class="line">init_state = cell.zero_state(batch_size, dtype=tf.float32)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="四、Dropout操作"><a href="#四、Dropout操作" class="headerlink" title="四、Dropout操作"></a>四、Dropout操作</h1><ul>
+<li>应用在一层<code>cell</code>的<strong>输入和输出</strong>，<strong>不应用在循环的部分</strong></li>
+</ul>
+<h2 id="1、一层的cell"><a href="#1、一层的cell" class="headerlink" title="1、一层的cell"></a>1、一层的<code>cell</code></h2><ul>
+<li><code>static_rnn</code>中实现<ul>
+<li>声明<code>placeholder</code>：<code>keep_prob = tf.placeholder(tf.float32, name=&#39;keep_prob&#39;)</code></li>
+<li>输入：<code>rnn_inputs = [tf.nn.dropout(rnn_input, keep_prob) for rnn_input in rnn_inputs]</code></li>
+<li>输出：<code>rnn_outputs = [tf.nn.dropout(rnn_output, keep_prob) for rnn_output in rnn_outputs]</code></li>
+<li><code>feed_dict</code>中加入即可：<code>feed_dict = {g[&#39;x&#39;]: X, g[&#39;y&#39;]: Y, g[&#39;keep_prob&#39;]: keep_prob}</code></li>
+</ul>
+</li>
+<li><code>dynamic_rnn</code>或者<code>scan</code>中实现<ul>
+<li>直接添加即可，其余类似：<code>rnn_inputs = tf.nn.dropout(rnn_inputed, keep_prob)</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="2、多层cell"><a href="#2、多层cell" class="headerlink" title="2、多层cell"></a>2、多层<code>cell</code></h2><ul>
+<li>我们之前说使用<code>MultiRNNCell</code>将多层<code>cell</code>看作一个<code>cell</code>, 那么怎么实现对每层<code>cell</code>使用<code>dropout</code>呢</li>
+<li>可以使用<code>tf.nn.rnn_cell.DropoutWrapper</code>来实现</li>
+<li><strong>方式一</strong>：<code>cell = tf.nn.rnn_cell.DropoutWrapper(cell, input_keep_prob=input_keep_prob, output_keep_prob=output_drop_prob)</code><ul>
+<li>如果同时使用了<code>input_keep_prob</code>和<code>output_keep_prob</code>都是<code>0.9</code>, 那么层之间的<code>drop_out=0.9*0.9=0.81</code></li>
+</ul>
+</li>
+<li><strong>方式二</strong>: 对于<code>basic cell</code>只使用一个<code>input_keep_prob</code>或者<code>output_keep_prob</code>，对<code>MultiRNNCell</code>也使用一个<code>input_keep_prob</code>或者<code>output_keep_prob</code></li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cell = tf<span class="selector-class">.nn</span><span class="selector-class">.rnn_cell</span><span class="selector-class">.LSTMCell</span>(num_units=state_size, state_is_tuple=True)</div><div class="line">cell = tf<span class="selector-class">.nn</span><span class="selector-class">.rnn_cell</span><span class="selector-class">.DropoutWrapper</span>(cell, input_keep_prob=keep_prob)</div><div class="line">cell = tf<span class="selector-class">.nn</span><span class="selector-class">.rnn_cell</span><span class="selector-class">.MultiRNNCell</span>(cells=[cell]*num_layers, state_is_tuple=True)</div><div class="line">cell = tf<span class="selector-class">.nn</span><span class="selector-class">.rnn_cell</span><span class="selector-class">.DropoutWrapper</span>(cell,output_keep_prob=keep_prob)</div></pre></td></tr></table></figure>
+<h1 id="五、层标准化-Layer-Normalization"><a href="#五、层标准化-Layer-Normalization" class="headerlink" title="五、层标准化 (Layer Normalization)"></a>五、层标准化 (<code>Layer Normalization</code>)</h1><h2 id="1、说明"><a href="#1、说明" class="headerlink" title="1、说明"></a>1、说明</h2><ul>
+<li><code>Layer Normalization</code>是受<code>Batch Normalization</code>的启发而来，针对于<strong>RNN</strong>，可以查看<a href="https://arxiv.org/abs/1607.06450" target="_blank" rel="external">相关论文</a></li>
+<li><code>Batch Normalization</code>主要针对于<strong>传统的深度神经网络</strong>和<strong>CNN</strong>，关于<code>Batch Normalization</code>的操作和推导可以看<a href="http://lawlite.me/2017/06/23/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-Batch-Normalization/">我之前的博客</a></li>
+<li>可以加快训练的速度，得到更好的结果等</li>
+</ul>
+<h2 id="2、代码-1"><a href="#2、代码-1" class="headerlink" title="2、代码"></a>2、代码</h2><ul>
+<li>找到<code>LSTMCell</code>的源码拷贝一份修改即可</li>
+<li><p><code>layer normalization</code>函数</p>
+<ul>
+<li>传入的<code>tensor</code>是二维的，对其进行<code>batch normalization</code>操作</li>
+<li><code>tf.nn.moment</code>是计算<code>tensor</code>的<code>mean value</code>和<code>variance value</code></li>
+<li>然后对其进行缩放(<code>scale</code>)和平移(<code>shift</code>)<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">'''layer normalization'''</div><div class="line">def ln(tensor, scope=None, epsilon=1e-5):</div><div class="line">  assert(len(tensor.get_shape()) == 2)</div><div class="line">  m, v = tf.nn.moments(tensor, [1], keep_dims=True)</div><div class="line">  if not isinstance(scope, str):</div><div class="line">    scope = ''</div><div class="line">  with tf.variable_scope(scope+'layer_norm'):</div><div class="line">    scale = tf.get_variable(name='scale', </div><div class="line">                            shape=[tensor.get_shape()[1]], </div><div class="line">                            initializer=tf.constant_initializer(1))</div><div class="line">    shift = tf.get_variable('shift',</div><div class="line">                            [tensor.get_shape()[1]],</div><div class="line">                            initializer=tf.constant_initializer(0))</div><div class="line">  LN_initial = (tensor - m) / tf.sqrt(v + epsilon)</div><div class="line">  return LN_initial*scale + shift</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>LSTMCell</code>中的<code>call</code>方法<code>i,j,f,o</code>调用<code>layer normalization</code>操作</p>
+<ul>
+<li><code>_linear</code>函数中的<code>bias</code>设为<code>False</code>， 因为<code>BN</code>会加上<code>shift</code><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">'''这里bias设置为false, 因为bn会加上shift'''</div><div class="line">lstm_matrix = _linear([inputs, m_prev], 4 * self._num_units, bias=False)</div><div class="line">i, j, f, o = array_ops.split(</div><div class="line">    value=lstm_matrix, num_or_size_splits=4, axis=1)</div><div class="line">'''执行ln'''</div><div class="line">i = ln(i, scope = 'i/')</div><div class="line">j = ln(j, scope = 'j/')</div><div class="line">f = ln(f, scope = 'f/')</div><div class="line">o = ln(o, scope = 'o/')</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>构建计算图</p>
+<ul>
+<li>可以选择<code>RNN GRU LSTM</code></li>
+<li><code>Dropout</code></li>
+<li><code>Layer Normalization</code><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">'''最终的整合模型，</div><div class="line">   - 普通RNN，GRU，LSTM</div><div class="line">   - dropout</div><div class="line">   - BN</div><div class="line">'''</div><div class="line">from LayerNormalizedLSTMCell import LayerNormalizedLSTMCell # 导入layer normalization的LSTMCell 文件</div><div class="line"></div><div class="line">def build_final_graph(</div><div class="line">    cell_type = None,</div><div class="line">    state_size = state_size,</div><div class="line">    num_classes = num_classes,</div><div class="line">    batch_size = batch_size,</div><div class="line">    num_steps = num_steps,</div><div class="line">    num_layers = 3,</div><div class="line">    build_with_dropout = False,</div><div class="line">    learning_rate = learning_rate):</div><div class="line">    </div><div class="line">    reset_graph()</div><div class="line">    x = tf.placeholder(tf.int32, [batch_size, num_steps], name='x')</div><div class="line">    y = tf.placeholder(tf.int32, [batch_size, num_steps], name='y')</div><div class="line">    keep_prob = tf.placeholder(tf.float32, name='keep_prob')</div><div class="line">    embeddings = tf.get_variable('embedding_matrix', [num_classes, state_size])</div><div class="line">    rnn_inputs = tf.nn.embedding_lookup(embeddings, x)</div><div class="line">    if cell_type == 'GRU':</div><div class="line">        cell = tf.nn.rnn_cell.GRUCell(state_size)</div><div class="line">    elif cell_type == 'LSTM':</div><div class="line">        cell = tf.nn.rnn_cell.LSTMCell(state_size, state_is_tuple=True)</div><div class="line">    elif cell_type == 'LN_LSTM':</div><div class="line">        cell = LayerNormalizedLSTMCell(state_size)  # 自己修改的代码，导入对应的文件</div><div class="line">    else:</div><div class="line">        cell = tf.nn.rnn_cell.BasicRNNCell(state_size)</div><div class="line">    if build_with_dropout:</div><div class="line">        cell = tf.nn.rnn_cell.DropoutWrapper(cell, input_keep_prob=keep_prob)</div><div class="line">        </div><div class="line">    init_state = cell.zero_state(batch_size, tf.float32)</div><div class="line">    '''dynamic_rnn'''</div><div class="line">    rnn_outputs, final_state = tf.nn.dynamic_rnn(cell, rnn_inputs, initial_state=init_state)</div><div class="line">    with tf.variable_scope('softmax'):</div><div class="line">        W = tf.get_variable('W', [state_size, num_classes])</div><div class="line">        b = tf.get_variable('b', [num_classes], initializer=tf.constant_initializer(0.0))</div><div class="line">    rnn_outputs = tf.reshape(rnn_outputs, [-1, state_size])</div><div class="line">    y_reshaped = tf.reshape(y, [-1])</div><div class="line">    logits = tf.matmul(rnn_outputs, W) + b</div><div class="line"></div><div class="line">    predictions = tf.nn.softmax(logits)</div><div class="line"></div><div class="line">    total_loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=y_reshaped))</div><div class="line">    train_step = tf.train.AdamOptimizer(learning_rate).minimize(total_loss)</div><div class="line"></div><div class="line">    return dict(</div><div class="line">        x = x,</div><div class="line">        y = y,</div><div class="line">        keep_prob = keep_prob,</div><div class="line">        init_state = init_state,</div><div class="line">        final_state = final_state,</div><div class="line">        total_loss = total_loss,</div><div class="line">        train_step = train_step,</div><div class="line">        preds = predictions,</div><div class="line">        saver = tf.train.Saver()</div><div class="line">    )</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="六、生成文本"><a href="#六、生成文本" class="headerlink" title="六、生成文本"></a>六、生成文本</h1><h2 id="1、说明-1"><a href="#1、说明-1" class="headerlink" title="1、说明"></a>1、说明</h2><ul>
+<li>训练完成之后将计算图保存到本地磁盘，下次直接读取就可以了</li>
+<li>我们给出<strong>第一个字符</strong>，<code>RNN</code>接着一个个生成字符，每次都是<strong>根据前一个字符</strong><ul>
+<li>所以<code>num_steps=1</code>, <code>batch_size=1</code>（可以想象生成<code>prediction</code>的<code>shape</code>是<code>(1, num_classes)</code>中选择一个概率,–&gt; <code>num_steps=1</code> ）</li>
+</ul>
+</li>
+</ul>
+<h2 id="2、代码-2"><a href="#2、代码-2" class="headerlink" title="2、代码"></a>2、代码</h2><ul>
+<li>构建图（直接传入参数即可）：<code>g = build_final_graph(cell_type=&#39;LN_LSTM&#39;, num_steps=1, batch_size=1)</code></li>
+<li><p>生成文本</p>
+<ul>
+<li>读取训练好的文件</li>
+<li>得到给出的第一个字符对应的数字</li>
+<li>循环遍历要生成多少个字符， 每次循环生成一个字符<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">'''生成文本'''</div><div class="line">def generate_characters(g, checkpoint, num_chars, prompt='A', pick_top_chars=None):</div><div class="line">    with tf.Session() as sess:</div><div class="line">        sess.run(tf.global_variables_initializer())</div><div class="line">        g['saver'].restore(sess, checkpoint)   # 读取文件</div><div class="line">        state = None</div><div class="line">        current_char = vocab_to_idx[prompt]    # 得到给出的字母对应的数字</div><div class="line">        chars = [current_char]                          </div><div class="line">        for i in range(num_chars):             # 总共生成多少数字</div><div class="line">            if state is not None:              # 第一次state为None,因为计算图中定义了刚开始为0</div><div class="line">                feed_dict=&#123;g['x']: [[current_char]], g['init_state']: state&#125; # 传入当前字符</div><div class="line">            else:</div><div class="line">                feed_dict=&#123;g['x']: [[current_char]]&#125;</div><div class="line">            preds, state = sess.run([g['preds'],g['final_state']], feed_dict)   # 得到预测结果（概率）preds的shape就是（1，num_classes）</div><div class="line">            if pick_top_chars is not None:              # 如果设置了概率较大的前多少个</div><div class="line">                p = np.squeeze(preds)</div><div class="line">                p[np.argsort(p)[:-pick_top_chars]] = 0  # 其余的置为0</div><div class="line">                p = p / np.sum(p)                       # 因为下面np.random.choice函数p的概率和要求是1，处理一下</div><div class="line">                current_char = np.random.choice(vocab_size, 1, p=p)[0]    # 根据概率选择一个</div><div class="line">            else:</div><div class="line">                current_char = np.random.choice(vocab_size, 1, p=np.squeeze(preds))[0]</div><div class="line"></div><div class="line">            chars.append(current_char)</div><div class="line">    chars = map(lambda x: idx_to_vocab[x], chars)</div><div class="line">    result = "".join(chars)</div><div class="line">    print(result)</div><div class="line">    return result</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>结果</p>
+<ul>
+<li>由于训练耗时很长，这里使用<code>LSTM</code>训练了<code>30</code>个<code>epoch</code>，结果如下</li>
+<li>可以自己调整参数，可能会得到更好的结果<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">ANK</div><div class="line">O: HFOFMFRone s the statlighte thithe thit.</div><div class="line"></div><div class="line">BODEN --</div><div class="line"></div><div class="line">I I's a tomir.</div><div class="line">I't</div><div class="line">shis and on ar tald the theand this he sile be cares hat s ond tho fo hour he singe sime shind and somante tat ond treang tatsing of the an the to to fook.. Ir ard the with ane she stale..</div><div class="line">ANTE --</div><div class="line"></div><div class="line">KINE</div><div class="line">Show the ard and a beat the weringe be thing or.</div><div class="line"></div><div class="line">Bo hith tho he melan to the mute steres.</div><div class="line"></div><div class="line">The singer stis ard stis.</div><div class="line"></div><div class="line">BACE CANKONS CORE</div><div class="line">Sard the sids ing tho the the sackes tom the</div><div class="line"></div><div class="line">IN</div><div class="line">We stoe shit a dome thor</div><div class="line"></div><div class="line">ate seomser hith.</div><div class="line"></div><div class="line">That</div><div class="line">thow ound</div><div class="line"></div><div class="line"></div><div class="line">TANTONT. SEAT THONTITE SERTI                         1  23</div><div class="line">SHe the mathe a tomoner</div><div class="line">ind is ingit ofres treacentit. Sher stard on this the tor an the candin he whor he sath heres and</div><div class="line">stha dortour tit thas stand. I'd and or a</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="https://r2rt.com/recurrent-neural-networks-in-tensorflow-ii.html" target="_blank" rel="external">https://r2rt.com/recurrent-neural-networks-in-tensorflow-ii.html</a></li>
+<li><a href="https://karpathy.github.io/2015/05/21/rnn-effectiveness/" target="_blank" rel="external">https://karpathy.github.io/2015/05/21/rnn-effectiveness/</a></li>
+<li><a href="http://jmlr.org/proceedings/papers/v37/ioffe15.pdf" target="_blank" rel="external">http://jmlr.org/proceedings/papers/v37/ioffe15.pdf</a></li>
+<li><code>tensorflow scan</code>：<ul>
+<li><a href="https://www.tensorflow.org/api_docs/python/tf/scan" target="_blank" rel="external">https://www.tensorflow.org/api_docs/python/tf/scan</a></li>
+<li><a href="https://www.youtube.com/watch?v=A6qJMB3stE4&amp;t=621s" target="_blank" rel="external">https://www.youtube.com/watch?v=A6qJMB3stE4&amp;t=621s</a></li>
+</ul>
+</li>
+</ul>
+
+
+		
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/weixin.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">DeepLearning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">RNN</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">LSTM</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://lawlite.me/2017/06/21/RNN-LSTM循环神经网络-03Tensorflow进阶实现/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/06/21/RNN-循环神经网络之LSTM和GRU-04介绍及推导/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          RNN-循环神经网络之LSTM和GRU-04介绍及推导
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/06/16/RNN-循环神经网络-02Tensorflow中的实现/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">RNN-循环神经网络-02Tensorflow中的实现</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
+  
+
+
+
+
+
+
+<section class="duoshuo" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8yODEwMy80Njc2">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+
+<!-- 网易云跟帖 -->
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 Lawlite
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+  总访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true,
+		showTags: true
+	}
+</script>
+
+<script>!function(t){function n(r){if(e[r])return e[r].exports;var o=e[r]={exports:{},id:r,loaded:!1};return t[r].call(o.exports,o,o.exports,n),o.loaded=!0,o.exports}var e={};return n.m=t,n.c=e,n.p="./",n(0)}([function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}function o(t,n){var e=/\/|index.html/g;return t.replace(e,"")===n.replace(e,"")}function i(){for(var t=document.querySelectorAll(".js-header-menu li a"),n=window.location.pathname,e=0,r=t.length;e<r;e++){var i=t[e];o(n,i.getAttribute("href"))&&(0,d.default)(i,"active")}}function u(t){for(var n=t.offsetLeft,e=t.offsetParent;null!==e;)n+=e.offsetLeft,e=e.offsetParent;return n}function f(t){for(var n=t.offsetTop,e=t.offsetParent;null!==e;)n+=e.offsetTop,e=e.offsetParent;return n}function c(t,n,e,r,o){var i=u(t),c=f(t)-n;if(c-e<=o){var a=t.$newDom;a||(a=t.cloneNode(!0),(0,h.default)(t,a),t.$newDom=a,a.style.position="fixed",a.style.top=(e||c)+"px",a.style.left=i+"px",a.style.zIndex=r||2,a.style.width="100%",a.style.color="#fff"),a.style.visibility="visible",t.style.visibility="hidden"}else{t.style.visibility="visible";var s=t.$newDom;s&&(s.style.visibility="hidden")}}function a(){var t=document.querySelector(".js-overlay"),n=document.querySelector(".js-header-menu");c(t,document.body.scrollTop,-63,2,0),c(n,document.body.scrollTop,1,3,0)}function s(){document.querySelector("#container").addEventListener("scroll",function(t){a()}),window.addEventListener("scroll",function(t){a()}),a()}function l(){x.default.versions.mobile&&window.screen.width<800&&(i(),s())}var p=e(71),d=r(p),v=e(72),y=(r(v),e(84)),h=r(y),b=e(69),x=r(b),m=e(75),g=r(m),w=e(70);l(),(0,w.addLoadEvent)(function(){g.default.init()}),t.exports={}},function(t,n){var e=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=e)},function(t,n){var e={}.hasOwnProperty;t.exports=function(t,n){return e.call(t,n)}},function(t,n,e){var r=e(49),o=e(15);t.exports=function(t){return r(o(t))}},function(t,n,e){t.exports=!e(8)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,n,e){var r=e(6),o=e(12);t.exports=e(4)?function(t,n,e){return r.f(t,n,o(1,e))}:function(t,n,e){return t[n]=e,t}},function(t,n,e){var r=e(10),o=e(30),i=e(24),u=Object.defineProperty;n.f=e(4)?Object.defineProperty:function(t,n,e){if(r(t),n=i(n,!0),r(e),o)try{return u(t,n,e)}catch(t){}if("get"in e||"set"in e)throw TypeError("Accessors not supported!");return"value"in e&&(t[n]=e.value),t}},function(t,n,e){var r=e(22)("wks"),o=e(13),i=e(1).Symbol,u="function"==typeof i,f=t.exports=function(t){return r[t]||(r[t]=u&&i[t]||(u?i:o)("Symbol."+t))};f.store=r},function(t,n){t.exports=function(t){try{return!!t()}catch(t){return!0}}},function(t,n,e){var r=e(35),o=e(16);t.exports=Object.keys||function(t){return r(t,o)}},function(t,n,e){var r=e(11);t.exports=function(t){if(!r(t))throw TypeError(t+" is not an object!");return t}},function(t,n){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,n){t.exports=function(t,n){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:n}}},function(t,n){var e=0,r=Math.random();t.exports=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++e+r).toString(36))}},function(t,n){var e=t.exports={version:"2.4.0"};"number"==typeof __e&&(__e=e)},function(t,n){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t}},function(t,n){t.exports="constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf".split(",")},function(t,n){t.exports={}},function(t,n){t.exports=!0},function(t,n){n.f={}.propertyIsEnumerable},function(t,n,e){var r=e(6).f,o=e(2),i=e(7)("toStringTag");t.exports=function(t,n,e){t&&!o(t=e?t:t.prototype,i)&&r(t,i,{configurable:!0,value:n})}},function(t,n,e){var r=e(22)("keys"),o=e(13);t.exports=function(t){return r[t]||(r[t]=o(t))}},function(t,n,e){var r=e(1),o="__core-js_shared__",i=r[o]||(r[o]={});t.exports=function(t){return i[t]||(i[t]={})}},function(t,n){var e=Math.ceil,r=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?r:e)(t)}},function(t,n,e){var r=e(11);t.exports=function(t,n){if(!r(t))return t;var e,o;if(n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;if("function"==typeof(e=t.valueOf)&&!r(o=e.call(t)))return o;if(!n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;throw TypeError("Can't convert object to primitive value")}},function(t,n,e){var r=e(1),o=e(14),i=e(18),u=e(26),f=e(6).f;t.exports=function(t){var n=o.Symbol||(o.Symbol=i?{}:r.Symbol||{});"_"==t.charAt(0)||t in n||f(n,t,{value:u.f(t)})}},function(t,n,e){n.f=e(7)},function(t,n,e){var r=e(1),o=e(14),i=e(46),u=e(5),f="prototype",c=function(t,n,e){var a,s,l,p=t&c.F,d=t&c.G,v=t&c.S,y=t&c.P,h=t&c.B,b=t&c.W,x=d?o:o[n]||(o[n]={}),m=x[f],g=d?r:v?r[n]:(r[n]||{})[f];d&&(e=n);for(a in e)s=!p&&g&&void 0!==g[a],s&&a in x||(l=s?g[a]:e[a],x[a]=d&&"function"!=typeof g[a]?e[a]:h&&s?i(l,r):b&&g[a]==l?function(t){var n=function(n,e,r){if(this instanceof t){switch(arguments.length){case 0:return new t;case 1:return new t(n);case 2:return new t(n,e)}return new t(n,e,r)}return t.apply(this,arguments)};return n[f]=t[f],n}(l):y&&"function"==typeof l?i(Function.call,l):l,y&&((x.virtual||(x.virtual={}))[a]=l,t&c.R&&m&&!m[a]&&u(m,a,l)))};c.F=1,c.G=2,c.S=4,c.P=8,c.B=16,c.W=32,c.U=64,c.R=128,t.exports=c},function(t,n){var e={}.toString;t.exports=function(t){return e.call(t).slice(8,-1)}},function(t,n,e){var r=e(11),o=e(1).document,i=r(o)&&r(o.createElement);t.exports=function(t){return i?o.createElement(t):{}}},function(t,n,e){t.exports=!e(4)&&!e(8)(function(){return 7!=Object.defineProperty(e(29)("div"),"a",{get:function(){return 7}}).a})},function(t,n,e){"use strict";var r=e(18),o=e(27),i=e(36),u=e(5),f=e(2),c=e(17),a=e(51),s=e(20),l=e(58),p=e(7)("iterator"),d=!([].keys&&"next"in[].keys()),v="@@iterator",y="keys",h="values",b=function(){return this};t.exports=function(t,n,e,x,m,g,w){a(e,n,x);var O,S,_,j=function(t){if(!d&&t in A)return A[t];switch(t){case y:return function(){return new e(this,t)};case h:return function(){return new e(this,t)}}return function(){return new e(this,t)}},P=n+" Iterator",E=m==h,M=!1,A=t.prototype,T=A[p]||A[v]||m&&A[m],L=T||j(m),N=m?E?j("entries"):L:void 0,C="Array"==n?A.entries||T:T;if(C&&(_=l(C.call(new t)),_!==Object.prototype&&(s(_,P,!0),r||f(_,p)||u(_,p,b))),E&&T&&T.name!==h&&(M=!0,L=function(){return T.call(this)}),r&&!w||!d&&!M&&A[p]||u(A,p,L),c[n]=L,c[P]=b,m)if(O={values:E?L:j(h),keys:g?L:j(y),entries:N},w)for(S in O)S in A||i(A,S,O[S]);else o(o.P+o.F*(d||M),n,O);return O}},function(t,n,e){var r=e(10),o=e(55),i=e(16),u=e(21)("IE_PROTO"),f=function(){},c="prototype",a=function(){var t,n=e(29)("iframe"),r=i.length,o="<",u=">";for(n.style.display="none",e(48).appendChild(n),n.src="javascript:",t=n.contentWindow.document,t.open(),t.write(o+"script"+u+"document.F=Object"+o+"/script"+u),t.close(),a=t.F;r--;)delete a[c][i[r]];return a()};t.exports=Object.create||function(t,n){var e;return null!==t?(f[c]=r(t),e=new f,f[c]=null,e[u]=t):e=a(),void 0===n?e:o(e,n)}},function(t,n,e){var r=e(35),o=e(16).concat("length","prototype");n.f=Object.getOwnPropertyNames||function(t){return r(t,o)}},function(t,n){n.f=Object.getOwnPropertySymbols},function(t,n,e){var r=e(2),o=e(3),i=e(45)(!1),u=e(21)("IE_PROTO");t.exports=function(t,n){var e,f=o(t),c=0,a=[];for(e in f)e!=u&&r(f,e)&&a.push(e);for(;n.length>c;)r(f,e=n[c++])&&(~i(a,e)||a.push(e));return a}},function(t,n,e){t.exports=e(5)},function(t,n,e){var r=e(15);t.exports=function(t){return Object(r(t))}},function(t,n,e){t.exports={default:e(41),__esModule:!0}},function(t,n,e){t.exports={default:e(42),__esModule:!0}},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}n.__esModule=!0;var o=e(39),i=r(o),u=e(38),f=r(u),c="function"==typeof f.default&&"symbol"==typeof i.default?function(t){return typeof t}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":typeof t};n.default="function"==typeof f.default&&"symbol"===c(i.default)?function(t){return"undefined"==typeof t?"undefined":c(t)}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":"undefined"==typeof t?"undefined":c(t)}},function(t,n,e){e(65),e(63),e(66),e(67),t.exports=e(14).Symbol},function(t,n,e){e(64),e(68),t.exports=e(26).f("iterator")},function(t,n){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,n){t.exports=function(){}},function(t,n,e){var r=e(3),o=e(61),i=e(60);t.exports=function(t){return function(n,e,u){var f,c=r(n),a=o(c.length),s=i(u,a);if(t&&e!=e){for(;a>s;)if(f=c[s++],f!=f)return!0}else for(;a>s;s++)if((t||s in c)&&c[s]===e)return t||s||0;return!t&&-1}}},function(t,n,e){var r=e(43);t.exports=function(t,n,e){if(r(t),void 0===n)return t;switch(e){case 1:return function(e){return t.call(n,e)};case 2:return function(e,r){return t.call(n,e,r)};case 3:return function(e,r,o){return t.call(n,e,r,o)}}return function(){return t.apply(n,arguments)}}},function(t,n,e){var r=e(9),o=e(34),i=e(19);t.exports=function(t){var n=r(t),e=o.f;if(e)for(var u,f=e(t),c=i.f,a=0;f.length>a;)c.call(t,u=f[a++])&&n.push(u);return n}},function(t,n,e){t.exports=e(1).document&&document.documentElement},function(t,n,e){var r=e(28);t.exports=Object("z").propertyIsEnumerable(0)?Object:function(t){return"String"==r(t)?t.split(""):Object(t)}},function(t,n,e){var r=e(28);t.exports=Array.isArray||function(t){return"Array"==r(t)}},function(t,n,e){"use strict";var r=e(32),o=e(12),i=e(20),u={};e(5)(u,e(7)("iterator"),function(){return this}),t.exports=function(t,n,e){t.prototype=r(u,{next:o(1,e)}),i(t,n+" Iterator")}},function(t,n){t.exports=function(t,n){return{value:n,done:!!t}}},function(t,n,e){var r=e(9),o=e(3);t.exports=function(t,n){for(var e,i=o(t),u=r(i),f=u.length,c=0;f>c;)if(i[e=u[c++]]===n)return e}},function(t,n,e){var r=e(13)("meta"),o=e(11),i=e(2),u=e(6).f,f=0,c=Object.isExtensible||function(){return!0},a=!e(8)(function(){return c(Object.preventExtensions({}))}),s=function(t){u(t,r,{value:{i:"O"+ ++f,w:{}}})},l=function(t,n){if(!o(t))return"symbol"==typeof t?t:("string"==typeof t?"S":"P")+t;if(!i(t,r)){if(!c(t))return"F";if(!n)return"E";s(t)}return t[r].i},p=function(t,n){if(!i(t,r)){if(!c(t))return!0;if(!n)return!1;s(t)}return t[r].w},d=function(t){return a&&v.NEED&&c(t)&&!i(t,r)&&s(t),t},v=t.exports={KEY:r,NEED:!1,fastKey:l,getWeak:p,onFreeze:d}},function(t,n,e){var r=e(6),o=e(10),i=e(9);t.exports=e(4)?Object.defineProperties:function(t,n){o(t);for(var e,u=i(n),f=u.length,c=0;f>c;)r.f(t,e=u[c++],n[e]);return t}},function(t,n,e){var r=e(19),o=e(12),i=e(3),u=e(24),f=e(2),c=e(30),a=Object.getOwnPropertyDescriptor;n.f=e(4)?a:function(t,n){if(t=i(t),n=u(n,!0),c)try{return a(t,n)}catch(t){}if(f(t,n))return o(!r.f.call(t,n),t[n])}},function(t,n,e){var r=e(3),o=e(33).f,i={}.toString,u="object"==typeof window&&window&&Object.getOwnPropertyNames?Object.getOwnPropertyNames(window):[],f=function(t){try{return o(t)}catch(t){return u.slice()}};t.exports.f=function(t){return u&&"[object Window]"==i.call(t)?f(t):o(r(t))}},function(t,n,e){var r=e(2),o=e(37),i=e(21)("IE_PROTO"),u=Object.prototype;t.exports=Object.getPrototypeOf||function(t){return t=o(t),r(t,i)?t[i]:"function"==typeof t.constructor&&t instanceof t.constructor?t.constructor.prototype:t instanceof Object?u:null}},function(t,n,e){var r=e(23),o=e(15);t.exports=function(t){return function(n,e){var i,u,f=String(o(n)),c=r(e),a=f.length;return c<0||c>=a?t?"":void 0:(i=f.charCodeAt(c),i<55296||i>56319||c+1===a||(u=f.charCodeAt(c+1))<56320||u>57343?t?f.charAt(c):i:t?f.slice(c,c+2):(i-55296<<10)+(u-56320)+65536)}}},function(t,n,e){var r=e(23),o=Math.max,i=Math.min;t.exports=function(t,n){return t=r(t),t<0?o(t+n,0):i(t,n)}},function(t,n,e){var r=e(23),o=Math.min;t.exports=function(t){return t>0?o(r(t),9007199254740991):0}},function(t,n,e){"use strict";var r=e(44),o=e(52),i=e(17),u=e(3);t.exports=e(31)(Array,"Array",function(t,n){this._t=u(t),this._i=0,this._k=n},function(){var t=this._t,n=this._k,e=this._i++;return!t||e>=t.length?(this._t=void 0,o(1)):"keys"==n?o(0,e):"values"==n?o(0,t[e]):o(0,[e,t[e]])},"values"),i.Arguments=i.Array,r("keys"),r("values"),r("entries")},function(t,n){},function(t,n,e){"use strict";var r=e(59)(!0);e(31)(String,"String",function(t){this._t=String(t),this._i=0},function(){var t,n=this._t,e=this._i;return e>=n.length?{value:void 0,done:!0}:(t=r(n,e),this._i+=t.length,{value:t,done:!1})})},function(t,n,e){"use strict";var r=e(1),o=e(2),i=e(4),u=e(27),f=e(36),c=e(54).KEY,a=e(8),s=e(22),l=e(20),p=e(13),d=e(7),v=e(26),y=e(25),h=e(53),b=e(47),x=e(50),m=e(10),g=e(3),w=e(24),O=e(12),S=e(32),_=e(57),j=e(56),P=e(6),E=e(9),M=j.f,A=P.f,T=_.f,L=r.Symbol,N=r.JSON,C=N&&N.stringify,k="prototype",F=d("_hidden"),q=d("toPrimitive"),I={}.propertyIsEnumerable,B=s("symbol-registry"),D=s("symbols"),W=s("op-symbols"),H=Object[k],K="function"==typeof L,R=r.QObject,J=!R||!R[k]||!R[k].findChild,U=i&&a(function(){return 7!=S(A({},"a",{get:function(){return A(this,"a",{value:7}).a}})).a})?function(t,n,e){var r=M(H,n);r&&delete H[n],A(t,n,e),r&&t!==H&&A(H,n,r)}:A,G=function(t){var n=D[t]=S(L[k]);return n._k=t,n},$=K&&"symbol"==typeof L.iterator?function(t){return"symbol"==typeof t}:function(t){return t instanceof L},z=function(t,n,e){return t===H&&z(W,n,e),m(t),n=w(n,!0),m(e),o(D,n)?(e.enumerable?(o(t,F)&&t[F][n]&&(t[F][n]=!1),e=S(e,{enumerable:O(0,!1)})):(o(t,F)||A(t,F,O(1,{})),t[F][n]=!0),U(t,n,e)):A(t,n,e)},Y=function(t,n){m(t);for(var e,r=b(n=g(n)),o=0,i=r.length;i>o;)z(t,e=r[o++],n[e]);return t},Q=function(t,n){return void 0===n?S(t):Y(S(t),n)},X=function(t){var n=I.call(this,t=w(t,!0));return!(this===H&&o(D,t)&&!o(W,t))&&(!(n||!o(this,t)||!o(D,t)||o(this,F)&&this[F][t])||n)},V=function(t,n){if(t=g(t),n=w(n,!0),t!==H||!o(D,n)||o(W,n)){var e=M(t,n);return!e||!o(D,n)||o(t,F)&&t[F][n]||(e.enumerable=!0),e}},Z=function(t){for(var n,e=T(g(t)),r=[],i=0;e.length>i;)o(D,n=e[i++])||n==F||n==c||r.push(n);return r},tt=function(t){for(var n,e=t===H,r=T(e?W:g(t)),i=[],u=0;r.length>u;)!o(D,n=r[u++])||e&&!o(H,n)||i.push(D[n]);return i};K||(L=function(){if(this instanceof L)throw TypeError("Symbol is not a constructor!");var t=p(arguments.length>0?arguments[0]:void 0),n=function(e){this===H&&n.call(W,e),o(this,F)&&o(this[F],t)&&(this[F][t]=!1),U(this,t,O(1,e))};return i&&J&&U(H,t,{configurable:!0,set:n}),G(t)},f(L[k],"toString",function(){return this._k}),j.f=V,P.f=z,e(33).f=_.f=Z,e(19).f=X,e(34).f=tt,i&&!e(18)&&f(H,"propertyIsEnumerable",X,!0),v.f=function(t){return G(d(t))}),u(u.G+u.W+u.F*!K,{Symbol:L});for(var nt="hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables".split(","),et=0;nt.length>et;)d(nt[et++]);for(var nt=E(d.store),et=0;nt.length>et;)y(nt[et++]);u(u.S+u.F*!K,"Symbol",{for:function(t){return o(B,t+="")?B[t]:B[t]=L(t)},keyFor:function(t){if($(t))return h(B,t);throw TypeError(t+" is not a symbol!")},useSetter:function(){J=!0},useSimple:function(){J=!1}}),u(u.S+u.F*!K,"Object",{create:Q,defineProperty:z,defineProperties:Y,getOwnPropertyDescriptor:V,getOwnPropertyNames:Z,getOwnPropertySymbols:tt}),N&&u(u.S+u.F*(!K||a(function(){var t=L();return"[null]"!=C([t])||"{}"!=C({a:t})||"{}"!=C(Object(t))})),"JSON",{stringify:function(t){if(void 0!==t&&!$(t)){for(var n,e,r=[t],o=1;arguments.length>o;)r.push(arguments[o++]);return n=r[1],"function"==typeof n&&(e=n),!e&&x(n)||(n=function(t,n){if(e&&(n=e.call(this,t,n)),!$(n))return n}),r[1]=n,C.apply(N,r)}}}),L[k][q]||e(5)(L[k],q,L[k].valueOf),l(L,"Symbol"),l(Math,"Math",!0),l(r.JSON,"JSON",!0)},function(t,n,e){e(25)("asyncIterator")},function(t,n,e){e(25)("observable")},function(t,n,e){e(62);for(var r=e(1),o=e(5),i=e(17),u=e(7)("toStringTag"),f=["NodeList","DOMTokenList","MediaList","StyleSheetList","CSSRuleList"],c=0;c<5;c++){var a=f[c],s=r[a],l=s&&s.prototype;l&&!l[u]&&o(l,u,a),i[a]=i.Array}},function(t,n){"use strict";var e={versions:function(){var t=window.navigator.userAgent;return{trident:t.indexOf("Trident")>-1,presto:t.indexOf("Presto")>-1,webKit:t.indexOf("AppleWebKit")>-1,gecko:t.indexOf("Gecko")>-1&&t.indexOf("KHTML")==-1,mobile:!!t.match(/AppleWebKit.*Mobile.*/),ios:!!t.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),android:t.indexOf("Android")>-1||t.indexOf("Linux")>-1,iPhone:t.indexOf("iPhone")>-1||t.indexOf("Mac")>-1,iPad:t.indexOf("iPad")>-1,webApp:t.indexOf("Safari")==-1,weixin:t.indexOf("MicroMessenger")==-1}}()};t.exports=e},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}var o=e(40),i=r(o),u=function(){function t(t,n,e){return n||e?String.fromCharCode(n||e):o[t]||t}function n(t){return l[t]}var e=/&quot;|&lt;|&gt;|&amp;|&nbsp;|&apos;|&#(\d+);|&#(\d+)/g,r=/['<> "&]/g,o={"&quot;":'"',"&lt;":"<","&gt;":">","&amp;":"&","&nbsp;":" "},f=/\u00a0/g,c=/<br\s*\/?>/gi,a=/\r?\n/g,s=/\s/g,l={};for(var p in o)l[o[p]]=p;return o["&apos;"]="'",l["'"]="&#39;",{encode:function(t){return t?(""+t).replace(r,n).replace(a,"<br/>").replace(s,"&nbsp;"):""},decode:function(n){return n?(""+n).replace(c,"\n").replace(e,t).replace(f," "):""},encodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},encodeBase16forJSON:function(t){if(!t)return t;t=t.replace(/[\u4E00-\u9FBF]/gi,function(t){return escape(t).replace("%u","\\u")});for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},decodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e+=2)n.push(String.fromCharCode("0x"+t.slice(e,e+2)));return n.join("")},encodeObject:function(t){if(t instanceof Array)for(var n=0,e=t.length;e>n;n++)t[n]=u.encodeObject(t[n]);else if("object"==("undefined"==typeof t?"undefined":(0,i.default)(t)))for(var r in t)t[r]=u.encodeObject(t[r]);else if("string"==typeof t)return u.encode(t);return t},loadScript:function(t){var n=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(n),n.setAttribute("src",t)},addLoadEvent:function(t){var n=window.onload;"function"!=typeof window.onload?window.onload=t:window.onload=function(){n(),t()}}}}();t.exports=u},function(t,n){function e(t,n){t.classList?t.classList.add(n):t.className+=" "+n}t.exports=e},function(t,n){function e(t,n){if(t.classList)t.classList.remove(n);else{var e=new RegExp("(^|\\b)"+n.split(" ").join("|")+"(\\b|$)","gi");t.className=t.className.replace(e," ")}}t.exports=e},,,function(t,n){"use strict";function e(){var t=document.querySelector("#page-nav");if(t&&!document.querySelector("#page-nav .extend.prev")&&(t.innerHTML='<a class="extend prev disabled" rel="prev">&laquo; Prev</a>'+t.innerHTML),t&&!document.querySelector("#page-nav .extend.next")&&(t.innerHTML=t.innerHTML+'<a class="extend next disabled" rel="next">Next &raquo;</a>'),yiliaConfig&&yiliaConfig.open_in_new){var n=document.querySelectorAll(".article-entry a:not(.article-more-a)");n.forEach(function(t){t.setAttribute("target","_blank")})}var e=document.querySelector("#js-aboutme");e&&0!==e.length&&(e.innerHTML=e.innerText)}t.exports={init:e}},,,,,,,,,function(t,n){function e(t,n){if("string"==typeof n)return t.insertAdjacentHTML("afterend",n);var e=t.nextSibling;return e?t.parentNode.insertBefore(n,e):t.parentNode.appendChild(n)}t.exports=e}])</script><script src="/./main.234bc0.js"></script><script>!function(){var e=function(e){var t=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(t),t.setAttribute("src",e)};e("/slider.885efe.js")}()</script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    showProcessingMessages: false,
+    messageStyle: "none",
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+        inlineMath:  [ ["$", "$"] ],
+        displayMath: [ ["$$","$$"] ],
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code','a'],
+        ignoreClass:"comment-content"
+    },
+    "HTML-CSS": {
+        availableFonts: ["STIX","TeX"],
+        showMathMenu: false
+    }
+});
+MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+</script>
+<script src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">所有文章</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'friends')"><a href="javascript:void(0)" q-class="active:friends">友链</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Github</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DeepLearning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">LSTM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">GRU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Paper阅读记录</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tensorflow</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            2、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: true
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-friends" q-show="friends">
+  		
+        <ul class="search-ul">
+          
+            <li class="search-li">
+              <a href="http://blog.csdn.net/u013082989" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>My CSDN</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://lawlite.me/archives/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>归档</a>
+            </li>
+          
+        </ul>
+  		
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">研究生一枚</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
