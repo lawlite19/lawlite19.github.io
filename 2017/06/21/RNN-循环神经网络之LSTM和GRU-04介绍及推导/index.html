@@ -8,13 +8,13 @@
   <link rel="dns-prefetch" href="http://lawlite.me">
   <title>（Unfinished）RNN-循环神经网络之LSTM和GRU-04介绍及推导 | Lawlite的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、说明 关于LSTM的cell结构和一些计算在之前已经介绍了，可以点击这里查看 本篇博客主要涉及一下内容： LSTM前向计算说明(之前的博客中LSTM部分实际已经提到过，这里结合图更详细说明)">
+  <meta name="description" content="（Unfinished）尚未完成一、说明 关于LSTM的cell结构和一些计算在之前已经介绍了，可以点击这里查看 本篇博客主要涉及一下内容： LSTM前向计算说明(之前的博客中LSTM部分实际已经提到过，这里结合图更详细说明)">
 <meta name="keywords" content="Python,DeepLearning,RNN,LSTM,GRU">
 <meta property="og:type" content="article">
 <meta property="og:title" content="（Unfinished）RNN-循环神经网络之LSTM和GRU-04介绍及推导">
 <meta property="og:url" content="http://lawlite.me/2017/06/21/RNN-循环神经网络之LSTM和GRU-04介绍及推导/index.html">
 <meta property="og:site_name" content="Lawlite的博客">
-<meta property="og:description" content="一、说明 关于LSTM的cell结构和一些计算在之前已经介绍了，可以点击这里查看 本篇博客主要涉及一下内容： LSTM前向计算说明(之前的博客中LSTM部分实际已经提到过，这里结合图更详细说明)">
+<meta property="og:description" content="（Unfinished）尚未完成一、说明 关于LSTM的cell结构和一些计算在之前已经介绍了，可以点击这里查看 本篇博客主要涉及一下内容： LSTM前向计算说明(之前的博客中LSTM部分实际已经提到过，这里结合图更详细说明)">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_LSTM_19.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_LSTM_20.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_LSTM_21.png">
@@ -25,10 +25,10 @@
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_LSTM_26.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_LSTM_08.png">
 <meta property="og:image" content="http://lawlite.me/2017/06/21/RNN-循环神经网络之LSTM和GRU-04介绍及推导/images/RNN_GRU_27.png">
-<meta property="og:updated_time" content="2017-06-24T10:23:56.158Z">
+<meta property="og:updated_time" content="2017-06-24T10:26:16.384Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="（Unfinished）RNN-循环神经网络之LSTM和GRU-04介绍及推导">
-<meta name="twitter:description" content="一、说明 关于LSTM的cell结构和一些计算在之前已经介绍了，可以点击这里查看 本篇博客主要涉及一下内容： LSTM前向计算说明(之前的博客中LSTM部分实际已经提到过，这里结合图更详细说明)">
+<meta name="twitter:description" content="（Unfinished）尚未完成一、说明 关于LSTM的cell结构和一些计算在之前已经介绍了，可以点击这里查看 本篇博客主要涉及一下内容： LSTM前向计算说明(之前的博客中LSTM部分实际已经提到过，这里结合图更详细说明)">
 <meta name="twitter:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_LSTM_19.png">
   
     <link rel="alternative" href="/atom.xml" title="Lawlite的博客" type="application/atom+xml">
@@ -238,7 +238,7 @@ var _hmt = _hmt || [];
 			<div id="toc-article" class="toc-article">
 			    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
 				<strong class="toc-title">文章目录</strong>
-	            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、说明"><span class="toc-number">1.</span> <span class="toc-text">一、说明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、LSTM前向计算step-by-step"><span class="toc-number">2.</span> <span class="toc-text">二、LSTM前向计算step by step</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、结构review"><span class="toc-number">2.1.</span> <span class="toc-text">1、结构review</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、前向计算step-by-step"><span class="toc-number">2.2.</span> <span class="toc-text">2、前向计算step by step</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-决定抛弃的信息"><span class="toc-number">2.2.1.</span> <span class="toc-text">(1) 决定抛弃的信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-决定存储的新信息"><span class="toc-number">2.2.2.</span> <span class="toc-text">(2) 决定存储的新信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-更新state-C-t-1-成-C-t"><span class="toc-number">2.2.3.</span> <span class="toc-text">(3) 更新state$C_{t-1}$成$C_t$</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-最后计算输出"><span class="toc-number">2.2.4.</span> <span class="toc-text">(4) 最后计算输出</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、GRU-Gated-Recurrent-Unit"><span class="toc-number">3.</span> <span class="toc-text">三、GRU (Gated Recurrent Unit)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、结构和前向计算"><span class="toc-number">3.1.</span> <span class="toc-text">1、结构和前向计算</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
+	            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#（Unfinished）尚未完成"><span class="toc-number">1.</span> <span class="toc-text">（Unfinished）尚未完成</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#一、说明"><span class="toc-number">2.</span> <span class="toc-text">一、说明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、LSTM前向计算step-by-step"><span class="toc-number">3.</span> <span class="toc-text">二、LSTM前向计算step by step</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、结构review"><span class="toc-number">3.1.</span> <span class="toc-text">1、结构review</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、前向计算step-by-step"><span class="toc-number">3.2.</span> <span class="toc-text">2、前向计算step by step</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-决定抛弃的信息"><span class="toc-number">3.2.1.</span> <span class="toc-text">(1) 决定抛弃的信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-决定存储的新信息"><span class="toc-number">3.2.2.</span> <span class="toc-text">(2) 决定存储的新信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-更新state-C-t-1-成-C-t"><span class="toc-number">3.2.3.</span> <span class="toc-text">(3) 更新state$C_{t-1}$成$C_t$</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-最后计算输出"><span class="toc-number">3.2.4.</span> <span class="toc-text">(4) 最后计算输出</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、GRU-Gated-Recurrent-Unit"><span class="toc-number">4.</span> <span class="toc-text">三、GRU (Gated Recurrent Unit)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、结构和前向计算"><span class="toc-number">4.1.</span> <span class="toc-text">1、结构和前向计算</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
            </div>
 		   <script type="text/javascript">
 			function showToc(){
@@ -258,7 +258,7 @@ var _hmt = _hmt || [];
 		<!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="一、说明"><a href="#一、说明" class="headerlink" title="一、说明"></a>一、说明</h1><ul>
+        <h1 id="（Unfinished）尚未完成"><a href="#（Unfinished）尚未完成" class="headerlink" title="（Unfinished）尚未完成"></a>（Unfinished）尚未完成</h1><h1 id="一、说明"><a href="#一、说明" class="headerlink" title="一、说明"></a>一、说明</h1><ul>
 <li>关于<code>LSTM</code>的<code>cell</code>结构和一些计算在之前已经介绍了，可以<a href="http://lawlite.me/2017/06/14/RNN-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8CLSTM-01%E5%9F%BA%E7%A1%80/#%E5%9B%9B%E3%80%81Long-Short-Term-Memory-LSTM%EF%BC%8C%E9%95%BF%E7%9F%AD%E6%97%B6%E8%AE%B0%E5%BF%86%E7%BD%91%E7%BB%9C">点击这里查看</a></li>
 <li>本篇博客主要涉及一下内容：<ul>
 <li><code>LSTM</code>前向计算说明(之前的博客中<a href="http://lawlite.me/2017/06/14/RNN-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8CLSTM-01%E5%9F%BA%E7%A1%80/#%E5%9B%9B%E3%80%81Long-Short-Term-Memory-LSTM%EF%BC%8C%E9%95%BF%E7%9F%AD%E6%97%B6%E8%AE%B0%E5%BF%86%E7%BD%91%E7%BB%9C">LSTM部分</a>实际已经提到过，这里结合图更详细说明)</li>
