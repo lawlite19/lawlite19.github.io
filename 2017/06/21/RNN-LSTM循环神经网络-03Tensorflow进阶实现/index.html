@@ -18,7 +18,7 @@
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_list_tensor19.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_LSTM_27.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/RNN/RNN_LSTM_28.png">
-<meta property="og:updated_time" content="2017-06-24T10:44:41.281Z">
+<meta property="og:updated_time" content="2017-06-25T01:54:58.671Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RNN-LSTM循环神经网络-03Tensorflow进阶实现">
 <meta name="twitter:description" content="全部代码：点击这里查看 关于Tensorflow实现一个简单的二元序列的例子可以点击这里查看 关于RNN和LSTM的基础可以查看这里 这篇博客主要包含以下内容 训练一个RNN模型逐字符生成文本数据(最后的部分) 使用Tensorflow的scan函数实现dynamic_rnn动态创建的效果 使用multiple RNN创建多层的RNN 实现Dropout和Layer Normalization的">
@@ -477,6 +477,22 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 </li>
+<li><p><strong>#2017/06/25</strong> 运行结果更新</p>
+<ul>
+<li>更换了一个大点的数据集，<a href="https://gist.githubusercontent.com/spitis/59bfafe6966bfe60cc206ffbb760269f/raw/030a08754aada17cef14eed6fac7797cda830fe8/variousscripts.txt" target="_blank" rel="external">点击查看</a>，使用了<code>layer normalized</code>的<code>LSTM</code>模型</li>
+<li>参数设置：<ul>
+<li><code>num_steps=80</code>            </li>
+<li><code>batch_size=50</code></li>
+<li><code>state_size=512</code>            </li>
+<li><code>num_classes = vocab_size</code></li>
+<li><code>learning_rate = 5e-4</code></li>
+<li><code>30</code>个<code>epochs</code></li>
+</ul>
+</li>
+<li>在实验室电脑跑了一晚上，结果是不是好一点了<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">AKTIN:  Yousa hand it have to turn you, sir.</div><div class="line">I have. I've got to here hard on my</div><div class="line">play as a space state, and why he</div><div class="line">happened. What we alwaws who</div><div class="line">this?</div><div class="line"></div><div class="line">JOCASTAND :</div><div class="line"></div><div class="line">PADM </div><div class="line">You, sir!</div><div class="line"></div><div class="line">A battle. An arm of the ship is still.</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">THE WINDEN'S CORUS</div><div class="line"></div><div class="line">Han's laser guns at the forest fire.  The crowd spots his black</div><div class="line">folkwark and sees the bedroom and twists and sees Leia</div><div class="line">who is shaking.  A huge creature has a long time,</div><div class="line">hold her hand and his timmed, that we see the saulyand.  The</div><div class="line">crowd ruised by the staircase.</div><div class="line"></div><div class="line">EXT. MAZ' CASTLE RUINS - DAY</div><div class="line"></div><div class="line">Rey and Wicket and CAMERA is heard.   Here as so they helf</div><div class="line">this tonight, he spins and sit in a startled bright.</div><div class="line"></div><div class="line">LUKE</div><div class="line">(into propecy)</div><div class="line">The defenstity! Thank you.</div><div class="line"></div><div class="line">LUKE</div><div class="line">I'm afraid to have a lossing live,</div><div class="line">or help. We're</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
 </ul>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
 <li><a href="https://r2rt.com/recurrent-neural-networks-in-tensorflow-ii.html" target="_blank" rel="external">https://r2rt.com/recurrent-neural-networks-in-tensorflow-ii.html</a></li>
@@ -524,8 +540,34 @@ var _hmt = _hmt || [];
           </div>
           </a>
         </div>
+<!-- 版权申明 -->
+<div> 
+  <ul class="post-copyright" style="
+    margin: 0em 0em 0em 0em;
+    padding: 0.5em 1em;
+    border-left: 3px solid #ff1700;
+    background-color: #f9f9f9;
+    list-style: none;
+    font-size: 14px;
+">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Lawlite
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://lawlite.me/2017/06/21/RNN-LSTM循环神经网络-03Tensorflow进阶实现/" title="RNN-LSTM循环神经网络-03Tensorflow进阶实现">http://lawlite.me/2017/06/21/RNN-LSTM循环神经网络-03Tensorflow进阶实现/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</div>
+<!-- 版权声明结束 -->
       
     </div>
+
     <div class="article-info article-info-index">
       
       
@@ -830,6 +872,10 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tensorflow</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
               </li>
              
@@ -843,10 +889,6 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Paper阅读记录</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tensorflow</a>
               </li>
             
             <div class="clearfix"></div>
