@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://lawlite.me">
+  <title>PyTorch学习 | Lawlite的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一、PyTorch介绍1、说明 PyTorch 是 Torch 在 Python 上的衍生（Torch 是一个使用 Lua 语言的神经网络库） 和tensorflow比较 PyTorch建立的神经网络是动态的 Tensorflow是建立静态图 Tensorflow 的高度工业化, 它的底层代码是很难看懂的.  PyTorch 好那么一点点, 如果你深入 API, 你至少能比看 Tensorflow">
+<meta name="keywords" content="Python,PyTorch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PyTorch学习">
+<meta property="og:url" content="http://lawlite.me/2017/05/10/PyTorch/index.html">
+<meta property="og:site_name" content="Lawlite的博客">
+<meta property="og:description" content="一、PyTorch介绍1、说明 PyTorch 是 Torch 在 Python 上的衍生（Torch 是一个使用 Lua 语言的神经网络库） 和tensorflow比较 PyTorch建立的神经网络是动态的 Tensorflow是建立静态图 Tensorflow 的高度工业化, 它的底层代码是很难看懂的.  PyTorch 好那么一点点, 如果你深入 API, 你至少能比看 Tensorflow">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/PyTorch/PyTorch_01.png">
+<meta property="og:updated_time" content="2017-07-06T08:50:11.260Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PyTorch学习">
+<meta name="twitter:description" content="一、PyTorch介绍1、说明 PyTorch 是 Torch 在 Python 上的衍生（Torch 是一个使用 Lua 语言的神经网络库） 和tensorflow比较 PyTorch建立的神经网络是动态的 Tensorflow是建立静态图 Tensorflow 的高度工业化, 它的底层代码是很难看懂的.  PyTorch 好那么一点点, 如果你深入 API, 你至少能比看 Tensorflow">
+<meta name="twitter:image" content="http://lawlite.me/assets/blog_images/PyTorch/PyTorch_01.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Lawlite的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/assets/img/favicon.ico">
+  
+  <link rel="stylesheet" type="text/css" href="/./main.234bc0.css">
+  <style type="text/css">
+  
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+	var hm = document.createElement("script");
+	hm.src = "https://hm.baidu.com/hm.js?aafd2cc62b94803248a1bee49dbc581f";
+	var s = document.getElementsByTagName("script")[0]; 
+	s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+  
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+<div class="overlay" style="background: #279ADB"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/assets/img/avatar.jpg" class="js-avatar">
+		</a>
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Lawlite</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/tags/随笔/">随笔</a></li>
+	        
+				<li><a href="/photos/">相册</a></li>
+	        
+				<li><a href="/留言板/">留言板</a></li>
+	        
+				<li><a href="http://lawlite.me/archives/">归档</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+    		
+    			
+    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/lawlite19" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/lawlite.me" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
+					<a class="qq" target="_blank" href="/849451478" title="qq"><i class="icon-qq"></i></a>
+		        
+					<a class="twitter" target="_blank" href="https://twitter.com/lawliteWang" title="twitter"><i class="icon-twitter"></i></a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #279ADB"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/assets/img/avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">Lawlite</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/lawlite19" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/lawlite.me" title="zhihu"><i class="icon-zhihu"></i></a>
+			        
+						<a class="qq" target="_blank" href="/849451478" title="qq"><i class="icon-qq"></i></a>
+			        
+						<a class="twitter" target="_blank" href="https://twitter.com/lawliteWang" title="twitter"><i class="icon-twitter"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 20%"><a href="/">主页</a></li>
+		        
+					<li style="width: 20%"><a href="/tags/随笔/">随笔</a></li>
+		        
+					<li style="width: 20%"><a href="/photos/">相册</a></li>
+		        
+					<li style="width: 20%"><a href="/留言板/">留言板</a></li>
+		        
+					<li style="width: 20%"><a href="http://lawlite.me/archives/">归档</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-PyTorch" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      PyTorch学习
+    </h1>
+  
+
+		<!-- 显示阅读和评论数 -->
+		
+		<br/>
+		<a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+		<span class="icon-sort"></span>
+		<span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+            阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+		</span>
+		</a>
+		<!-- 网易的评论数，这里先不使用
+		<a class="cloud-tie-join-count" href="javascript:void(0);" style="color:#ef7522;font-size:14px;">
+			<span class="icon-comment"></span>
+			<span class="join-text" style="color:#ef7522;font-size:14px;">参与数:</span>
+			<span class="join-count">0</span>人
+		</a>  -->
+		
+		
+        
+        <a href="/2017/05/10/PyTorch/" class="archive-article-date">
+  	<time datetime="2017-05-10T11:30:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-10</time>
+</a>
+        
+      </header>
+    
+		<!-- 目录内容 -->
+		
+		    <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+            <span class="btn-bg"></span>
+            <span class="btn-text">文章导航</span>
+            </p>
+			<div id="toc-article" class="toc-article">
+			    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+				<strong class="toc-title">文章目录</strong>
+	            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、PyTorch介绍"><span class="toc-number">1.</span> <span class="toc-text">一、PyTorch介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、说明"><span class="toc-number">1.1.</span> <span class="toc-text">1、说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、安装PyTorch"><span class="toc-number">1.2.</span> <span class="toc-text">2、安装PyTorch</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、基础知识"><span class="toc-number">2.</span> <span class="toc-text">二、基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、和Numpy相似之处"><span class="toc-number">2.1.</span> <span class="toc-text">1、和Numpy相似之处</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-数据转换"><span class="toc-number">2.1.1.</span> <span class="toc-text">(1) 数据转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Torch中的运算"><span class="toc-number">2.1.2.</span> <span class="toc-text">(2) Torch中的运算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、变量Variable"><span class="toc-number">2.2.</span> <span class="toc-text">2、变量Variable</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-说明"><span class="toc-number">2.2.1.</span> <span class="toc-text">(1) 说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-使用"><span class="toc-number">2.2.2.</span> <span class="toc-text">(2) 使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-计算梯度"><span class="toc-number">2.2.3.</span> <span class="toc-text">(3) 计算梯度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Variable里面的数据"><span class="toc-number">2.2.4.</span> <span class="toc-text">(4) Variable里面的数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、Torch-中的激励函数"><span class="toc-number">2.3.</span> <span class="toc-text">3、Torch 中的激励函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、建立基础的神经网络"><span class="toc-number">3.</span> <span class="toc-text">三、建立基础的神经网络</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、回归问题"><span class="toc-number">3.1.</span> <span class="toc-text">1、回归问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-准备工作"><span class="toc-number">3.1.1.</span> <span class="toc-text">(1) 准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-建立神经网络"><span class="toc-number">3.1.2.</span> <span class="toc-text">(2) 建立神经网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-训练网络"><span class="toc-number">3.1.3.</span> <span class="toc-text">(3) 训练网络</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、分类问题"><span class="toc-number">3.2.</span> <span class="toc-text">2、分类问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-准备工作-1"><span class="toc-number">3.2.1.</span> <span class="toc-text">(1) 准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-建立网络"><span class="toc-number">3.2.2.</span> <span class="toc-text">(2) 建立网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-训练网络-1"><span class="toc-number">3.2.3.</span> <span class="toc-text">(3) 训练网络</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、快速搭建神经网络"><span class="toc-number">3.3.</span> <span class="toc-text">3、快速搭建神经网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、保存和提取"><span class="toc-number">3.4.</span> <span class="toc-text">4、保存和提取</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-保存（两种方法）"><span class="toc-number">3.4.1.</span> <span class="toc-text">(1) 保存（两种方法）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-提取（也是两种方法）"><span class="toc-number">3.4.2.</span> <span class="toc-text">(2) 提取（也是两种方法）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、批训练SGD"><span class="toc-number">3.5.</span> <span class="toc-text">5、批训练SGD</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-DataLoader"><span class="toc-number">3.5.1.</span> <span class="toc-text">(1) DataLoader</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6、优化器-optimizer"><span class="toc-number">3.6.</span> <span class="toc-text">6、优化器 optimizer</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、高级神经网络"><span class="toc-number">4.</span> <span class="toc-text">四、高级神经网络</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、卷积神经网络-CNN"><span class="toc-number">4.1.</span> <span class="toc-text">1、卷积神经网络 CNN</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
+           </div>
+		   <script type="text/javascript">
+			function showToc(){
+				var toc_article = document.getElementById("toc-article");
+				var show_toc_btn = document.getElementById("show-toc-btn");
+				toc_article.setAttribute("style","display:block");
+				show_toc_btn.setAttribute("style","display:none");
+				};
+			function showBtn(){
+				var toc_article = document.getElementById("toc-article");
+				var show_toc_btn = document.getElementById("show-toc-btn");
+				toc_article.setAttribute("style","display:none");
+				show_toc_btn.setAttribute("style","display:block");
+				};
+		   </script>
+        		
+		<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一、PyTorch介绍"><a href="#一、PyTorch介绍" class="headerlink" title="一、PyTorch介绍"></a>一、PyTorch介绍</h1><h2 id="1、说明"><a href="#1、说明" class="headerlink" title="1、说明"></a>1、说明</h2><ul>
+<li><code>PyTorch</code> 是 <code>Torch</code> 在 <code>Python</code> 上的衍生（<code>Torch</code> 是一个使用 <code>Lua</code> 语言的神经网络库）</li>
+<li>和<code>tensorflow</code>比较<ul>
+<li><code>PyTorch</code>建立的神经网络是<strong>动态的</strong></li>
+<li><code>Tensorflow</code>是建立<strong>静态图</strong></li>
+<li><code>Tensorflow</code> 的高度工业化, 它的底层代码是很难看懂的. </li>
+<li><code>PyTorch</code> 好那么一点点, 如果你深入 <code>API</code>, 你至少能比看 <code>Tensorflow</code> 多看懂一点点 <code>PyTorch</code> 的底层在干嘛.</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h2 id="2、安装PyTorch"><a href="#2、安装PyTorch" class="headerlink" title="2、安装PyTorch"></a>2、安装<code>PyTorch</code></h2><ul>
+<li>官网：<a href="http://pytorch.org/" target="_blank" rel="external">http://pytorch.org/</a></li>
+<li>进入官网之后可以选择对应的安装选项<ul>
+<li>目前只支持<code>Linux</code>和<code>MacOS</code>版本（<code>2017-05-06</code>）</li>
+<li>执行下面对应的安装命令即可<br><img src="/assets/blog_images/PyTorch/PyTorch_01.png" alt="安装" title="PyTorch_01"></li>
+</ul>
+</li>
+<li>安装 <code>PyTorch</code> 会安装两个模块<ul>
+<li>一个是 <code>torch</code>, 一个 <code>torchvision</code>, <code>torch</code> 是<strong>主模块</strong>, 用来搭建神经网络的, </li>
+<li><code>torchvision</code> 是<strong>辅模块</strong>,有数据库,还有一些已经训练好的神经网络等着你直接用, 比如 (<code>VGG, AlexNet, ResNet</code>).</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li>上面在<code>ubuntu14</code>下自带的<code>python2.7</code>安装没有问题，在<code>CentOS6.5</code>下的<code>python3.5</code>中安装可能报错<ul>
+<li>安装<code>python3.5</code>时的配置：</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">./configure --enable-shared \</div><div class="line">            --prefix=/usr/local/python3.<span class="number">5</span> \</div><div class="line">            LDFLAGS=<span class="string">"-Wl,--rpath=/usr/local/lib"</span></div></pre></td></tr></table></figure>
+<ul>
+<li>然后运行<code>python</code>可能报<code>loading shared libraries: libpython3.5m.so.1.0: cannot open shared object file: No such file or directory</code>的错误，拷贝一份<code>libpython3.5m.so.1.0</code>到<code>/usr/lib64</code>目录下即可</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cp /home/Python/Python-<span class="number">3.5</span>.<span class="number">3</span>/libpython3.<span class="number">5</span>m<span class="selector-class">.so</span>.<span class="number">1.0</span> /usr/lib64</div></pre></td></tr></table></figure>
+<h1 id="二、基础知识"><a href="#二、基础知识" class="headerlink" title="二、基础知识"></a>二、基础知识</h1><h2 id="1、和Numpy相似之处"><a href="#1、和Numpy相似之处" class="headerlink" title="1、和Numpy相似之处"></a>1、和<code>Numpy</code>相似之处</h2><h3 id="1-数据转换"><a href="#1-数据转换" class="headerlink" title="(1) 数据转换"></a>(1) 数据转换</h3><ul>
+<li>导入包：<code>import torch</code></li>
+<li>将<code>numpy</code>数据转为<code>torch</code>数据</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">np_data = np.arange(<span class="number">6</span>).reshape((<span class="number">2</span>, <span class="number">3</span>))</div><div class="line">torch_data = torch.from_numpy(np_data)</div></pre></td></tr></table></figure>
+<ul>
+<li>将<code>torch</code>数据转为<code>numpy</code>数据</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tensor2array = torch_data.numpy()</div></pre></td></tr></table></figure>
+<h3 id="2-Torch中的运算"><a href="#2-Torch中的运算" class="headerlink" title="(2) Torch中的运算"></a>(2) <code>Torch</code>中的运算</h3><ul>
+<li>API：<a href="http://pytorch.org/docs/torch.html#math-operations" target="_blank" rel="external">http://pytorch.org/docs/torch.html#math-operations</a></li>
+<li><code>torch</code> 中 <code>tensor</code> 的运算和 <code>numpy array</code>运算很相似，比如<ul>
+<li><code>np.abs() --&gt; torch.abs()</code></li>
+<li><code>np.sin() --&gt; torch.sin()</code>等</li>
+</ul>
+</li>
+<li>矩阵相乘：<ul>
+<li><code>data = [[1,2], [3,4]]</code></li>
+<li><code>tensor = torch.FloatTensor(data)  # 转换成32位浮点 tensor</code></li>
+<li><code>torch.mm(tensor, tensor)</code><h2 id="2、变量Variable"><a href="#2、变量Variable" class="headerlink" title="2、变量Variable"></a>2、变量<code>Variable</code></h2><h3 id="1-说明"><a href="#1-说明" class="headerlink" title="(1) 说明"></a>(1) 说明</h3></li>
+</ul>
+</li>
+<li><code>Variable</code> 就是一个存放会<strong>变化的值</strong>的位置</li>
+<li>这里<strong>变化的值</strong>就是<strong>tensor</strong>数据<h3 id="2-使用"><a href="#2-使用" class="headerlink" title="(2) 使用"></a>(2) 使用</h3></li>
+<li><p>导入包</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">import torch</div><div class="line">from torch.autograd import Variable # torch 中 Variable 模块</div></pre></td></tr></table></figure>
+</li>
+<li><p>定义<code>tensor</code>: <code>tensor = torch.FloatTensor([[1,2],[3,4]])</code></p>
+</li>
+<li>将<code>tensor</code>放入<code>Variable</code>: <code>variable = Variable(tensor, requires_grad=True)</code><ul>
+<li><code>requires_grad</code> 是参不参与误差反向传播, 要不要计算<strong>梯度</strong></li>
+<li><code>print(variable)</code> 会输出，(多出<code>Variable containing:</code>，表明是<code>Variable</code>)</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Variable containing:</div><div class="line"> <span class="number">1</span>  <span class="number">2</span></div><div class="line"> <span class="number">3</span>  <span class="number">4</span></div><div class="line">[torch<span class="selector-class">.FloatTensor</span> of size <span class="number">2</span>x2]</div></pre></td></tr></table></figure>
+<h3 id="3-计算梯度"><a href="#3-计算梯度" class="headerlink" title="(3) 计算梯度"></a>(3) 计算梯度</h3><ul>
+<li><code>v_out = torch.mean(variable*variable)   # x^2</code></li>
+<li><code>v_out.backward()      # 模拟 v_out 的误差反向传递</code></li>
+<li><code>print(variable.grad)  # 显示 Variable 的梯度</code><ul>
+<li>输出结果如下</li>
+<li>因为<code>torch.mean(variable*variable)</code>是<code>1/4*x^2</code>，导数就是<code>1/2x</code><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="number">0.5000</span>  <span class="number">1.0000</span></div><div class="line"><span class="number">1.5000</span>  <span class="number">2.0000</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-Variable里面的数据"><a href="#4-Variable里面的数据" class="headerlink" title="(4) Variable里面的数据"></a>(4) Variable里面的数据</h3><ul>
+<li>直接<code>print(variable)</code>只会输出 <code>Variable</code> 形式的数据, 在很多时候是用不了的(比如想要用 <code>plt</code> 画图), 所以我们要转换一下, 将它变成 <code>tensor</code> 形式.</li>
+<li>获取 <code>tensor</code> 数据：<code>print(variable.data)    # tensor 形式</code><ul>
+<li>然后也可以转而<code>numpy</code>数据：<code>print(variable.data.numpy())    # numpy 形式</code><h2 id="3、Torch-中的激励函数"><a href="#3、Torch-中的激励函数" class="headerlink" title="3、Torch 中的激励函数"></a>3、<code>Torch</code> 中的激励函数</h2></li>
+</ul>
+</li>
+<li>导入包：<code>import torch.nn.functional as F     # 激励函数都在这</code></li>
+<li>平时要用到的就这几个. <code>relu, sigmoid, tanh, softplus</code></li>
+<li>激励函数<ul>
+<li><code>x</code>是<code>Variable</code>数据，<code>F.relu(x)</code>也是返回<code>Variable</code>数据，然后<code>.data</code>获取 <code>tensor</code> 数据<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 做一些假数据来观看图像</div><div class="line">x = torch.linspace(-5, 5, 200)  # x data (tensor), shape=(100, 1)</div><div class="line">x = Variable(x)</div><div class="line">x_np = x.data.numpy()   # 换成 numpy array, 出图时用</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">y_relu = F.relu(x).data.numpy()</div><div class="line">y_sigmoid = F.sigmoid(x).data.numpy()</div><div class="line">y_tanh = F.tanh(x).data.numpy()</div><div class="line">y_softplus = F.softplus(x).data.numpy()</div><div class="line"># y_softmax = F.softmax(x)  softmax 比较特殊, 不能直接显示, 不过他是关于概率的, 用于分类</div></pre></td></tr></table></figure>
+<ul>
+<li><code>softplus</code>的公式为：<code>f(x)=ln(1+ex)</code></li>
+</ul>
+<h1 id="三、建立基础的神经网络"><a href="#三、建立基础的神经网络" class="headerlink" title="三、建立基础的神经网络"></a>三、建立基础的神经网络</h1><h2 id="1、回归问题"><a href="#1、回归问题" class="headerlink" title="1、回归问题"></a>1、回归问题</h2><h3 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="(1) 准备工作"></a>(1) 准备工作</h3><ul>
+<li>导入包</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">import torch</div><div class="line">from torch<span class="selector-class">.autograd</span> import Variable</div><div class="line">import torch<span class="selector-class">.nn</span><span class="selector-class">.functional</span> as F </div><div class="line">import matplotlib<span class="selector-class">.pyplot</span> as plt</div></pre></td></tr></table></figure>
+<ul>
+<li><p>制造假数据</p>
+<ul>
+<li><code>torch.unsqueeze</code>是转成2维的数据<code>[[]]</code>,加上一个<strong>假的维度</strong><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">x = torch.unsqueeze(torch.linspace(-1, 1, 100), dim=1)  # x data (tensor), shape=(100, 1)</div><div class="line">y = x.pow(2) + 0.2*torch.rand(x.size())                 # noisy y data (tensor), shape=(100, 1)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>定义<code>Variable</code>: <code>x, y = torch.autograd.Variable(x), Variable(y)</code></p>
+<h3 id="2-建立神经网络"><a href="#2-建立神经网络" class="headerlink" title="(2) 建立神经网络"></a>(2) 建立神经网络</h3></li>
+<li><p>使用类的方式class</p>
+<ul>
+<li>继承<code>torch.nn.Module</code></li>
+<li>这里只包含一个隐层，<code>__init__</code>只是定义了几个层</li>
+<li><code>forward</code>进行传播，也就是整个网络的搭建，<strong>因为是预测，最后一层不需要激励函数</strong><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">class Net(torch.nn.Module):  # 继承 torch 的 Module</div><div class="line">    def __init__(self, n_feature, n_hidden, n_output):</div><div class="line">        super(Net, self).__init__()     # 继承 __init__ 功能</div><div class="line">        # 定义每层用什么样的形式</div><div class="line">        self.hidden = torch.nn.Linear(n_feature, n_hidden)   # 隐藏层线性输出</div><div class="line">        self.predict = torch.nn.Linear(n_hidden, n_output)   # 输出层线性输出</div><div class="line"></div><div class="line">    def forward(self, x):   # 这同时也是 Module 中的 forward 功能</div><div class="line">        # 正向传播输入值, 神经网络分析出输出值</div><div class="line">        x = F.relu(self.hidden(x))      # 激励函数(隐藏层的线性值)</div><div class="line">        x = self.predict(x)             # 输出值</div><div class="line">        return x</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>使用：<code>net = Net(n_feature=1, n_hidden=10, n_output=1)</code></p>
+</li>
+<li>输出：<code>print(net)</code>，结果为</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Net (</div><div class="line">  (hidden): Linear (<span class="number">1</span> -&gt; <span class="number">10</span>)</div><div class="line">  (predict): Linear (<span class="number">10</span> -&gt; <span class="number">1</span>)</div><div class="line">)</div></pre></td></tr></table></figure>
+<h3 id="3-训练网络"><a href="#3-训练网络" class="headerlink" title="(3) 训练网络"></a>(3) 训练网络</h3><ul>
+<li>定义优化器：<code>optimizer = torch.optim.SGD(net.parameters(), lr=0.5)  # 传入 net 的所有参数, 学习率lr</code></li>
+<li>定义损失函数：<code>loss_func = torch.nn.MSELoss()      # 预测值和真实值的误差计算公式 (均方差)</code></li>
+<li>训练</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">for t in range(100):</div><div class="line">    prediction = net(x)     # 喂给 net 训练数据 x, 输出预测值</div><div class="line"></div><div class="line">    loss = loss_func(prediction, y)     # 计算两者的误差</div><div class="line"></div><div class="line">    optimizer.zero_grad()   # 清空上一步的残余更新参数值</div><div class="line">    loss.backward()         # 误差反向传播, 计算参数更新值</div><div class="line">    optimizer.step()        # 将参数更新值施加到 net 的 parameters 上</div></pre></td></tr></table></figure>
+<h2 id="2、分类问题"><a href="#2、分类问题" class="headerlink" title="2、分类问题"></a>2、分类问题</h2><h3 id="1-准备工作-1"><a href="#1-准备工作-1" class="headerlink" title="(1) 准备工作"></a>(1) 准备工作</h3><ul>
+<li>导入包</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">import torch</div><div class="line">from torch.autograd import Variable</div><div class="line">import torch.nn.functional as F     # 激励函数都在这</div><div class="line">import matplotlib.pyplot as plt</div></pre></td></tr></table></figure>
+<ul>
+<li><p>制造假数据</p>
+<ul>
+<li><code>x0</code>是一个类别的<code>x1,x2</code></li>
+<li><code>y0</code>就是对应这个类别的 <code>label</code>，这里是<code>0</code></li>
+<li>然后将<code>x0,x1</code>，<code>y0,y1</code>合并在一起<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># 假数据</div><div class="line">n_data = torch.ones(100, 2)         # 数据的基本形态</div><div class="line">x0 = torch.normal(2*n_data, 1)      # 类型0 x data (tensor), shape=(100, 2)</div><div class="line">y0 = torch.zeros(100)               # 类型0 y data (tensor), shape=(100, 1)</div><div class="line">x1 = torch.normal(-2*n_data, 1)     # 类型1 x data (tensor), shape=(100, 1)</div><div class="line">y1 = torch.ones(100)                # 类型1 y data (tensor), shape=(100, 1)</div><div class="line"># 注意 x, y 数据的数据形式是一定要像下面一样 (torch.cat 是在合并数据)</div><div class="line">x = torch.cat((x0, x1), 0).type(torch.FloatTensor)  # FloatTensor = 32-bit floating</div><div class="line">y = torch.cat((y0, y1), ).type(torch.LongTensor)    # LongTensor = 64-bit integer</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>定义Variable: <code>x, y = Variable(x), Variable(y)</code></p>
+</li>
+</ul>
+<h3 id="2-建立网络"><a href="#2-建立网络" class="headerlink" title="(2) 建立网络"></a>(2) 建立网络</h3><ul>
+<li><p>与上面回归的例子类似</p>
+<ul>
+<li>使用<code>relu</code>激励函数</li>
+<li>这里最后一层并没有使用<strong>激励函数</strong>或是<code>softmax</code>，因为下面使用了<code>CrossEntropyLoss</code>，这个里面默认会调用<code>log_softmax</code>函数(<code>nll_loss(log_softmax(input), target, weight, size_average)</code>)</li>
+<li>当然这里也可以最后返回<code>F.softmax(x)</code>, 那么下面的损失函数就是<code>loss = F.nll_loss(out, y)</code><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">class Net(torch.nn.Module):     # 继承 torch 的 Module</div><div class="line">    def __init__(self, n_feature, n_hidden, n_output):</div><div class="line">        super(Net, self).__init__()     # 继承 __init__ 功能</div><div class="line">        self.hidden = torch.nn.Linear(n_feature, n_hidden)   # 隐藏层线性输出</div><div class="line">        self.out = torch.nn.Linear(n_hidden, n_output)       # 输出层线性输出</div><div class="line"></div><div class="line">    def forward(self, x):</div><div class="line">        # 正向传播输入值, 神经网络分析出输出值</div><div class="line">        x = F.relu(self.hidden(x))      # 激励函数(隐藏层的线性值)</div><div class="line">        x = self.out(x)                 # 输出值, 但是这个不是预测值, 预测值还需要再另外计算</div><div class="line">        return x</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>建立网络：<code>net = Net(n_feature=2, n_hidden=10, n_output=2) # 几个类别就几个 output</code></p>
+<h3 id="3-训练网络-1"><a href="#3-训练网络-1" class="headerlink" title="(3) 训练网络"></a>(3) 训练网络</h3></li>
+<li>优化器：<code>optimizer = torch.optim.SGD(net.parameters(), lr=0.02)  # 传入 net 的所有参数, 学习率</code></li>
+<li>损失函数：<code>loss_func = torch.nn.CrossEntropyLoss()</code></li>
+<li>训练：</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">for t in range(100):</div><div class="line">    out = net(x)     # 喂给 net 训练数据 x, 输出分析值</div><div class="line"></div><div class="line">    loss = loss_func(out, y)     # 计算两者的误差</div><div class="line"></div><div class="line">    optimizer.zero_grad()   # 清空上一步的残余更新参数值</div><div class="line">    loss.backward()         # 误差反向传播, 计算参数更新值</div><div class="line">    optimizer.step()        # 将参数更新值施加到 net 的 parameters 上</div></pre></td></tr></table></figure>
+<ul>
+<li>预测：<ul>
+<li>输出至最大的那个（概率最大的）坐标<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 过了一道 softmax 的激励函数后的最大概率才是预测值</div><div class="line">        prediction = torch.max(F.softmax(out), 1)[1]</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="3、快速搭建神经网络"><a href="#3、快速搭建神经网络" class="headerlink" title="3、快速搭建神经网络"></a>3、快速搭建神经网络</h2><ul>
+<li>使用<code>torch.nn.Sequential</code></li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">net2 = torch<span class="selector-class">.nn</span><span class="selector-class">.Sequential</span>(</div><div class="line">    torch<span class="selector-class">.nn</span><span class="selector-class">.Linear</span>(<span class="number">1</span>, <span class="number">10</span>),</div><div class="line">    torch<span class="selector-class">.nn</span><span class="selector-class">.ReLU</span>(),</div><div class="line">    torch<span class="selector-class">.nn</span><span class="selector-class">.Linear</span>(<span class="number">10</span>, <span class="number">1</span>)</div><div class="line">)</div></pre></td></tr></table></figure>
+<ul>
+<li>输出：<code>print(net2)</code><ul>
+<li>相比我们之前自己定义的类，<strong>激励函数</strong>也显示出来了<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Sequential (</div><div class="line">  (<span class="number">0</span>): Linear (<span class="number">1</span> -&gt; <span class="number">10</span>)</div><div class="line">  (<span class="number">1</span>): ReLU ()</div><div class="line">  (<span class="number">2</span>): Linear (<span class="number">10</span> -&gt; <span class="number">1</span>)</div><div class="line">)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="4、保存和提取"><a href="#4、保存和提取" class="headerlink" title="4、保存和提取"></a>4、保存和提取</h2><h3 id="1-保存（两种方法）"><a href="#1-保存（两种方法）" class="headerlink" title="(1) 保存（两种方法）"></a>(1) 保存（两种方法）</h3><ul>
+<li>保存整个网络<ul>
+<li><code>torch.save(net1, &#39;net.pkl&#39;)</code>  # 保存整个网络，<code>net1</code> 就是定义的网络</li>
+</ul>
+</li>
+<li>只保存网络中的参数<ul>
+<li><code>torch.save(net1.state_dict(), &#39;net_params.pkl&#39;)</code>   # 只保存网络中的参数 (速度快, 占内存少)<h3 id="2-提取（也是两种方法）"><a href="#2-提取（也是两种方法）" class="headerlink" title="(2) 提取（也是两种方法）"></a>(2) 提取（也是两种方法）</h3></li>
+</ul>
+</li>
+<li>提取整个网络：<ul>
+<li><code>net2 = torch.load(&#39;net.pkl&#39;)</code></li>
+<li><code>prediction = net2(x)</code></li>
+</ul>
+</li>
+<li>只提取网络参数<ul>
+<li>首先需要定义一样的神经网络</li>
+<li><code>net3.load_state_dict(torch.load(&#39;net_params.pkl&#39;))</code></li>
+<li><code>prediction = net3(x)</code><h2 id="5、批训练SGD"><a href="#5、批训练SGD" class="headerlink" title="5、批训练SGD"></a>5、批训练SGD</h2></li>
+</ul>
+</li>
+<li>上面我们虽然是<code>torch.optim.SGD</code>进行优化，但是还是将所有数据放进去训练<h3 id="1-DataLoader"><a href="#1-DataLoader" class="headerlink" title="(1) DataLoader"></a>(1) DataLoader</h3></li>
+<li>是 <code>torch</code> 用来包装你的数据(<code>tensor</code>)的工具</li>
+<li>导入包： <code>import torch.utils.data as Data</code></li>
+<li><p>将tensor数据转为<code>torch</code>能识别的<code>Dataset</code></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">torch_dataset = Data.TensorDataset(data_tensor=x, target_tensor=y)</div></pre></td></tr></table></figure>
+</li>
+<li><p>把 dataset 放入 DataLoader</p>
+<ul>
+<li><code>BATCH_SIZE</code>是我们定义的<code>batch</code>大小<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">loader = Data.DataLoader(</div><div class="line">    dataset=torch_dataset,      # torch TensorDataset format</div><div class="line">    batch_size=BATCH_SIZE,      # mini batch size</div><div class="line">    shuffle=True,               # 要不要打乱数据 (打乱比较好)</div><div class="line">    num_workers=2,              # 多线程来读数据</div><div class="line">)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>就可以得到<code>batch</code>数据了</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">for epoch in range(3):   # 训练所有!整套!数据 3 次</div><div class="line">    for step, (batch_x, batch_y) in enumerate(loader):  # 每一步 loader 释放一小批数据用来学习</div><div class="line">        # 假设这里就是你训练的地方...</div><div class="line"></div><div class="line">        # 打出来一些数据</div><div class="line">        print('Epoch: ', epoch, '| Step: ', step, '| batch x: ',</div><div class="line">              batch_x.numpy(), '| batch y: ', batch_y.numpy())</div></pre></td></tr></table></figure>
+</li>
+<li><p>这里还是<code>tensor</code>数据，真正训练时还要放到<code>Variable</code>中</p>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">b_x = Variable(batch_x)  # 务必要用 Variable 包一下</div><div class="line">b_y = Variable(batch_y)</div></pre></td></tr></table></figure>
+<h2 id="6、优化器-optimizer"><a href="#6、优化器-optimizer" class="headerlink" title="6、优化器 optimizer"></a>6、优化器 optimizer</h2><ul>
+<li><code>SGD</code><ul>
+<li>就是随机梯度下降</li>
+</ul>
+</li>
+<li><code>momentum</code><ul>
+<li>动量加速</li>
+<li>在<code>SGD</code>函数里指定<code>momentum</code>的值即可</li>
+</ul>
+</li>
+<li><code>RMSprop</code><ul>
+<li>指定参数<code>alpha</code></li>
+</ul>
+</li>
+<li><code>Adam</code><ul>
+<li>参数<code>betas=(0.9, 0.99)</code><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">opt_SGD         = torch<span class="selector-class">.optim</span><span class="selector-class">.SGD</span>(net_SGD.parameters(), lr=LR)</div><div class="line">opt_Momentum    = torch<span class="selector-class">.optim</span><span class="selector-class">.SGD</span>(net_Momentum.parameters(), lr=LR, momentum=<span class="number">0.8</span>)</div><div class="line">opt_RMSprop     = torch<span class="selector-class">.optim</span><span class="selector-class">.RMSprop</span>(net_RMSprop.parameters(), lr=LR, alpha=<span class="number">0.9</span>)</div><div class="line">opt_Adam        = torch<span class="selector-class">.optim</span><span class="selector-class">.Adam</span>(net_Adam.parameters(), lr=LR, betas=(<span class="number">0.9</span>, <span class="number">0.99</span>))</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="四、高级神经网络"><a href="#四、高级神经网络" class="headerlink" title="四、高级神经网络"></a>四、高级神经网络</h1><h2 id="1、卷积神经网络-CNN"><a href="#1、卷积神经网络-CNN" class="headerlink" title="1、卷积神经网络 CNN"></a>1、卷积神经网络 <code>CNN</code></h2><ul>
+<li>使用mnist数据集</li>
+<li>导入包</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import torch</div><div class="line">from torch<span class="selector-class">.autograd</span> import Variable</div><div class="line">import torch<span class="selector-class">.utils</span><span class="selector-class">.data</span> as Data</div><div class="line">import torchvision</div><div class="line">from matplotlib import pyplot as plt</div></pre></td></tr></table></figure>
+<ul>
+<li>下载数据集</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">EPOCH = 10</div><div class="line">BATCH_SIZE = 50</div><div class="line">LR = 0.001</div><div class="line">train_data = torchvision.datasets.MNIST(root='./mnist', </div><div class="line">                                        transform=torchvision.transforms.ToTensor(),</div><div class="line">                                        download=False)  # first set True, then set False</div><div class="line"></div><div class="line">print(train_data.train_data.size())</div><div class="line">test_data = torchvision.datasets.MNIST(root='./mnist', train=False)</div></pre></td></tr></table></figure>
+<ul>
+<li><p>处理数据</p>
+<ul>
+<li>使用 <code>DataLoader</code> 进行<code>batch</code>训练</li>
+<li>将测试数据放到<code>Variable</code>里，并加上一个维度（在第二维位置dim=1），因为下面训练时是<code>(batch_size, 1, 28, 28)</code><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">train_loader = Data.DataLoader(dataset=train_data, batch_size=128, shuffle=True)</div><div class="line"># shape from (total_size, 28, 28) to (total_size, 1, 28, 28)</div><div class="line">test_x = Variable(torch.unsqueeze(test_data.test_data, dim=1), volatile=True).type(torch.FloatTensor)/255.0</div><div class="line"></div><div class="line">test_y = test_data.test_labels</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>建立计算图模型</p>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">class CNN(torch.nn.Module):</div><div class="line">    def __init__(self):</div><div class="line">        super(CNN, self).__init__()</div><div class="line">        self.conv1 = torch.nn.Sequential( # input shape (1, 28, 28)</div><div class="line">            torch.nn.Conv2d(in_channels=1,</div><div class="line">                            out_channels=16,</div><div class="line">                            kernel_size=5,</div><div class="line">                            stride=1, </div><div class="line">                            padding=2),</div><div class="line">            torch.nn.ReLU(),</div><div class="line">            torch.nn.MaxPool2d(kernel_size=2) </div><div class="line">        )   # output shape (16, 14, 14)</div><div class="line">        self.conv2 = torch.nn.Sequential(</div><div class="line">            torch.nn.Conv2d(16, 32, 5, 1, 2),</div><div class="line">            torch.nn.ReLU(),</div><div class="line">            torch.nn.MaxPool2d(2)</div><div class="line">        )  # output shape (32, 7, 7)</div><div class="line">        self.out = torch.nn.Linear(in_features=32*7*7, out_features=10)</div><div class="line">    def forward(self, x):</div><div class="line">        x = self.conv1(x)</div><div class="line">        x = self.conv2(x)</div><div class="line">        x = x.view(x.size(0), -1) # 展平多维的卷积图成 (batch_size, 32 * 7 * 7)</div><div class="line">        output = self.out(x)</div><div class="line">        return output</div><div class="line">cnn = CNN()</div></pre></td></tr></table></figure>
+<ul>
+<li>定义优化器<code>optimizer</code>和损失</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">optimizer = torch<span class="selector-class">.optim</span><span class="selector-class">.Adam</span>(cnn.parameters(), lr=LR)</div><div class="line">loss_func = torch<span class="selector-class">.nn</span><span class="selector-class">.CrossEntropyLoss</span>()</div></pre></td></tr></table></figure>
+<ul>
+<li>进行batch训练</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">for epoch in range(EPOCH):</div><div class="line">    for i, (x, y) in enumerate(train_loader):</div><div class="line">        batch_x = Variable(x)</div><div class="line">        batch_y = Variable(y)</div><div class="line">        output = cnn(batch_x)</div><div class="line">        loss = loss_func(output, batch_y)</div><div class="line">        optimizer.zero_grad()</div><div class="line">        loss.backward()</div><div class="line">        optimizer.step()</div><div class="line">        if i % 50 == 0:</div><div class="line">            # 用 test 数据来验证准确率</div><div class="line">            test_output = cnn(test_x)</div><div class="line">            pred_y = torch.max(test_output, 1)[1].data.squeeze()</div><div class="line">            accuracy = sum(pred_y == test_y) / float(test_y.size(0))</div><div class="line">            print('Epoch: ', epoch, '| train loss: %.4f' % loss.data[0], '| test accuracy: %.2f' % accuracy)</div></pre></td></tr></table></figure>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/" target="_blank" rel="external">https://morvanzhou.github.io/tutorials/machine-learning/torch/</a></li>
+</ul>
+
+
+		
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/weixin.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+<!-- 版权申明开始  -->
+
+<div> 
+  <ul class="post-copyright" style="
+    margin: 0em 0em 0em 0em;
+    padding: 0.5em 1em;
+    border-left: 3px solid #ff1700;
+    background-color: #f9f9f9;
+    list-style: none;
+    font-size: 14px;
+">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Lawlite
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://lawlite.me/2017/05/10/PyTorch/" title="PyTorch学习">http://lawlite.me/2017/05/10/PyTorch/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/80x15.png"></a> 。转载请注明出处！
+    </li>
+  </ul>
+</div>
+
+<!-- 版权声明结束 -->
+      
+    </div>
+
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">PyTorch</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://lawlite.me/2017/05/10/PyTorch/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/06/14/Seaborn绘图/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Seaborn绘图
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/04/17/Hexo-yilia主题实现文章目录和添加视频/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hexo+yilia主题实现文章目录和添加视频</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
+  
+
+
+
+
+
+
+<section class="duoshuo" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8yODEwMy80Njc2">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+
+<!-- 网易云跟帖 -->
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 Lawlite
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+  总访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true,
+		showTags: true
+	}
+</script>
+
+<script>!function(t){function n(r){if(e[r])return e[r].exports;var o=e[r]={exports:{},id:r,loaded:!1};return t[r].call(o.exports,o,o.exports,n),o.loaded=!0,o.exports}var e={};return n.m=t,n.c=e,n.p="./",n(0)}([function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}function o(t,n){var e=/\/|index.html/g;return t.replace(e,"")===n.replace(e,"")}function i(){for(var t=document.querySelectorAll(".js-header-menu li a"),n=window.location.pathname,e=0,r=t.length;e<r;e++){var i=t[e];o(n,i.getAttribute("href"))&&(0,d.default)(i,"active")}}function u(t){for(var n=t.offsetLeft,e=t.offsetParent;null!==e;)n+=e.offsetLeft,e=e.offsetParent;return n}function f(t){for(var n=t.offsetTop,e=t.offsetParent;null!==e;)n+=e.offsetTop,e=e.offsetParent;return n}function c(t,n,e,r,o){var i=u(t),c=f(t)-n;if(c-e<=o){var a=t.$newDom;a||(a=t.cloneNode(!0),(0,h.default)(t,a),t.$newDom=a,a.style.position="fixed",a.style.top=(e||c)+"px",a.style.left=i+"px",a.style.zIndex=r||2,a.style.width="100%",a.style.color="#fff"),a.style.visibility="visible",t.style.visibility="hidden"}else{t.style.visibility="visible";var s=t.$newDom;s&&(s.style.visibility="hidden")}}function a(){var t=document.querySelector(".js-overlay"),n=document.querySelector(".js-header-menu");c(t,document.body.scrollTop,-63,2,0),c(n,document.body.scrollTop,1,3,0)}function s(){document.querySelector("#container").addEventListener("scroll",function(t){a()}),window.addEventListener("scroll",function(t){a()}),a()}function l(){x.default.versions.mobile&&window.screen.width<800&&(i(),s())}var p=e(71),d=r(p),v=e(72),y=(r(v),e(84)),h=r(y),b=e(69),x=r(b),m=e(75),g=r(m),w=e(70);l(),(0,w.addLoadEvent)(function(){g.default.init()}),t.exports={}},function(t,n){var e=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=e)},function(t,n){var e={}.hasOwnProperty;t.exports=function(t,n){return e.call(t,n)}},function(t,n,e){var r=e(49),o=e(15);t.exports=function(t){return r(o(t))}},function(t,n,e){t.exports=!e(8)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,n,e){var r=e(6),o=e(12);t.exports=e(4)?function(t,n,e){return r.f(t,n,o(1,e))}:function(t,n,e){return t[n]=e,t}},function(t,n,e){var r=e(10),o=e(30),i=e(24),u=Object.defineProperty;n.f=e(4)?Object.defineProperty:function(t,n,e){if(r(t),n=i(n,!0),r(e),o)try{return u(t,n,e)}catch(t){}if("get"in e||"set"in e)throw TypeError("Accessors not supported!");return"value"in e&&(t[n]=e.value),t}},function(t,n,e){var r=e(22)("wks"),o=e(13),i=e(1).Symbol,u="function"==typeof i,f=t.exports=function(t){return r[t]||(r[t]=u&&i[t]||(u?i:o)("Symbol."+t))};f.store=r},function(t,n){t.exports=function(t){try{return!!t()}catch(t){return!0}}},function(t,n,e){var r=e(35),o=e(16);t.exports=Object.keys||function(t){return r(t,o)}},function(t,n,e){var r=e(11);t.exports=function(t){if(!r(t))throw TypeError(t+" is not an object!");return t}},function(t,n){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,n){t.exports=function(t,n){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:n}}},function(t,n){var e=0,r=Math.random();t.exports=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++e+r).toString(36))}},function(t,n){var e=t.exports={version:"2.4.0"};"number"==typeof __e&&(__e=e)},function(t,n){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t}},function(t,n){t.exports="constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf".split(",")},function(t,n){t.exports={}},function(t,n){t.exports=!0},function(t,n){n.f={}.propertyIsEnumerable},function(t,n,e){var r=e(6).f,o=e(2),i=e(7)("toStringTag");t.exports=function(t,n,e){t&&!o(t=e?t:t.prototype,i)&&r(t,i,{configurable:!0,value:n})}},function(t,n,e){var r=e(22)("keys"),o=e(13);t.exports=function(t){return r[t]||(r[t]=o(t))}},function(t,n,e){var r=e(1),o="__core-js_shared__",i=r[o]||(r[o]={});t.exports=function(t){return i[t]||(i[t]={})}},function(t,n){var e=Math.ceil,r=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?r:e)(t)}},function(t,n,e){var r=e(11);t.exports=function(t,n){if(!r(t))return t;var e,o;if(n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;if("function"==typeof(e=t.valueOf)&&!r(o=e.call(t)))return o;if(!n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;throw TypeError("Can't convert object to primitive value")}},function(t,n,e){var r=e(1),o=e(14),i=e(18),u=e(26),f=e(6).f;t.exports=function(t){var n=o.Symbol||(o.Symbol=i?{}:r.Symbol||{});"_"==t.charAt(0)||t in n||f(n,t,{value:u.f(t)})}},function(t,n,e){n.f=e(7)},function(t,n,e){var r=e(1),o=e(14),i=e(46),u=e(5),f="prototype",c=function(t,n,e){var a,s,l,p=t&c.F,d=t&c.G,v=t&c.S,y=t&c.P,h=t&c.B,b=t&c.W,x=d?o:o[n]||(o[n]={}),m=x[f],g=d?r:v?r[n]:(r[n]||{})[f];d&&(e=n);for(a in e)s=!p&&g&&void 0!==g[a],s&&a in x||(l=s?g[a]:e[a],x[a]=d&&"function"!=typeof g[a]?e[a]:h&&s?i(l,r):b&&g[a]==l?function(t){var n=function(n,e,r){if(this instanceof t){switch(arguments.length){case 0:return new t;case 1:return new t(n);case 2:return new t(n,e)}return new t(n,e,r)}return t.apply(this,arguments)};return n[f]=t[f],n}(l):y&&"function"==typeof l?i(Function.call,l):l,y&&((x.virtual||(x.virtual={}))[a]=l,t&c.R&&m&&!m[a]&&u(m,a,l)))};c.F=1,c.G=2,c.S=4,c.P=8,c.B=16,c.W=32,c.U=64,c.R=128,t.exports=c},function(t,n){var e={}.toString;t.exports=function(t){return e.call(t).slice(8,-1)}},function(t,n,e){var r=e(11),o=e(1).document,i=r(o)&&r(o.createElement);t.exports=function(t){return i?o.createElement(t):{}}},function(t,n,e){t.exports=!e(4)&&!e(8)(function(){return 7!=Object.defineProperty(e(29)("div"),"a",{get:function(){return 7}}).a})},function(t,n,e){"use strict";var r=e(18),o=e(27),i=e(36),u=e(5),f=e(2),c=e(17),a=e(51),s=e(20),l=e(58),p=e(7)("iterator"),d=!([].keys&&"next"in[].keys()),v="@@iterator",y="keys",h="values",b=function(){return this};t.exports=function(t,n,e,x,m,g,w){a(e,n,x);var O,S,_,j=function(t){if(!d&&t in A)return A[t];switch(t){case y:return function(){return new e(this,t)};case h:return function(){return new e(this,t)}}return function(){return new e(this,t)}},P=n+" Iterator",E=m==h,M=!1,A=t.prototype,T=A[p]||A[v]||m&&A[m],L=T||j(m),N=m?E?j("entries"):L:void 0,C="Array"==n?A.entries||T:T;if(C&&(_=l(C.call(new t)),_!==Object.prototype&&(s(_,P,!0),r||f(_,p)||u(_,p,b))),E&&T&&T.name!==h&&(M=!0,L=function(){return T.call(this)}),r&&!w||!d&&!M&&A[p]||u(A,p,L),c[n]=L,c[P]=b,m)if(O={values:E?L:j(h),keys:g?L:j(y),entries:N},w)for(S in O)S in A||i(A,S,O[S]);else o(o.P+o.F*(d||M),n,O);return O}},function(t,n,e){var r=e(10),o=e(55),i=e(16),u=e(21)("IE_PROTO"),f=function(){},c="prototype",a=function(){var t,n=e(29)("iframe"),r=i.length,o="<",u=">";for(n.style.display="none",e(48).appendChild(n),n.src="javascript:",t=n.contentWindow.document,t.open(),t.write(o+"script"+u+"document.F=Object"+o+"/script"+u),t.close(),a=t.F;r--;)delete a[c][i[r]];return a()};t.exports=Object.create||function(t,n){var e;return null!==t?(f[c]=r(t),e=new f,f[c]=null,e[u]=t):e=a(),void 0===n?e:o(e,n)}},function(t,n,e){var r=e(35),o=e(16).concat("length","prototype");n.f=Object.getOwnPropertyNames||function(t){return r(t,o)}},function(t,n){n.f=Object.getOwnPropertySymbols},function(t,n,e){var r=e(2),o=e(3),i=e(45)(!1),u=e(21)("IE_PROTO");t.exports=function(t,n){var e,f=o(t),c=0,a=[];for(e in f)e!=u&&r(f,e)&&a.push(e);for(;n.length>c;)r(f,e=n[c++])&&(~i(a,e)||a.push(e));return a}},function(t,n,e){t.exports=e(5)},function(t,n,e){var r=e(15);t.exports=function(t){return Object(r(t))}},function(t,n,e){t.exports={default:e(41),__esModule:!0}},function(t,n,e){t.exports={default:e(42),__esModule:!0}},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}n.__esModule=!0;var o=e(39),i=r(o),u=e(38),f=r(u),c="function"==typeof f.default&&"symbol"==typeof i.default?function(t){return typeof t}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":typeof t};n.default="function"==typeof f.default&&"symbol"===c(i.default)?function(t){return"undefined"==typeof t?"undefined":c(t)}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":"undefined"==typeof t?"undefined":c(t)}},function(t,n,e){e(65),e(63),e(66),e(67),t.exports=e(14).Symbol},function(t,n,e){e(64),e(68),t.exports=e(26).f("iterator")},function(t,n){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,n){t.exports=function(){}},function(t,n,e){var r=e(3),o=e(61),i=e(60);t.exports=function(t){return function(n,e,u){var f,c=r(n),a=o(c.length),s=i(u,a);if(t&&e!=e){for(;a>s;)if(f=c[s++],f!=f)return!0}else for(;a>s;s++)if((t||s in c)&&c[s]===e)return t||s||0;return!t&&-1}}},function(t,n,e){var r=e(43);t.exports=function(t,n,e){if(r(t),void 0===n)return t;switch(e){case 1:return function(e){return t.call(n,e)};case 2:return function(e,r){return t.call(n,e,r)};case 3:return function(e,r,o){return t.call(n,e,r,o)}}return function(){return t.apply(n,arguments)}}},function(t,n,e){var r=e(9),o=e(34),i=e(19);t.exports=function(t){var n=r(t),e=o.f;if(e)for(var u,f=e(t),c=i.f,a=0;f.length>a;)c.call(t,u=f[a++])&&n.push(u);return n}},function(t,n,e){t.exports=e(1).document&&document.documentElement},function(t,n,e){var r=e(28);t.exports=Object("z").propertyIsEnumerable(0)?Object:function(t){return"String"==r(t)?t.split(""):Object(t)}},function(t,n,e){var r=e(28);t.exports=Array.isArray||function(t){return"Array"==r(t)}},function(t,n,e){"use strict";var r=e(32),o=e(12),i=e(20),u={};e(5)(u,e(7)("iterator"),function(){return this}),t.exports=function(t,n,e){t.prototype=r(u,{next:o(1,e)}),i(t,n+" Iterator")}},function(t,n){t.exports=function(t,n){return{value:n,done:!!t}}},function(t,n,e){var r=e(9),o=e(3);t.exports=function(t,n){for(var e,i=o(t),u=r(i),f=u.length,c=0;f>c;)if(i[e=u[c++]]===n)return e}},function(t,n,e){var r=e(13)("meta"),o=e(11),i=e(2),u=e(6).f,f=0,c=Object.isExtensible||function(){return!0},a=!e(8)(function(){return c(Object.preventExtensions({}))}),s=function(t){u(t,r,{value:{i:"O"+ ++f,w:{}}})},l=function(t,n){if(!o(t))return"symbol"==typeof t?t:("string"==typeof t?"S":"P")+t;if(!i(t,r)){if(!c(t))return"F";if(!n)return"E";s(t)}return t[r].i},p=function(t,n){if(!i(t,r)){if(!c(t))return!0;if(!n)return!1;s(t)}return t[r].w},d=function(t){return a&&v.NEED&&c(t)&&!i(t,r)&&s(t),t},v=t.exports={KEY:r,NEED:!1,fastKey:l,getWeak:p,onFreeze:d}},function(t,n,e){var r=e(6),o=e(10),i=e(9);t.exports=e(4)?Object.defineProperties:function(t,n){o(t);for(var e,u=i(n),f=u.length,c=0;f>c;)r.f(t,e=u[c++],n[e]);return t}},function(t,n,e){var r=e(19),o=e(12),i=e(3),u=e(24),f=e(2),c=e(30),a=Object.getOwnPropertyDescriptor;n.f=e(4)?a:function(t,n){if(t=i(t),n=u(n,!0),c)try{return a(t,n)}catch(t){}if(f(t,n))return o(!r.f.call(t,n),t[n])}},function(t,n,e){var r=e(3),o=e(33).f,i={}.toString,u="object"==typeof window&&window&&Object.getOwnPropertyNames?Object.getOwnPropertyNames(window):[],f=function(t){try{return o(t)}catch(t){return u.slice()}};t.exports.f=function(t){return u&&"[object Window]"==i.call(t)?f(t):o(r(t))}},function(t,n,e){var r=e(2),o=e(37),i=e(21)("IE_PROTO"),u=Object.prototype;t.exports=Object.getPrototypeOf||function(t){return t=o(t),r(t,i)?t[i]:"function"==typeof t.constructor&&t instanceof t.constructor?t.constructor.prototype:t instanceof Object?u:null}},function(t,n,e){var r=e(23),o=e(15);t.exports=function(t){return function(n,e){var i,u,f=String(o(n)),c=r(e),a=f.length;return c<0||c>=a?t?"":void 0:(i=f.charCodeAt(c),i<55296||i>56319||c+1===a||(u=f.charCodeAt(c+1))<56320||u>57343?t?f.charAt(c):i:t?f.slice(c,c+2):(i-55296<<10)+(u-56320)+65536)}}},function(t,n,e){var r=e(23),o=Math.max,i=Math.min;t.exports=function(t,n){return t=r(t),t<0?o(t+n,0):i(t,n)}},function(t,n,e){var r=e(23),o=Math.min;t.exports=function(t){return t>0?o(r(t),9007199254740991):0}},function(t,n,e){"use strict";var r=e(44),o=e(52),i=e(17),u=e(3);t.exports=e(31)(Array,"Array",function(t,n){this._t=u(t),this._i=0,this._k=n},function(){var t=this._t,n=this._k,e=this._i++;return!t||e>=t.length?(this._t=void 0,o(1)):"keys"==n?o(0,e):"values"==n?o(0,t[e]):o(0,[e,t[e]])},"values"),i.Arguments=i.Array,r("keys"),r("values"),r("entries")},function(t,n){},function(t,n,e){"use strict";var r=e(59)(!0);e(31)(String,"String",function(t){this._t=String(t),this._i=0},function(){var t,n=this._t,e=this._i;return e>=n.length?{value:void 0,done:!0}:(t=r(n,e),this._i+=t.length,{value:t,done:!1})})},function(t,n,e){"use strict";var r=e(1),o=e(2),i=e(4),u=e(27),f=e(36),c=e(54).KEY,a=e(8),s=e(22),l=e(20),p=e(13),d=e(7),v=e(26),y=e(25),h=e(53),b=e(47),x=e(50),m=e(10),g=e(3),w=e(24),O=e(12),S=e(32),_=e(57),j=e(56),P=e(6),E=e(9),M=j.f,A=P.f,T=_.f,L=r.Symbol,N=r.JSON,C=N&&N.stringify,k="prototype",F=d("_hidden"),q=d("toPrimitive"),I={}.propertyIsEnumerable,B=s("symbol-registry"),D=s("symbols"),W=s("op-symbols"),H=Object[k],K="function"==typeof L,R=r.QObject,J=!R||!R[k]||!R[k].findChild,U=i&&a(function(){return 7!=S(A({},"a",{get:function(){return A(this,"a",{value:7}).a}})).a})?function(t,n,e){var r=M(H,n);r&&delete H[n],A(t,n,e),r&&t!==H&&A(H,n,r)}:A,G=function(t){var n=D[t]=S(L[k]);return n._k=t,n},$=K&&"symbol"==typeof L.iterator?function(t){return"symbol"==typeof t}:function(t){return t instanceof L},z=function(t,n,e){return t===H&&z(W,n,e),m(t),n=w(n,!0),m(e),o(D,n)?(e.enumerable?(o(t,F)&&t[F][n]&&(t[F][n]=!1),e=S(e,{enumerable:O(0,!1)})):(o(t,F)||A(t,F,O(1,{})),t[F][n]=!0),U(t,n,e)):A(t,n,e)},Y=function(t,n){m(t);for(var e,r=b(n=g(n)),o=0,i=r.length;i>o;)z(t,e=r[o++],n[e]);return t},Q=function(t,n){return void 0===n?S(t):Y(S(t),n)},X=function(t){var n=I.call(this,t=w(t,!0));return!(this===H&&o(D,t)&&!o(W,t))&&(!(n||!o(this,t)||!o(D,t)||o(this,F)&&this[F][t])||n)},V=function(t,n){if(t=g(t),n=w(n,!0),t!==H||!o(D,n)||o(W,n)){var e=M(t,n);return!e||!o(D,n)||o(t,F)&&t[F][n]||(e.enumerable=!0),e}},Z=function(t){for(var n,e=T(g(t)),r=[],i=0;e.length>i;)o(D,n=e[i++])||n==F||n==c||r.push(n);return r},tt=function(t){for(var n,e=t===H,r=T(e?W:g(t)),i=[],u=0;r.length>u;)!o(D,n=r[u++])||e&&!o(H,n)||i.push(D[n]);return i};K||(L=function(){if(this instanceof L)throw TypeError("Symbol is not a constructor!");var t=p(arguments.length>0?arguments[0]:void 0),n=function(e){this===H&&n.call(W,e),o(this,F)&&o(this[F],t)&&(this[F][t]=!1),U(this,t,O(1,e))};return i&&J&&U(H,t,{configurable:!0,set:n}),G(t)},f(L[k],"toString",function(){return this._k}),j.f=V,P.f=z,e(33).f=_.f=Z,e(19).f=X,e(34).f=tt,i&&!e(18)&&f(H,"propertyIsEnumerable",X,!0),v.f=function(t){return G(d(t))}),u(u.G+u.W+u.F*!K,{Symbol:L});for(var nt="hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables".split(","),et=0;nt.length>et;)d(nt[et++]);for(var nt=E(d.store),et=0;nt.length>et;)y(nt[et++]);u(u.S+u.F*!K,"Symbol",{for:function(t){return o(B,t+="")?B[t]:B[t]=L(t)},keyFor:function(t){if($(t))return h(B,t);throw TypeError(t+" is not a symbol!")},useSetter:function(){J=!0},useSimple:function(){J=!1}}),u(u.S+u.F*!K,"Object",{create:Q,defineProperty:z,defineProperties:Y,getOwnPropertyDescriptor:V,getOwnPropertyNames:Z,getOwnPropertySymbols:tt}),N&&u(u.S+u.F*(!K||a(function(){var t=L();return"[null]"!=C([t])||"{}"!=C({a:t})||"{}"!=C(Object(t))})),"JSON",{stringify:function(t){if(void 0!==t&&!$(t)){for(var n,e,r=[t],o=1;arguments.length>o;)r.push(arguments[o++]);return n=r[1],"function"==typeof n&&(e=n),!e&&x(n)||(n=function(t,n){if(e&&(n=e.call(this,t,n)),!$(n))return n}),r[1]=n,C.apply(N,r)}}}),L[k][q]||e(5)(L[k],q,L[k].valueOf),l(L,"Symbol"),l(Math,"Math",!0),l(r.JSON,"JSON",!0)},function(t,n,e){e(25)("asyncIterator")},function(t,n,e){e(25)("observable")},function(t,n,e){e(62);for(var r=e(1),o=e(5),i=e(17),u=e(7)("toStringTag"),f=["NodeList","DOMTokenList","MediaList","StyleSheetList","CSSRuleList"],c=0;c<5;c++){var a=f[c],s=r[a],l=s&&s.prototype;l&&!l[u]&&o(l,u,a),i[a]=i.Array}},function(t,n){"use strict";var e={versions:function(){var t=window.navigator.userAgent;return{trident:t.indexOf("Trident")>-1,presto:t.indexOf("Presto")>-1,webKit:t.indexOf("AppleWebKit")>-1,gecko:t.indexOf("Gecko")>-1&&t.indexOf("KHTML")==-1,mobile:!!t.match(/AppleWebKit.*Mobile.*/),ios:!!t.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),android:t.indexOf("Android")>-1||t.indexOf("Linux")>-1,iPhone:t.indexOf("iPhone")>-1||t.indexOf("Mac")>-1,iPad:t.indexOf("iPad")>-1,webApp:t.indexOf("Safari")==-1,weixin:t.indexOf("MicroMessenger")==-1}}()};t.exports=e},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}var o=e(40),i=r(o),u=function(){function t(t,n,e){return n||e?String.fromCharCode(n||e):o[t]||t}function n(t){return l[t]}var e=/&quot;|&lt;|&gt;|&amp;|&nbsp;|&apos;|&#(\d+);|&#(\d+)/g,r=/['<> "&]/g,o={"&quot;":'"',"&lt;":"<","&gt;":">","&amp;":"&","&nbsp;":" "},f=/\u00a0/g,c=/<br\s*\/?>/gi,a=/\r?\n/g,s=/\s/g,l={};for(var p in o)l[o[p]]=p;return o["&apos;"]="'",l["'"]="&#39;",{encode:function(t){return t?(""+t).replace(r,n).replace(a,"<br/>").replace(s,"&nbsp;"):""},decode:function(n){return n?(""+n).replace(c,"\n").replace(e,t).replace(f," "):""},encodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},encodeBase16forJSON:function(t){if(!t)return t;t=t.replace(/[\u4E00-\u9FBF]/gi,function(t){return escape(t).replace("%u","\\u")});for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},decodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e+=2)n.push(String.fromCharCode("0x"+t.slice(e,e+2)));return n.join("")},encodeObject:function(t){if(t instanceof Array)for(var n=0,e=t.length;e>n;n++)t[n]=u.encodeObject(t[n]);else if("object"==("undefined"==typeof t?"undefined":(0,i.default)(t)))for(var r in t)t[r]=u.encodeObject(t[r]);else if("string"==typeof t)return u.encode(t);return t},loadScript:function(t){var n=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(n),n.setAttribute("src",t)},addLoadEvent:function(t){var n=window.onload;"function"!=typeof window.onload?window.onload=t:window.onload=function(){n(),t()}}}}();t.exports=u},function(t,n){function e(t,n){t.classList?t.classList.add(n):t.className+=" "+n}t.exports=e},function(t,n){function e(t,n){if(t.classList)t.classList.remove(n);else{var e=new RegExp("(^|\\b)"+n.split(" ").join("|")+"(\\b|$)","gi");t.className=t.className.replace(e," ")}}t.exports=e},,,function(t,n){"use strict";function e(){var t=document.querySelector("#page-nav");if(t&&!document.querySelector("#page-nav .extend.prev")&&(t.innerHTML='<a class="extend prev disabled" rel="prev">&laquo; Prev</a>'+t.innerHTML),t&&!document.querySelector("#page-nav .extend.next")&&(t.innerHTML=t.innerHTML+'<a class="extend next disabled" rel="next">Next &raquo;</a>'),yiliaConfig&&yiliaConfig.open_in_new){var n=document.querySelectorAll(".article-entry a:not(.article-more-a)");n.forEach(function(t){t.setAttribute("target","_blank")})}var e=document.querySelector("#js-aboutme");e&&0!==e.length&&(e.innerHTML=e.innerText)}t.exports={init:e}},,,,,,,,,function(t,n){function e(t,n){if("string"==typeof n)return t.insertAdjacentHTML("afterend",n);var e=t.nextSibling;return e?t.parentNode.insertBefore(n,e):t.parentNode.appendChild(n)}t.exports=e}])</script><script src="/./main.234bc0.js"></script><script>!function(){var e=function(e){var t=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(t),t.setAttribute("src",e)};e("/slider.885efe.js")}()</script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    showProcessingMessages: false,
+    messageStyle: "none",
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+        inlineMath:  [ ["$", "$"] ],
+        displayMath: [ ["$$","$$"] ],
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code','a'],
+        ignoreClass:"comment-content"
+    },
+    "HTML-CSS": {
+        availableFonts: ["STIX","TeX"],
+        showMathMenu: false
+    }
+});
+MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?...">
+</script>
+
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">所有文章</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'friends')"><a href="javascript:void(0)" q-class="active:friends">友链</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Github</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">PyTorch</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DeepLearning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">LSTM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">GRU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">R</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tensorflow</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Paper阅读记录</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            2、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: true
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-friends" q-show="friends">
+  		
+        <ul class="search-ul">
+          
+            <li class="search-li">
+              <a href="http://blog.csdn.net/u013082989" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>My CSDN</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://lawlite.me/archives/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>归档</a>
+            </li>
+          
+        </ul>
+  		
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">研究生一枚</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
