@@ -23,7 +23,7 @@
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/ModelCompression/05_compressed-result.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/ModelCompression/06_combination-of-pruning-and-uqantizaiton.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/ModelCompression/07_comparison.png">
-<meta property="og:updated_time" content="2017-09-08T06:58:04.029Z">
+<meta property="og:updated_time" content="2017-09-11T06:40:04.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文记录-Deep Compression:Compressing DeepNeural Networks With Pruning, Trained Quantization And Huffman Coding">
 <meta name="twitter:description" content="1、概述 压缩主要分为三个阶段：剪枝(pruning)、训练分层(trained quantization)以及 哈夫曼编码(Huffman coding) 可以压缩35到49倍，并且不影响精度 [模型压缩的主要用于还是能够用于小型的设备上，例如手机端等，比如Google的Mobile Net, 但是准确度肯定要比正常的电脑端训练的大网络低一些，在所难免] [一般的训练好的神经网络模型文件有几百兆">
@@ -396,6 +396,7 @@ var _hmt = _hmt || [];
 </ul>
 <p><img src="/assets/blog_images/ModelCompression/07_comparison.png" alt="和之前的工作比较" title="07_comparison"></p>
 <ul>
+<li>缺点就是在运行时现有的<code>GPU</code>不能进行间接的矩阵输入查找，以及相对索引 <code>CSC</code> 或 <code>CSR</code>, 还有剪枝的操作主要<strong>是在全连接层</strong>，但是计算量大的卷积层较少，虽然可以通过<code>BLAS libraries</code>或是<code>specialized hardware</code>进行加速，但是也是受限的（下篇<code>Paper</code>中也有提到）</li>
 <li>[我觉得剪枝和权值共享其实是能够防止过拟合的，所以准确度没有损失]</li>
 <li>[权值共享时是当前层的权值共享，不是整个网络的权值共享]</li>
 </ul>
@@ -550,6 +551,15 @@ var _hmt = _hmt || [];
 
   
 <nav id="article-nav">
+  
+    <a href="/2017/09/11/论文记录-PruningFiltersForEfficientConvNets/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          论文记录-Pruning Filters For Efficient ConvNets
+        
+      </div>
+    </a>
   
   
     <a href="/2017/06/30/R语言学习/" id="article-nav-older" class="article-nav-link-wrap">
@@ -732,11 +742,11 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
+                <a href="javascript:void(0)" class="js-tag color3">DeepLearning</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DeepLearning</a>
+                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -748,15 +758,7 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">GRU</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tensorflow</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -764,19 +766,15 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">R</a>
+                <a href="javascript:void(0)" class="js-tag color1">Tensorflow</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">GRU</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -785,6 +783,18 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">ModelCompression</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">R</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
               </li>
             
             <div class="clearfix"></div>

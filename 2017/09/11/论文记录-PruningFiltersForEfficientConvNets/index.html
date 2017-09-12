@@ -6,17 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://lawlite.me">
-  <title>Tag: 机器学习 | Lawlite的博客</title>
+  <title>论文记录-Pruning Filters For Efficient ConvNets | Lawlite的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="东南-蒙纳士联合学院研究生">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Lawlite的博客">
-<meta property="og:url" content="http://lawlite.me/tags/机器学习/index.html">
+  <meta name="description" content="1、概述 一些剪枝的操作主要是减少了全连接层的参数，全连接层的参数量占比最多（比如VGG-16中全连接层操作占了90%，计算量只占了不到1%）, 但是主要的计算量集中在卷层操作 论文就是提出了对卷积层进行剪枝操作，然后进行retrain，不会造成稀疏连接（像上篇论文一样，稀疏矩阵操作需要特殊的库等来处理） 全连接层可以使用平均池化层来代替以减少参数量">
+<meta name="keywords" content="Paper阅读记录,ModelCompression">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文记录-Pruning Filters For Efficient ConvNets">
+<meta property="og:url" content="http://lawlite.me/2017/09/11/论文记录-PruningFiltersForEfficientConvNets/index.html">
 <meta property="og:site_name" content="Lawlite的博客">
-<meta property="og:description" content="东南-蒙纳士联合学院研究生">
+<meta property="og:description" content="1、概述 一些剪枝的操作主要是减少了全连接层的参数，全连接层的参数量占比最多（比如VGG-16中全连接层操作占了90%，计算量只占了不到1%）, 但是主要的计算量集中在卷层操作 论文就是提出了对卷积层进行剪枝操作，然后进行retrain，不会造成稀疏连接（像上篇论文一样，稀疏矩阵操作需要特殊的库等来处理） 全连接层可以使用平均池化层来代替以减少参数量">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/ModelCompression/07_feature-map.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/ModelCompression/08_conv_abs_distribution.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/ModelCompression/09_accuracy_of_prune.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/ModelCompression/10_two_strategies_of_pruning.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/ModelCompression/11_experiment_result.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/ModelCompression/12_comparison.png">
+<meta property="og:updated_time" content="2017-09-12T03:24:04.998Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Lawlite的博客">
-<meta name="twitter:description" content="东南-蒙纳士联合学院研究生">
+<meta name="twitter:title" content="论文记录-Pruning Filters For Efficient ConvNets">
+<meta name="twitter:description" content="1、概述 一些剪枝的操作主要是减少了全连接层的参数，全连接层的参数量占比最多（比如VGG-16中全连接层操作占了90%，计算量只占了不到1%）, 但是主要的计算量集中在卷层操作 论文就是提出了对卷积层进行剪枝操作，然后进行retrain，不会造成稀疏连接（像上篇论文一样，稀疏矩阵操作需要特殊的库等来处理） 全连接层可以使用平均池化层来代替以减少参数量">
+<meta name="twitter:image" content="http://lawlite.me/assets/blog_images/ModelCompression/07_feature-map.png">
   
     <link rel="alternative" href="/atom.xml" title="Lawlite的博客" type="application/atom+xml">
   
@@ -181,116 +190,343 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-论文记录-PruningFiltersForEfficientConvNets" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/08/Python机器学习/" class="archive-article-date">
-  	<time datetime="2017-01-08T15:01:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-08</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/08/Python机器学习/">Python机器学习</a>
+    <h1 class="article-title" itemprop="name">
+      论文记录-Pruning Filters For Efficient ConvNets
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+		<!-- 显示阅读和评论数 -->
+		
+		<br/>
+		<a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+		<span class="icon-sort"></span>
+		<span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+            阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+		</span>
+		</a>
+		<!-- 网易的评论数，这里先不使用
+		<a class="cloud-tie-join-count" href="javascript:void(0);" style="color:#ef7522;font-size:14px;">
+			<span class="icon-comment"></span>
+			<span class="join-text" style="color:#ef7522;font-size:14px;">参与数:</span>
+			<span class="join-count">0</span>人
+		</a>  -->
+		
+		
+        
+        <a href="/2017/09/11/论文记录-PruningFiltersForEfficientConvNets/" class="archive-article-date">
+  	<time datetime="2017-09-11T02:32:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-11</time>
+</a>
+        
+      </header>
+    
+		<!-- 目录内容 -->
+		
+		    <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+            <span class="btn-bg"></span>
+            <span class="btn-text">文章导航</span>
+            </p>
+			<div id="toc-article" class="toc-article">
+			    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+				<strong class="toc-title">文章目录</strong>
+	            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、概述"><span class="toc-number">1.</span> <span class="toc-text">1、概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、对Filters进行剪枝，以及Feature-maps"><span class="toc-number">2.</span> <span class="toc-text">2、对Filters进行剪枝，以及Feature maps</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-基础（CNN相关内容）"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 基础（CNN相关内容）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-去除哪些filters-在单层中"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 去除哪些filters (在单层中)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-剪枝的敏感度-Sensitivity"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 剪枝的敏感度(Sensitivity)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-多层剪枝的策略"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 多层剪枝的策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、-Retraining"><span class="toc-number">3.</span> <span class="toc-text">3、 Retraining</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、实验结果"><span class="toc-number">4.</span> <span class="toc-text">4、实验结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、结论"><span class="toc-number">5.</span> <span class="toc-text">5、结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">6.</span> <span class="toc-text">Reference</span></a></li></ol>
+           </div>
+		   <script type="text/javascript">
+			function showToc(){
+				var toc_article = document.getElementById("toc-article");
+				var show_toc_btn = document.getElementById("show-toc-btn");
+				toc_article.setAttribute("style","display:block");
+				show_toc_btn.setAttribute("style","display:none");
+				};
+			function showBtn(){
+				var toc_article = document.getElementById("toc-article");
+				var show_toc_btn = document.getElementById("show-toc-btn");
+				toc_article.setAttribute("style","display:none");
+				show_toc_btn.setAttribute("style","display:block");
+				};
+		   </script>
+        		
+		<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1、概述"><a href="#1、概述" class="headerlink" title="1、概述"></a>1、概述</h2><ul>
+<li>一些剪枝的操作主要是<strong>减少了全连接层的参数</strong>，全连接层的参数量占比最多（比如<code>VGG-16</code>中全连接层操作占了<code>90%</code>，计算量只占了不到<code>1%</code>）, 但是主要的<strong>计算量集中在卷层操作</strong></li>
+<li>论文就是提出了<strong>对卷积层进行剪枝操作</strong>，然后进行<code>retrain</code>，不会造成<strong>稀疏连接</strong>（像<a href="http://lawlite.me/2017/09/07/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-DeepCompression-CompressingDeepNeuralNetworksWithPruning-TrainedQuantizationAndHuffmanCoding/">上篇论文</a>一样，稀疏矩阵操作需要特殊的库等来处理）</li>
+<li>全连接层可以使用<strong>平均池化层</strong>来代替以减少参数量</li>
+</ul>
+<a id="more"></a>
+<h2 id="2、对Filters进行剪枝，以及Feature-maps"><a href="#2、对Filters进行剪枝，以及Feature-maps" class="headerlink" title="2、对Filters进行剪枝，以及Feature maps"></a>2、对<code>Filters</code>进行剪枝，以及<code>Feature maps</code></h2><h3 id="2-1-基础（CNN相关内容）"><a href="#2-1-基础（CNN相关内容）" class="headerlink" title="2.1 基础（CNN相关内容）"></a>2.1 基础（<code>CNN</code>相关内容）</h3><ul>
+<li>设第 <code>i</code> 层的卷积层的输入 <code>channel</code> 有 $n_i$ , $h_i$ 和 $w_i$ 表示输入的特征图<code>feature map</code>的高和宽</li>
+<li>使用$n_{i+1}$ 个<code>3D filters</code> $F_{i,j} \in R^{n_i \times k \times k}$， 则卷积操作可以将输入的<code>feature maps</code> $x_i \in R^{n_i \times h_i \times w_i}$ 转化为 $x_{i+1} \in R^{n_{i+1} \times h_{i+1} \times w_{i+1}}$<ul>
+<li>关于<code>CNN</code>的基础不了解的可以<a href="http://blog.csdn.net/u013082989/article/details/53673602" target="_blank" rel="external">查看这里</a></li>
+</ul>
+</li>
+<li>卷积操作的运算数量是：$n_{i+1}n_ik^2h_{i+1}w_{i+1}$ (对应到下图的<code>kernel matrix</code>)</li>
+<li>所以如下图所示，取出一个<code>feature map</code>可以直接减少$n_ik^2h_{i+1}w_{i+1}$个运算<ul>
+<li>同时接下来的<code>feature map</code>也就没有了，附加移除$n_{i+2}k^2h_{i+2}w_{i+2}$个运算</li>
+</ul>
+</li>
+<li>所以减少<code>m</code>个 <code>featuremaps</code> 可以减少 $m/n_{i+1}$ 的计算量<ul>
+<li>下图的<code>kernel matrix</code>，一个 <code>feature map</code> 对应一列，所以是$m/n_{i+1}$<br><img src="/assets/blog_images/ModelCompression/07_feature-map.png" alt="filters" title="07_feature-map"></li>
+</ul>
+</li>
+</ul>
+<h3 id="2-2-去除哪些filters-在单层中"><a href="#2-2-去除哪些filters-在单层中" class="headerlink" title="2.2 去除哪些filters (在单层中)"></a>2.2 去除哪些<code>filters</code> (在单层中)</h3><ul>
+<li>向<a href="http://lawlite.me/2017/09/07/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-DeepCompression-CompressingDeepNeuralNetworksWithPruning-TrainedQuantizationAndHuffmanCoding/">之前的论文</a>介绍的，权重的绝对值越小，则权重的作用也就越小<ul>
+<li>[ 假设权重值都在<code>0</code>附近，进行乘积得到的值很小，所以对结果造成的影响也很小 ]</li>
+<li>[ 删除一些冗余的值还有可能防止过拟合 ]</li>
+</ul>
+</li>
+<li>本文使用的是<code>filter</code>的绝对值的和来衡量这个<code>filter</code>的作用，即 $\sum |F_{i,j}|$ , ($l_1$范数)<ul>
+<li>选择前<code>m</code>个<strong>最小的</strong>绝对值删除</li>
+<li>文章和<strong>随机选择</strong>相同数量<code>的filters</code>和选择<strong>最大值</strong>的结果比较，此方法最好</li>
+</ul>
+</li>
+<li><code>VGG-16</code>在<code>Cifar-10</code>数据集上训练得到的卷积层的权重分布情况，可以看出每一卷积层的分布变化还是很大的</li>
+</ul>
+<p><img src="/assets/blog_images/ModelCompression/08_conv_abs_distribution.png" alt="each layer distribution of abs value " title="08_conv_abs_distribution"></p>
+<h3 id="2-3-剪枝的敏感度-Sensitivity"><a href="#2-3-剪枝的敏感度-Sensitivity" class="headerlink" title="2.3 剪枝的敏感度(Sensitivity)"></a>2.3 剪枝的敏感度(Sensitivity)</h3><ul>
+<li>就是每一卷积层进行<strong>单独剪枝</strong>，查看在<code>validation set</code>上准确度的变化</li>
+<li>对于<code>VGG-16</code>, 一些卷积层的<code>filter</code>数量是一样的，所以对于差不多 <code>Sensitivity</code> 的卷积层，使用相同的比例进行剪枝，而对于 <code>Sensitivity</code> 比较大的，选择最小的比例进行剪枝或者不进行剪枝</li>
+</ul>
+<p><img src="/assets/blog_images/ModelCompression/09_accuracy_of_prune.png" alt="accuracy" title="09_accuracy_of_prune"></p>
+<h3 id="2-4-多层剪枝的策略"><a href="#2-4-多层剪枝的策略" class="headerlink" title="2.4 多层剪枝的策略"></a>2.4 多层剪枝的策略</h3><ul>
+<li>之前的一些剪枝策略是逐层剪枝，然后进行<code>retraining</code>，但是这样是非常耗时的</li>
+<li>两种策略<ul>
+<li>独立剪枝：就是每一层是独立的，然后进行剪枝</li>
+<li>贪心剪枝：就是考虑到上一层被剪掉的情况</li>
+</ul>
+</li>
+<li>如下图，第一种方法就是不考虑已经前面已经移除的<code>filters</code>（蓝色的），就是黄色的<code>kernel</code>仍然参与计算<ul>
+<li>而对于贪心剪枝就不用计算黄色的<code>kernel</code>了</li>
+</ul>
+</li>
+</ul>
+<p><img src="/assets/blog_images/ModelCompression/10_two_strategies_of_pruning.png" alt="two strategies of pruning" title="10_two_strategies_of_pruning"></p>
+<h2 id="3、-Retraining"><a href="#3、-Retraining" class="headerlink" title="3、 Retraining"></a>3、 Retraining</h2><ul>
+<li>剪枝之后，应该<code>retraining</code>，（和迁移学习很像，有些<code>fine-tune</code>的意思）</li>
+<li>也是两种策略：<ul>
+<li>一次性剪枝然后 <code>retrain</code></li>
+<li>逐层剪枝进行 <code>retrain</code></li>
+</ul>
+</li>
+<li>第二种策略结果可能会更好，但是需要更多的<code>epochs</code></li>
+</ul>
+<h2 id="4、实验结果"><a href="#4、实验结果" class="headerlink" title="4、实验结果"></a>4、实验结果</h2><ul>
+<li>剪枝之后进行<code>retrain</code>，在原来的基础之上得到的结果要比完全重新训练得到的结果好</li>
+</ul>
+<p><img src="/assets/blog_images/ModelCompression/11_experiment_result.png" alt="result" title="11_experiment_result"></p>
+<ul>
+<li>和随机剪枝、减去最大值$l_1$范数的<code>filters</code>的结果比较</li>
+</ul>
+<p><img src="/assets/blog_images/ModelCompression/12_comparison.png" alt="comparison" title="12_comparison"></p>
+<h2 id="5、结论"><a href="#5、结论" class="headerlink" title="5、结论"></a>5、结论</h2><ul>
+<li>剪枝<code>filters</code>，减少计算量</li>
+<li>注意有<code>Batch Normalization</code>层的对应剪枝后，<code>BN</code>层也要对应删除</li>
+<li>[其实感觉方法挺简单的]</li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://arxiv.org/abs/1608.08710" target="_blank" rel="external">https://arxiv.org/abs/1608.08710</a></li>
+<li><a href="http://lawlite.me/2017/09/07/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-DeepCompression-CompressingDeepNeuralNetworksWithPruning-TrainedQuantizationAndHuffmanCoding/">http://lawlite.me/2017/09/07/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-DeepCompression-CompressingDeepNeuralNetworksWithPruning-TrainedQuantizationAndHuffmanCoding/</a></li>
+<li><a href="http://blog.csdn.net/u013082989/article/details/53673602" target="_blank" rel="external">http://blog.csdn.net/u013082989/article/details/53673602</a></li>
+</ul>
+
+
+		
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/weixin.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+<!-- 版权申明开始  -->
+
+<div> 
+  <ul class="post-copyright" style="
+    margin: 0em 0em 0em 0em;
+    padding: 0.5em 1em;
+    border-left: 3px solid #ff1700;
+    background-color: #f9f9f9;
+    list-style: none;
+    font-size: 14px;
+">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Lawlite
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://lawlite.me/2017/09/11/论文记录-PruningFiltersForEfficientConvNets/" title="论文记录-Pruning Filters For Efficient ConvNets">http://lawlite.me/2017/09/11/论文记录-PruningFiltersForEfficientConvNets/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/80x15.png"></a> 。转载请注明出处！
+    </li>
+  </ul>
+</div>
+
+<!-- 版权声明结束 -->
+      
+    </div>
+
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Paper阅读记录</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">ModelCompression</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://lawlite.me/2017/09/11/论文记录-PruningFiltersForEfficientConvNets/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/11/09/Python科学计算/" class="archive-article-date">
-  	<time datetime="2016-11-09T14:25:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-09</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/11/09/Python科学计算/">Python科学计算</a>
-    </h1>
+  
+    <a href="/2017/09/07/论文记录-DeepCompression-CompressingDeepNeuralNetworksWithPruning-TrainedQuantizationAndHuffmanCoding/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">论文记录-Deep Compression:Compressing DeepNeural Networks With Pruning, Trained Quantization And Huffman Coding</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
 
-    
+
+
+<section class="duoshuo" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8yODEwMy80Njc2">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+
+<!-- 网易云跟帖 -->
 
 
           </div>
@@ -321,9 +557,9 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		root: "/",
