@@ -9,7 +9,7 @@
   <title>RNN-LSTM循环神经网络-03Tensorflow进阶实现 | Lawlite的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="全部代码：点击这里查看 关于Tensorflow实现一个简单的二元序列的例子可以点击这里查看 关于RNN和LSTM的基础可以查看这里 这篇博客主要包含以下内容 训练一个RNN模型逐字符生成文本数据(最后的部分) 使用Tensorflow的scan函数实现dynamic_rnn动态创建的效果 使用multiple RNN创建多层的RNN 实现Dropout和Layer Normalization的">
-<meta name="keywords" content="Python,RNN,DeepLearning,LSTM">
+<meta name="keywords" content="Python,DeepLearning,RNN,LSTM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RNN-LSTM循环神经网络-03Tensorflow进阶实现">
 <meta property="og:url" content="http://lawlite.me/2017/06/21/RNN-LSTM循环神经网络-03Tensorflow进阶实现/index.html">
@@ -76,7 +76,7 @@ var _hmt = _hmt || [];
 	        
 				<li><a href="/tags/随笔/">随笔</a></li>
 	        
-				<li><a href="/photos/">相册</a></li>
+				<li><a href="/photos/">相册 &amp; 视频</a></li>
 	        
 				<li><a href="/留言板/">留言板</a></li>
 	        
@@ -168,7 +168,7 @@ var _hmt = _hmt || [];
 		        
 					<li style="width: 20%"><a href="/tags/随笔/">随笔</a></li>
 		        
-					<li style="width: 20%"><a href="/photos/">相册</a></li>
+					<li style="width: 20%"><a href="/photos/">相册 &amp; 视频</a></li>
 		        
 					<li style="width: 20%"><a href="/留言板/">留言板</a></li>
 		        
@@ -582,11 +582,11 @@ var _hmt = _hmt || [];
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">RNN</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">DeepLearning</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">DeepLearning</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">RNN</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -842,15 +842,7 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -858,7 +850,7 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
+                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -866,15 +858,15 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">LSTM</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tensorflow</a>
+                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -882,15 +874,23 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">R</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tensorflow</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -902,15 +902,15 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">论文记录</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">图像分割</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>
