@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://lawlite.me">
+  <title>风格迁移 Style transfer | Lawlite的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一、介绍 将一张图片的艺术风格应用在另外一张图片上    使用深度卷积网络CNN提取一张图片的内容和提取一张图片的风格， 然后将两者结合起来得到最后的结果">
+<meta name="keywords" content="Style transfer,Keras">
+<meta property="og:type" content="article">
+<meta property="og:title" content="风格迁移 Style transfer">
+<meta property="og:url" content="http://lawlite.me/2018/02/28/风格迁移Style-transfer/index.html">
+<meta property="og:site_name" content="Lawlite的博客">
+<meta property="og:description" content="一、介绍 将一张图片的艺术风格应用在另外一张图片上    使用深度卷积网络CNN提取一张图片的内容和提取一张图片的风格， 然后将两者结合起来得到最后的结果">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/Style_transfer/01_style-transfer.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/Style_transfer/03_representation.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/Style_transfer/04_vgg16.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/Style_transfer/05_buildings.jpg">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/Style_transfer/06_starry-sky.jpg">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/Style_transfer/07_initialize.jpg">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/Style_transfer/08_final-result.jpg">
+<meta property="og:updated_time" content="2018-03-01T03:12:31.001Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="风格迁移 Style transfer">
+<meta name="twitter:description" content="一、介绍 将一张图片的艺术风格应用在另外一张图片上    使用深度卷积网络CNN提取一张图片的内容和提取一张图片的风格， 然后将两者结合起来得到最后的结果">
+<meta name="twitter:image" content="http://lawlite.me/assets/blog_images/Style_transfer/01_style-transfer.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Lawlite的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/assets/img/favicon.ico">
+  
+  <link rel="stylesheet" type="text/css" href="/./main.234bc0.css">
+  <style type="text/css">
+  
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+	var hm = document.createElement("script");
+	hm.src = "https://hm.baidu.com/hm.js?aafd2cc62b94803248a1bee49dbc581f";
+	var s = document.getElementsByTagName("script")[0]; 
+	s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+  
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+<div class="overlay" style="background: #279ADB"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/assets/img/avatar.jpg" class="js-avatar">
+		</a>
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Lawlite</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/tags/随笔/">随笔</a></li>
+	        
+				<li><a href="/photos/">相册 &amp; 视频</a></li>
+	        
+				<li><a href="/留言板/">留言板</a></li>
+	        
+				<li><a href="http://lawlite.me/archives/">归档</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+    		
+    			
+    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/lawlite19" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="rss" target="_blank" href="/atom.xml" title="rss"><i class="icon-rss"></i></a>
+		        
+					<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/lawlite.me" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
+					<a class="qq" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=849451478&site=qq&menu=yes" title="qq"><i class="icon-qq"></i></a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #279ADB"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/assets/img/avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">Lawlite</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/lawlite19" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss"><i class="icon-rss"></i></a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/lawlite.me" title="zhihu"><i class="icon-zhihu"></i></a>
+			        
+						<a class="qq" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=849451478&site=qq&menu=yes" title="qq"><i class="icon-qq"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 20%"><a href="/">主页</a></li>
+		        
+					<li style="width: 20%"><a href="/tags/随笔/">随笔</a></li>
+		        
+					<li style="width: 20%"><a href="/photos/">相册 &amp; 视频</a></li>
+		        
+					<li style="width: 20%"><a href="/留言板/">留言板</a></li>
+		        
+					<li style="width: 20%"><a href="http://lawlite.me/archives/">归档</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-风格迁移Style-transfer" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      风格迁移 Style transfer
+    </h1>
+  
+
+		<!-- 显示阅读和评论数 -->
+		
+		<br/>
+		<a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+		<span class="icon-sort"></span>
+		<span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+            阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+		</span>
+		</a>
+		<!-- 网易的评论数，这里先不使用
+		<a class="cloud-tie-join-count" href="javascript:void(0);" style="color:#ef7522;font-size:14px;">
+			<span class="icon-comment"></span>
+			<span class="join-text" style="color:#ef7522;font-size:14px;">参与数:</span>
+			<span class="join-count">0</span>人
+		</a>  -->
+		
+		
+        
+        <a href="/2018/02/28/风格迁移Style-transfer/" class="archive-article-date">
+  	<time datetime="2018-02-28T11:30:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-28</time>
+</a>
+        
+      </header>
+    
+		<!-- 目录内容 -->
+		
+		    <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+            <span class="btn-bg"></span>
+            <span class="btn-text">文章导航</span>
+            </p>
+			<div id="toc-article" class="toc-article">
+			    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+				<strong class="toc-title">文章目录</strong>
+	            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、介绍"><span class="toc-number">1.</span> <span class="toc-text">一、介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、-方法"><span class="toc-number">2.</span> <span class="toc-text">二、 方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、内容损失"><span class="toc-number">2.1.</span> <span class="toc-text">1、内容损失</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、风格损失"><span class="toc-number">2.2.</span> <span class="toc-text">2、风格损失</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、总损失函数"><span class="toc-number">2.3.</span> <span class="toc-text">3、总损失函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、代码实现"><span class="toc-number">3.</span> <span class="toc-text">三、代码实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、说明"><span class="toc-number">3.1.</span> <span class="toc-text">1、说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、加载并预处理图片和初始化输出图片"><span class="toc-number">3.2.</span> <span class="toc-text">2、加载并预处理图片和初始化输出图片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、获取网络中对应层的输出"><span class="toc-number">3.3.</span> <span class="toc-text">3、获取网络中对应层的输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、内容损失函数"><span class="toc-number">3.4.</span> <span class="toc-text">4、内容损失函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、Gram矩阵和风格损失"><span class="toc-number">3.5.</span> <span class="toc-text">5、Gram矩阵和风格损失</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6、总损失"><span class="toc-number">3.6.</span> <span class="toc-text">6、总损失</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7、损失函数梯度"><span class="toc-number">3.7.</span> <span class="toc-text">7、损失函数梯度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8、生成结果后处理"><span class="toc-number">3.8.</span> <span class="toc-text">8、生成结果后处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9、定义模型并优化"><span class="toc-number">3.9.</span> <span class="toc-text">9、定义模型并优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10、输出结果"><span class="toc-number">3.10.</span> <span class="toc-text">10、输出结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、总结"><span class="toc-number">4.</span> <span class="toc-text">四、总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
+           </div>
+		   <script type="text/javascript">
+			function showToc(){
+				var toc_article = document.getElementById("toc-article");
+				var show_toc_btn = document.getElementById("show-toc-btn");
+				toc_article.setAttribute("style","display:block");
+				show_toc_btn.setAttribute("style","display:none");
+				};
+			function showBtn(){
+				var toc_article = document.getElementById("toc-article");
+				var show_toc_btn = document.getElementById("show-toc-btn");
+				toc_article.setAttribute("style","display:none");
+				show_toc_btn.setAttribute("style","display:block");
+				};
+		   </script>
+        		
+		<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、介绍"><a href="#一、介绍" class="headerlink" title="一、介绍"></a>一、介绍</h2><ul>
+<li>将一张图片的艺术风格应用在另外一张图片上</li>
+</ul>
+<p><img src="/assets/blog_images/Style_transfer/01_style-transfer.png" alt="风格迁移结果" title="01_style-transfer"></p>
+<ul>
+<li>使用深度卷积网络CNN提取一张图片的<strong>内容</strong>和提取一张图片的<strong>风格</strong>， 然后将两者结合起来得到最后的结果</li>
+</ul>
+<a id="more"></a>
+<h2 id="二、-方法"><a href="#二、-方法" class="headerlink" title="二、 方法"></a>二、 方法</h2><p><img src="/assets/blog_images/Style_transfer/03_representation.png" alt="提取图片内容和风格并重构" title="02_representation"></p>
+<ul>
+<li>我们知道 <code>CNN</code> 可以捕捉图像的高层次特征，如上图所示，内容图片经过<code>CNN</code>可以得到对应的图像表述(<code>representation</code>, 就是经过卷积操作的<code>feature map</code>)，然后经过重构可以得到近似原图的效果<ul>
+<li>特别是前面几层经过重构得到的结果和原图更接近，也说明前几层保留的图片细节会更多，因为后面还有<code>pooling</code>层，自然会丢弃调一些信息</li>
+<li>这里的网络使用的是<code>VGG-16</code> (如下图)，包含 <code>13</code> 个卷积层，<code>3</code> 个全连接层<br><img src="/assets/blog_images/Style_transfer/04_vgg16.png" alt="vgg-16结构" title="04_vgg16"></li>
+</ul>
+</li>
+</ul>
+<h3 id="1、内容损失"><a href="#1、内容损失" class="headerlink" title="1、内容损失"></a>1、内容损失</h3><ul>
+<li>假设一个卷积层包含 ${N_l}$ 个过滤器 <code>filters</code>，则可以得到 ${N_l}$ 个<code>feature maps</code>，假设 <code>feature map</code>的大小是 $M_l$ (长乘宽)，则可以通过一个矩阵来存储 <code>l</code> 层的数据 $$F^l \in R^{N_l \times M_l} $$<ul>
+<li>$F^l_{i,j}$ 表示第 <code>l</code> 层的第 <code>i</code> 个<code>filter</code> 在 <code>j</code> 位置上的激活值</li>
+</ul>
+</li>
+<li>所以现在一张内容图片$\overrightarrow p$，一张生成图片$\overrightarrow x$(初始值为高斯分布), 经过一层<strong>卷积层l</strong>可以得到其对应的特征表示：$P^l$ 和 $F_l$, 则对应的损失采用<strong>均方误差</strong>: $$L_{content}(\overrightarrow p, \overrightarrow x, l) = {1 \over 2} \sum_{ij}(F^l_{ij}-P^l_{ij})^2$$<ul>
+<li>$F$ 和 $P$是两个矩阵，大小是$N_l \times M_l$，即<code>l</code>层过滤器的个数 和 <code>feature map</code> 的长乘宽的值</li>
+</ul>
+</li>
+</ul>
+<h3 id="2、风格损失"><a href="#2、风格损失" class="headerlink" title="2、风格损失"></a>2、风格损失</h3><ul>
+<li><strong>风格的表示</strong>这里采用<strong>格拉姆矩阵</strong>(<code>Gram Matrix</code>): $G^l \in R^{N_l \times N_l}$  $$G^l_{ij} = {\sum_k F^l_{ik}F^l_{jk}}$$<ul>
+<li>格拉姆矩阵计算的是<strong>两两特征的相关性</strong> , 即哪两个特征是同时出现的，哪两个特征是此消彼长的等，能够<strong>保留图像的风格</strong></li>
+<li>( 比如一幅画中有人和树，它们可以出现在任意位置，格拉姆矩阵可以衡量它们之间的关系，可以认为是这幅画的风格信息 )</li>
+</ul>
+</li>
+<li><p>假设$\overrightarrow a$是风格图像，$\overrightarrow x$是生成图像，$A^l$ 和 $G^l$ 表示在 $l$ 层的格拉姆矩阵，则这一层的损失为：$$E_l = {1 \over 4N^2_lM^2_l}{\sum_{i,j} (G^l_{ij}-A^l_{ij})^2}$$</p>
+</li>
+<li><p>提取风格信息是我们会使用多个卷积层的输出，所以总损失为：$$L_{style}(\overrightarrow a, \overrightarrow x) = {\sum^L_lw_lE_l}$$</p>
+<ul>
+<li>这里$w_l$是每一层损失的权重</li>
+</ul>
+</li>
+</ul>
+<h3 id="3、总损失函数"><a href="#3、总损失函数" class="headerlink" title="3、总损失函数"></a>3、总损失函数</h3><ul>
+<li>通过<strong>白噪声初始化</strong>(就是高斯分布)一个输出的结果，然后通过网络对这个结果进行风格和内容两方面的约束进行修正<br>$$L_{total}(\overrightarrow p,\overrightarrow a,\overrightarrow x)=\alpha L_{content}(\overrightarrow p, \overrightarrow x) +\beta L_{style}(\overrightarrow a, \overrightarrow x)$$</li>
+</ul>
+<h2 id="三、代码实现"><a href="#三、代码实现" class="headerlink" title="三、代码实现"></a>三、代码实现</h2><h3 id="1、说明"><a href="#1、说明" class="headerlink" title="1、说明"></a>1、说明</h3><ul>
+<li>全部代码：<a href="https://github.com/lawlite19/Blog-Back-Up/blob/master/code/style-transfer/style_transfer.py" target="_blank" rel="external">点击查看</a></li>
+<li>图像使用一张建筑图和梵高的星空<br><img src="/assets/blog_images/Style_transfer/05_buildings.jpg" alt="建筑" title="05_buildings"><br><img src="/assets/blog_images/Style_transfer/06_starry-sky.jpg" alt="星空" title="06_starry-sky"></li>
+</ul>
+<h3 id="2、加载并预处理图片和初始化输出图片"><a href="#2、加载并预处理图片和初始化输出图片" class="headerlink" title="2、加载并预处理图片和初始化输出图片"></a>2、加载并预处理图片和初始化输出图片</h3><ul>
+<li>输出图片采用高斯分布初始化</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> backend <span class="keyword">as</span> K</div><div class="line"><span class="keyword">from</span> keras.applications.vgg16 <span class="keyword">import</span> preprocess_input</div><div class="line"><span class="keyword">from</span> keras.preprocessing.image <span class="keyword">import</span> load_img, img_to_array</div><div class="line"></div><div class="line"><span class="keyword">from</span> keras.applications <span class="keyword">import</span> VGG16</div><div class="line"><span class="keyword">from</span> scipy.optimize <span class="keyword">import</span> fmin_l_bfgs_b</div><div class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"><span class="string">'''图片路径'''</span></div><div class="line">content_image_path = <span class="string">'./data/buildings.jpg'</span></div><div class="line">style_image_path = <span class="string">'./data/starry-sky.jpg'</span></div><div class="line">generate_image_path = <span class="string">'./data/output.jpg'</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="string">'''加载图片并初始化输出图片'''</span></div><div class="line">target_height = <span class="number">512</span></div><div class="line">target_width = <span class="number">512</span></div><div class="line">target_size = (target_height, target_width)</div><div class="line"></div><div class="line">content_image = load_img(content_image_path, target_size=target_size)</div><div class="line">content_image_array = img_to_array(content_image)</div><div class="line">content_image_array = K.variable(preprocess_input(np.expand_dims(content_image_array, <span class="number">0</span>)), dtype=<span class="string">'float32'</span>)</div><div class="line"></div><div class="line">style_image = load_img(style_image_path, target_size=target_size)</div><div class="line">style_image_array = img_to_array(style_image)</div><div class="line">style_image_array = K.variable(preprocess_input(np.expand_dims(style_image_array, <span class="number">0</span>)), dtype=<span class="string">'float32'</span>)</div><div class="line"></div><div class="line">generate_image = np.random.randint(<span class="number">256</span>, size=(target_width, target_height, <span class="number">3</span>)).astype(<span class="string">'float64'</span>)</div><div class="line">generate_image = preprocess_input(np.expand_dims(generate_image, <span class="number">0</span>))</div><div class="line">generate_image_placeholder = K.placeholder(shape=(<span class="number">1</span>, target_width, target_height, <span class="number">3</span>))</div></pre></td></tr></table></figure>
+<h3 id="3、获取网络中对应层的输出"><a href="#3、获取网络中对应层的输出" class="headerlink" title="3、获取网络中对应层的输出"></a>3、获取网络中对应层的输出</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_feature_represent</span><span class="params">(x, layer_names, model)</span>:</span></div><div class="line">    <span class="string">'''图片的特征图表示</span></div><div class="line">    </div><div class="line">    参数</div><div class="line">    ----------------------------------------------</div><div class="line">    x : 输入，</div><div class="line">        这里并没有使用，可以看作一个输入的标识</div><div class="line">    layer_names : list</div><div class="line">        CNN网络层的名字</div><div class="line">    model : CNN模型</div><div class="line">    </div><div class="line">    返回值</div><div class="line">    ----------------------------------------------</div><div class="line">    feature_matrices : list</div><div class="line">        经过CNN卷积层的特征表示，这里大小是(filter个数, feature map的长*宽)</div><div class="line">    </div><div class="line">    '''</div><div class="line">    feature_matrices = []</div><div class="line">    <span class="keyword">for</span> ln <span class="keyword">in</span> layer_names:</div><div class="line">        select_layer = model.get_layer(ln)</div><div class="line">        feature_raw = select_layer.output</div><div class="line">        feature_raw_shape = K.shape(feature_raw).eval(session=tf_session)</div><div class="line">        N_l = feature_raw_shape[<span class="number">-1</span>]</div><div class="line">        M_l = feature_raw_shape[<span class="number">1</span>]*feature_raw_shape[<span class="number">2</span>]</div><div class="line">        feature_matrix = K.reshape(feature_raw, (M_l, N_l))</div><div class="line">        feature_matrix = K.transpose(feature_matrix)</div><div class="line">        feature_matrices.append(feature_matrix)</div><div class="line">    <span class="keyword">return</span> feature_matrices</div></pre></td></tr></table></figure>
+<h3 id="4、内容损失函数"><a href="#4、内容损失函数" class="headerlink" title="4、内容损失函数"></a>4、内容损失函数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_content_loss</span><span class="params">(F, P)</span>:</span></div><div class="line">    <span class="string">'''计算内容损失</span></div><div class="line">    </div><div class="line">    参数</div><div class="line">    ---------------------------------------</div><div class="line">    F : tensor, float32</div><div class="line">        生成图片特征图矩阵</div><div class="line">    P : tensor, float32</div><div class="line">        内容图片特征图矩阵</div><div class="line">    </div><div class="line">    返回值</div><div class="line">    ---------------------------------------</div><div class="line">    content_loss : tensor, float32</div><div class="line">        内容损失</div><div class="line">    '''</div><div class="line">    content_loss = <span class="number">0.5</span>*K.sum(K.square(F-P))</div><div class="line">    <span class="keyword">return</span> content_loss</div></pre></td></tr></table></figure>
+<h3 id="5、Gram矩阵和风格损失"><a href="#5、Gram矩阵和风格损失" class="headerlink" title="5、Gram矩阵和风格损失"></a>5、Gram矩阵和风格损失</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_gram_matrix</span><span class="params">(F)</span>:</span></div><div class="line">    <span class="string">'''计算gram矩阵'''</span></div><div class="line">    G = K.dot(F, K.transpose(F))</div><div class="line">    <span class="keyword">return</span> G</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_style_loss</span><span class="params">(ws, Gs, As)</span>:</span></div><div class="line">    <span class="string">'''计算风格损失</span></div><div class="line">    </div><div class="line">    参数</div><div class="line">    ---------------------------------------</div><div class="line">    ws : array</div><div class="line">         每一层layer的权重</div><div class="line">    Gs : list</div><div class="line">         生成图片每一层得到的特征表示组成的list</div><div class="line">    As : list</div><div class="line">         风格图片每一层得到的特征表示组成的list</div><div class="line">    '''</div><div class="line">    style_loss = K.variable(<span class="number">0.</span>)</div><div class="line">    <span class="keyword">for</span> w, G, A <span class="keyword">in</span> zip(ws, Gs, As):</div><div class="line">        M_l = K.int_shape(G)[<span class="number">1</span>]</div><div class="line">        N_l = K.int_shape(G)[<span class="number">0</span>]</div><div class="line">        G_gram = get_gram_matrix(G)</div><div class="line">        A_gram = get_gram_matrix(A)</div><div class="line">        style_loss += w*<span class="number">0.25</span>*K.sum(K.square(G_gram-A_gram))/(N_l**<span class="number">2</span>*M_l**<span class="number">2</span>)</div><div class="line">    <span class="keyword">return</span> style_loss</div></pre></td></tr></table></figure>
+<h3 id="6、总损失"><a href="#6、总损失" class="headerlink" title="6、总损失"></a>6、总损失</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_total_loss</span><span class="params">(generate_image_placeholder, alpha=<span class="number">1.0</span>, beta=<span class="number">10000.0</span>)</span>:</span></div><div class="line">    <span class="string">'''总损失</span></div><div class="line">    '''</div><div class="line">    F = get_feature_represent(generate_image_placeholder, layer_names=[content_layer_name], model=gModel)[<span class="number">0</span>]</div><div class="line">    Gs = get_feature_represent(generate_image_placeholder, layer_names=style_layer_names, model=gModel)</div><div class="line">    content_loss = get_content_loss(F, P)</div><div class="line">    style_loss = get_style_loss(ws, Gs, As)</div><div class="line">    total_loss = alpha*content_loss + beta*style_loss</div><div class="line">    <span class="keyword">return</span> total_loss</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">calculate_loss</span><span class="params">(gen_image_array)</span>:</span></div><div class="line">    <span class="string">'''调用总损失函数，计算得到总损失数值'''</span></div><div class="line">    <span class="keyword">if</span> gen_image_array != (<span class="number">1</span>, target_width, target_height, <span class="number">3</span>):</div><div class="line">        gen_image_array = gen_image_array.reshape((<span class="number">1</span>, target_width, target_height, <span class="number">3</span>))</div><div class="line">    loss_fn = K.function(inputs=[gModel.input], outputs=[get_total_loss(gModel.input)])</div><div class="line">    <span class="keyword">return</span> loss_fn([gen_image_array])[<span class="number">0</span>].astype(<span class="string">'float64'</span>)</div></pre></td></tr></table></figure>
+<h3 id="7、损失函数梯度"><a href="#7、损失函数梯度" class="headerlink" title="7、损失函数梯度"></a>7、损失函数梯度</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_grad</span><span class="params">(gen_image_array)</span>:</span></div><div class="line">    <span class="string">'''计算损失函数的梯度'''</span></div><div class="line">    <span class="keyword">if</span> gen_image_array != (<span class="number">1</span>, target_width, target_height, <span class="number">3</span>):</div><div class="line">        gen_image_array = gen_image_array.reshape((<span class="number">1</span>, target_width, target_height, <span class="number">3</span>))</div><div class="line">    grad_fn = K.function([gModel.input], K.gradients(get_total_loss(gModel.input), [gModel.input]))</div><div class="line">    grad = grad_fn([gen_image_array])[<span class="number">0</span>].flatten().astype(<span class="string">'float64'</span>)</div><div class="line">    <span class="keyword">return</span> grad</div></pre></td></tr></table></figure>
+<h3 id="8、生成结果后处理"><a href="#8、生成结果后处理" class="headerlink" title="8、生成结果后处理"></a>8、生成结果后处理</h3><ul>
+<li>因为之<code>前preprocess_input</code>函数中做了处理，这里进行逆处理还原<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">postprocess_array</span><span class="params">(x)</span>:</span></div><div class="line">    <span class="string">'''生成图片后处理，因为之前preprocess_input函数中做了处理，这里进行逆处理还原</span></div><div class="line">    </div><div class="line">    '''</div><div class="line">    <span class="keyword">if</span> x.shape != (target_width, target_height, <span class="number">3</span>):</div><div class="line">        x = x.reshape((target_width, target_height, <span class="number">3</span>))</div><div class="line">    x[..., <span class="number">0</span>] += <span class="number">103.939</span></div><div class="line">    x[..., <span class="number">1</span>] += <span class="number">116.779</span></div><div class="line">    x[..., <span class="number">2</span>] += <span class="number">123.68</span></div><div class="line">    </div><div class="line">    x = x[..., ::<span class="number">-1</span>]  <span class="comment"># BGR--&gt;RGB</span></div><div class="line">    x = np.clip(x, <span class="number">0</span>, <span class="number">255</span>)</div><div class="line">    x = x.astype(<span class="string">'uint8'</span>)</div><div class="line">    <span class="keyword">return</span> x</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="9、定义模型并优化"><a href="#9、定义模型并优化" class="headerlink" title="9、定义模型并优化"></a>9、定义模型并优化</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="string">'''定义VGG模型'''</span></div><div class="line">tf_session = K.get_session()</div><div class="line">cModel = VGG16(include_top=<span class="keyword">False</span>, input_tensor=content_image_array)</div><div class="line">sModel = VGG16(include_top=<span class="keyword">False</span>, input_tensor=style_image_array)</div><div class="line">gModel = VGG16(include_top=<span class="keyword">False</span>, input_tensor=generate_image_placeholder)</div><div class="line">content_layer_name = <span class="string">'block4_conv2'</span></div><div class="line">style_layer_names = [</div><div class="line">    <span class="string">'block1_conv1'</span>,</div><div class="line">    <span class="string">'block2_conv1'</span>,</div><div class="line">    <span class="string">'block3_conv1'</span>,</div><div class="line">    <span class="string">'block4_conv1'</span></div><div class="line">]</div><div class="line"></div><div class="line"><span class="string">'''得到对应的representation矩阵'''</span></div><div class="line">P = get_feature_represent(x=content_image_array, layer_names=[content_layer_name], model=cModel)[<span class="number">0</span>]</div><div class="line">As = get_feature_represent(x=style_image_array, layer_names=style_layer_names, model=sModel)</div><div class="line">ws = np.ones(len(style_layer_names))/float(len(style_layer_names))</div><div class="line"></div><div class="line"><span class="string">'''使用fmin_l_bfgs_b进行损失函数优化'''</span></div><div class="line">iterations = <span class="number">600</span></div><div class="line">x_val = generate_image.flatten()</div><div class="line">xopt, f_val, info = fmin_l_bfgs_b(func=calculate_loss, x0=x_val, fprime=get_grad, maxiter=iterations, disp=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">x_out = postprocess_array(xopt)</div></pre></td></tr></table></figure>
+<h3 id="10、输出结果"><a href="#10、输出结果" class="headerlink" title="10、输出结果"></a>10、输出结果</h3><ul>
+<li>初始化输出图片</li>
+</ul>
+<p><img src="/assets/blog_images/Style_transfer/07_initialize.jpg" alt="初始化输出图片" title="07_initialize"></p>
+<ul>
+<li>迭代优化<code>500</code>轮结果<br><img src="/assets/blog_images/Style_transfer/08_final-result.jpg" alt="迭代500轮结果" title="08_final-result"></li>
+</ul>
+<h2 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h2><ul>
+<li><code>style tranfer</code>通过<strong>白噪声初始化</strong>(就是高斯分布)一个输出的结果，然后通过优化损失对这个结果进行<strong>风格</strong>和<strong>内容</strong>两方面的约束修正</li>
+<li>图片的风格信息使用的是 <strong>Gram矩阵</strong>来表示</li>
+<li>其中超参数风格损失的权重<code>ws</code>、内容损失和风格损失的权重$\alpha$, $\beta$可以进行调整查看结果<ul>
+<li>论文给出的${\beta \over \alpha} = 10^3或10^4$结果较好，可以自己适当增加看看最后的结果</li>
+</ul>
+</li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li>Paper: <a href="https://arxiv.org/pdf/1508.06576.pdf" target="_blank" rel="external">https://arxiv.org/pdf/1508.06576.pdf</a></li>
+<li><a href="https://www.cs.toronto.edu/~frossard/post/vgg16/" target="_blank" rel="external">https://www.cs.toronto.edu/~frossard/post/vgg16/</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/33910138" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/33910138</a></li>
+</ul>
+
+
+		
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/weixin.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+<!-- 版权申明开始  -->
+
+<div> 
+  <ul class="post-copyright" style="
+    margin: 0em 0em 0em 0em;
+    padding: 0.5em 1em;
+    border-left: 3px solid #ff1700;
+    background-color: #f9f9f9;
+    list-style: none;
+    font-size: 14px;
+">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Lawlite
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://lawlite.me/2018/02/28/风格迁移Style-transfer/" title="风格迁移 Style transfer">http://lawlite.me/2018/02/28/风格迁移Style-transfer/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/80x15.png"></a> 。转载请注明出处！
+    </li>
+  </ul>
+</div>
+
+<!-- 版权声明结束 -->
+      
+    </div>
+
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Style transfer</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Keras</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://lawlite.me/2018/02/28/风格迁移Style-transfer/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/25/阿里云GPU服务器上Torch安装与使用/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">阿里云GPU服务器上Torch安装与使用</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
+  
+
+
+
+
+
+
+<section class="duoshuo" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8yODEwMy80Njc2">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+
+<!-- 网易云跟帖 -->
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2018 Lawlite
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+  总访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true,
+		showTags: true
+	}
+</script>
+
+<script>!function(t){function n(r){if(e[r])return e[r].exports;var o=e[r]={exports:{},id:r,loaded:!1};return t[r].call(o.exports,o,o.exports,n),o.loaded=!0,o.exports}var e={};return n.m=t,n.c=e,n.p="./",n(0)}([function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}function o(t,n){var e=/\/|index.html/g;return t.replace(e,"")===n.replace(e,"")}function i(){for(var t=document.querySelectorAll(".js-header-menu li a"),n=window.location.pathname,e=0,r=t.length;e<r;e++){var i=t[e];o(n,i.getAttribute("href"))&&(0,d.default)(i,"active")}}function u(t){for(var n=t.offsetLeft,e=t.offsetParent;null!==e;)n+=e.offsetLeft,e=e.offsetParent;return n}function f(t){for(var n=t.offsetTop,e=t.offsetParent;null!==e;)n+=e.offsetTop,e=e.offsetParent;return n}function c(t,n,e,r,o){var i=u(t),c=f(t)-n;if(c-e<=o){var a=t.$newDom;a||(a=t.cloneNode(!0),(0,h.default)(t,a),t.$newDom=a,a.style.position="fixed",a.style.top=(e||c)+"px",a.style.left=i+"px",a.style.zIndex=r||2,a.style.width="100%",a.style.color="#fff"),a.style.visibility="visible",t.style.visibility="hidden"}else{t.style.visibility="visible";var s=t.$newDom;s&&(s.style.visibility="hidden")}}function a(){var t=document.querySelector(".js-overlay"),n=document.querySelector(".js-header-menu");c(t,document.body.scrollTop,-63,2,0),c(n,document.body.scrollTop,1,3,0)}function s(){document.querySelector("#container").addEventListener("scroll",function(t){a()}),window.addEventListener("scroll",function(t){a()}),a()}function l(){x.default.versions.mobile&&window.screen.width<800&&(i(),s())}var p=e(71),d=r(p),v=e(72),y=(r(v),e(84)),h=r(y),b=e(69),x=r(b),m=e(75),g=r(m),w=e(70);l(),(0,w.addLoadEvent)(function(){g.default.init()}),t.exports={}},function(t,n){var e=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=e)},function(t,n){var e={}.hasOwnProperty;t.exports=function(t,n){return e.call(t,n)}},function(t,n,e){var r=e(49),o=e(15);t.exports=function(t){return r(o(t))}},function(t,n,e){t.exports=!e(8)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,n,e){var r=e(6),o=e(12);t.exports=e(4)?function(t,n,e){return r.f(t,n,o(1,e))}:function(t,n,e){return t[n]=e,t}},function(t,n,e){var r=e(10),o=e(30),i=e(24),u=Object.defineProperty;n.f=e(4)?Object.defineProperty:function(t,n,e){if(r(t),n=i(n,!0),r(e),o)try{return u(t,n,e)}catch(t){}if("get"in e||"set"in e)throw TypeError("Accessors not supported!");return"value"in e&&(t[n]=e.value),t}},function(t,n,e){var r=e(22)("wks"),o=e(13),i=e(1).Symbol,u="function"==typeof i,f=t.exports=function(t){return r[t]||(r[t]=u&&i[t]||(u?i:o)("Symbol."+t))};f.store=r},function(t,n){t.exports=function(t){try{return!!t()}catch(t){return!0}}},function(t,n,e){var r=e(35),o=e(16);t.exports=Object.keys||function(t){return r(t,o)}},function(t,n,e){var r=e(11);t.exports=function(t){if(!r(t))throw TypeError(t+" is not an object!");return t}},function(t,n){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,n){t.exports=function(t,n){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:n}}},function(t,n){var e=0,r=Math.random();t.exports=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++e+r).toString(36))}},function(t,n){var e=t.exports={version:"2.4.0"};"number"==typeof __e&&(__e=e)},function(t,n){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t}},function(t,n){t.exports="constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf".split(",")},function(t,n){t.exports={}},function(t,n){t.exports=!0},function(t,n){n.f={}.propertyIsEnumerable},function(t,n,e){var r=e(6).f,o=e(2),i=e(7)("toStringTag");t.exports=function(t,n,e){t&&!o(t=e?t:t.prototype,i)&&r(t,i,{configurable:!0,value:n})}},function(t,n,e){var r=e(22)("keys"),o=e(13);t.exports=function(t){return r[t]||(r[t]=o(t))}},function(t,n,e){var r=e(1),o="__core-js_shared__",i=r[o]||(r[o]={});t.exports=function(t){return i[t]||(i[t]={})}},function(t,n){var e=Math.ceil,r=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?r:e)(t)}},function(t,n,e){var r=e(11);t.exports=function(t,n){if(!r(t))return t;var e,o;if(n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;if("function"==typeof(e=t.valueOf)&&!r(o=e.call(t)))return o;if(!n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;throw TypeError("Can't convert object to primitive value")}},function(t,n,e){var r=e(1),o=e(14),i=e(18),u=e(26),f=e(6).f;t.exports=function(t){var n=o.Symbol||(o.Symbol=i?{}:r.Symbol||{});"_"==t.charAt(0)||t in n||f(n,t,{value:u.f(t)})}},function(t,n,e){n.f=e(7)},function(t,n,e){var r=e(1),o=e(14),i=e(46),u=e(5),f="prototype",c=function(t,n,e){var a,s,l,p=t&c.F,d=t&c.G,v=t&c.S,y=t&c.P,h=t&c.B,b=t&c.W,x=d?o:o[n]||(o[n]={}),m=x[f],g=d?r:v?r[n]:(r[n]||{})[f];d&&(e=n);for(a in e)s=!p&&g&&void 0!==g[a],s&&a in x||(l=s?g[a]:e[a],x[a]=d&&"function"!=typeof g[a]?e[a]:h&&s?i(l,r):b&&g[a]==l?function(t){var n=function(n,e,r){if(this instanceof t){switch(arguments.length){case 0:return new t;case 1:return new t(n);case 2:return new t(n,e)}return new t(n,e,r)}return t.apply(this,arguments)};return n[f]=t[f],n}(l):y&&"function"==typeof l?i(Function.call,l):l,y&&((x.virtual||(x.virtual={}))[a]=l,t&c.R&&m&&!m[a]&&u(m,a,l)))};c.F=1,c.G=2,c.S=4,c.P=8,c.B=16,c.W=32,c.U=64,c.R=128,t.exports=c},function(t,n){var e={}.toString;t.exports=function(t){return e.call(t).slice(8,-1)}},function(t,n,e){var r=e(11),o=e(1).document,i=r(o)&&r(o.createElement);t.exports=function(t){return i?o.createElement(t):{}}},function(t,n,e){t.exports=!e(4)&&!e(8)(function(){return 7!=Object.defineProperty(e(29)("div"),"a",{get:function(){return 7}}).a})},function(t,n,e){"use strict";var r=e(18),o=e(27),i=e(36),u=e(5),f=e(2),c=e(17),a=e(51),s=e(20),l=e(58),p=e(7)("iterator"),d=!([].keys&&"next"in[].keys()),v="@@iterator",y="keys",h="values",b=function(){return this};t.exports=function(t,n,e,x,m,g,w){a(e,n,x);var O,S,_,j=function(t){if(!d&&t in A)return A[t];switch(t){case y:return function(){return new e(this,t)};case h:return function(){return new e(this,t)}}return function(){return new e(this,t)}},P=n+" Iterator",E=m==h,M=!1,A=t.prototype,T=A[p]||A[v]||m&&A[m],L=T||j(m),N=m?E?j("entries"):L:void 0,C="Array"==n?A.entries||T:T;if(C&&(_=l(C.call(new t)),_!==Object.prototype&&(s(_,P,!0),r||f(_,p)||u(_,p,b))),E&&T&&T.name!==h&&(M=!0,L=function(){return T.call(this)}),r&&!w||!d&&!M&&A[p]||u(A,p,L),c[n]=L,c[P]=b,m)if(O={values:E?L:j(h),keys:g?L:j(y),entries:N},w)for(S in O)S in A||i(A,S,O[S]);else o(o.P+o.F*(d||M),n,O);return O}},function(t,n,e){var r=e(10),o=e(55),i=e(16),u=e(21)("IE_PROTO"),f=function(){},c="prototype",a=function(){var t,n=e(29)("iframe"),r=i.length,o="<",u=">";for(n.style.display="none",e(48).appendChild(n),n.src="javascript:",t=n.contentWindow.document,t.open(),t.write(o+"script"+u+"document.F=Object"+o+"/script"+u),t.close(),a=t.F;r--;)delete a[c][i[r]];return a()};t.exports=Object.create||function(t,n){var e;return null!==t?(f[c]=r(t),e=new f,f[c]=null,e[u]=t):e=a(),void 0===n?e:o(e,n)}},function(t,n,e){var r=e(35),o=e(16).concat("length","prototype");n.f=Object.getOwnPropertyNames||function(t){return r(t,o)}},function(t,n){n.f=Object.getOwnPropertySymbols},function(t,n,e){var r=e(2),o=e(3),i=e(45)(!1),u=e(21)("IE_PROTO");t.exports=function(t,n){var e,f=o(t),c=0,a=[];for(e in f)e!=u&&r(f,e)&&a.push(e);for(;n.length>c;)r(f,e=n[c++])&&(~i(a,e)||a.push(e));return a}},function(t,n,e){t.exports=e(5)},function(t,n,e){var r=e(15);t.exports=function(t){return Object(r(t))}},function(t,n,e){t.exports={default:e(41),__esModule:!0}},function(t,n,e){t.exports={default:e(42),__esModule:!0}},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}n.__esModule=!0;var o=e(39),i=r(o),u=e(38),f=r(u),c="function"==typeof f.default&&"symbol"==typeof i.default?function(t){return typeof t}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":typeof t};n.default="function"==typeof f.default&&"symbol"===c(i.default)?function(t){return"undefined"==typeof t?"undefined":c(t)}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":"undefined"==typeof t?"undefined":c(t)}},function(t,n,e){e(65),e(63),e(66),e(67),t.exports=e(14).Symbol},function(t,n,e){e(64),e(68),t.exports=e(26).f("iterator")},function(t,n){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,n){t.exports=function(){}},function(t,n,e){var r=e(3),o=e(61),i=e(60);t.exports=function(t){return function(n,e,u){var f,c=r(n),a=o(c.length),s=i(u,a);if(t&&e!=e){for(;a>s;)if(f=c[s++],f!=f)return!0}else for(;a>s;s++)if((t||s in c)&&c[s]===e)return t||s||0;return!t&&-1}}},function(t,n,e){var r=e(43);t.exports=function(t,n,e){if(r(t),void 0===n)return t;switch(e){case 1:return function(e){return t.call(n,e)};case 2:return function(e,r){return t.call(n,e,r)};case 3:return function(e,r,o){return t.call(n,e,r,o)}}return function(){return t.apply(n,arguments)}}},function(t,n,e){var r=e(9),o=e(34),i=e(19);t.exports=function(t){var n=r(t),e=o.f;if(e)for(var u,f=e(t),c=i.f,a=0;f.length>a;)c.call(t,u=f[a++])&&n.push(u);return n}},function(t,n,e){t.exports=e(1).document&&document.documentElement},function(t,n,e){var r=e(28);t.exports=Object("z").propertyIsEnumerable(0)?Object:function(t){return"String"==r(t)?t.split(""):Object(t)}},function(t,n,e){var r=e(28);t.exports=Array.isArray||function(t){return"Array"==r(t)}},function(t,n,e){"use strict";var r=e(32),o=e(12),i=e(20),u={};e(5)(u,e(7)("iterator"),function(){return this}),t.exports=function(t,n,e){t.prototype=r(u,{next:o(1,e)}),i(t,n+" Iterator")}},function(t,n){t.exports=function(t,n){return{value:n,done:!!t}}},function(t,n,e){var r=e(9),o=e(3);t.exports=function(t,n){for(var e,i=o(t),u=r(i),f=u.length,c=0;f>c;)if(i[e=u[c++]]===n)return e}},function(t,n,e){var r=e(13)("meta"),o=e(11),i=e(2),u=e(6).f,f=0,c=Object.isExtensible||function(){return!0},a=!e(8)(function(){return c(Object.preventExtensions({}))}),s=function(t){u(t,r,{value:{i:"O"+ ++f,w:{}}})},l=function(t,n){if(!o(t))return"symbol"==typeof t?t:("string"==typeof t?"S":"P")+t;if(!i(t,r)){if(!c(t))return"F";if(!n)return"E";s(t)}return t[r].i},p=function(t,n){if(!i(t,r)){if(!c(t))return!0;if(!n)return!1;s(t)}return t[r].w},d=function(t){return a&&v.NEED&&c(t)&&!i(t,r)&&s(t),t},v=t.exports={KEY:r,NEED:!1,fastKey:l,getWeak:p,onFreeze:d}},function(t,n,e){var r=e(6),o=e(10),i=e(9);t.exports=e(4)?Object.defineProperties:function(t,n){o(t);for(var e,u=i(n),f=u.length,c=0;f>c;)r.f(t,e=u[c++],n[e]);return t}},function(t,n,e){var r=e(19),o=e(12),i=e(3),u=e(24),f=e(2),c=e(30),a=Object.getOwnPropertyDescriptor;n.f=e(4)?a:function(t,n){if(t=i(t),n=u(n,!0),c)try{return a(t,n)}catch(t){}if(f(t,n))return o(!r.f.call(t,n),t[n])}},function(t,n,e){var r=e(3),o=e(33).f,i={}.toString,u="object"==typeof window&&window&&Object.getOwnPropertyNames?Object.getOwnPropertyNames(window):[],f=function(t){try{return o(t)}catch(t){return u.slice()}};t.exports.f=function(t){return u&&"[object Window]"==i.call(t)?f(t):o(r(t))}},function(t,n,e){var r=e(2),o=e(37),i=e(21)("IE_PROTO"),u=Object.prototype;t.exports=Object.getPrototypeOf||function(t){return t=o(t),r(t,i)?t[i]:"function"==typeof t.constructor&&t instanceof t.constructor?t.constructor.prototype:t instanceof Object?u:null}},function(t,n,e){var r=e(23),o=e(15);t.exports=function(t){return function(n,e){var i,u,f=String(o(n)),c=r(e),a=f.length;return c<0||c>=a?t?"":void 0:(i=f.charCodeAt(c),i<55296||i>56319||c+1===a||(u=f.charCodeAt(c+1))<56320||u>57343?t?f.charAt(c):i:t?f.slice(c,c+2):(i-55296<<10)+(u-56320)+65536)}}},function(t,n,e){var r=e(23),o=Math.max,i=Math.min;t.exports=function(t,n){return t=r(t),t<0?o(t+n,0):i(t,n)}},function(t,n,e){var r=e(23),o=Math.min;t.exports=function(t){return t>0?o(r(t),9007199254740991):0}},function(t,n,e){"use strict";var r=e(44),o=e(52),i=e(17),u=e(3);t.exports=e(31)(Array,"Array",function(t,n){this._t=u(t),this._i=0,this._k=n},function(){var t=this._t,n=this._k,e=this._i++;return!t||e>=t.length?(this._t=void 0,o(1)):"keys"==n?o(0,e):"values"==n?o(0,t[e]):o(0,[e,t[e]])},"values"),i.Arguments=i.Array,r("keys"),r("values"),r("entries")},function(t,n){},function(t,n,e){"use strict";var r=e(59)(!0);e(31)(String,"String",function(t){this._t=String(t),this._i=0},function(){var t,n=this._t,e=this._i;return e>=n.length?{value:void 0,done:!0}:(t=r(n,e),this._i+=t.length,{value:t,done:!1})})},function(t,n,e){"use strict";var r=e(1),o=e(2),i=e(4),u=e(27),f=e(36),c=e(54).KEY,a=e(8),s=e(22),l=e(20),p=e(13),d=e(7),v=e(26),y=e(25),h=e(53),b=e(47),x=e(50),m=e(10),g=e(3),w=e(24),O=e(12),S=e(32),_=e(57),j=e(56),P=e(6),E=e(9),M=j.f,A=P.f,T=_.f,L=r.Symbol,N=r.JSON,C=N&&N.stringify,k="prototype",F=d("_hidden"),q=d("toPrimitive"),I={}.propertyIsEnumerable,B=s("symbol-registry"),D=s("symbols"),W=s("op-symbols"),H=Object[k],K="function"==typeof L,R=r.QObject,J=!R||!R[k]||!R[k].findChild,U=i&&a(function(){return 7!=S(A({},"a",{get:function(){return A(this,"a",{value:7}).a}})).a})?function(t,n,e){var r=M(H,n);r&&delete H[n],A(t,n,e),r&&t!==H&&A(H,n,r)}:A,G=function(t){var n=D[t]=S(L[k]);return n._k=t,n},$=K&&"symbol"==typeof L.iterator?function(t){return"symbol"==typeof t}:function(t){return t instanceof L},z=function(t,n,e){return t===H&&z(W,n,e),m(t),n=w(n,!0),m(e),o(D,n)?(e.enumerable?(o(t,F)&&t[F][n]&&(t[F][n]=!1),e=S(e,{enumerable:O(0,!1)})):(o(t,F)||A(t,F,O(1,{})),t[F][n]=!0),U(t,n,e)):A(t,n,e)},Y=function(t,n){m(t);for(var e,r=b(n=g(n)),o=0,i=r.length;i>o;)z(t,e=r[o++],n[e]);return t},Q=function(t,n){return void 0===n?S(t):Y(S(t),n)},X=function(t){var n=I.call(this,t=w(t,!0));return!(this===H&&o(D,t)&&!o(W,t))&&(!(n||!o(this,t)||!o(D,t)||o(this,F)&&this[F][t])||n)},V=function(t,n){if(t=g(t),n=w(n,!0),t!==H||!o(D,n)||o(W,n)){var e=M(t,n);return!e||!o(D,n)||o(t,F)&&t[F][n]||(e.enumerable=!0),e}},Z=function(t){for(var n,e=T(g(t)),r=[],i=0;e.length>i;)o(D,n=e[i++])||n==F||n==c||r.push(n);return r},tt=function(t){for(var n,e=t===H,r=T(e?W:g(t)),i=[],u=0;r.length>u;)!o(D,n=r[u++])||e&&!o(H,n)||i.push(D[n]);return i};K||(L=function(){if(this instanceof L)throw TypeError("Symbol is not a constructor!");var t=p(arguments.length>0?arguments[0]:void 0),n=function(e){this===H&&n.call(W,e),o(this,F)&&o(this[F],t)&&(this[F][t]=!1),U(this,t,O(1,e))};return i&&J&&U(H,t,{configurable:!0,set:n}),G(t)},f(L[k],"toString",function(){return this._k}),j.f=V,P.f=z,e(33).f=_.f=Z,e(19).f=X,e(34).f=tt,i&&!e(18)&&f(H,"propertyIsEnumerable",X,!0),v.f=function(t){return G(d(t))}),u(u.G+u.W+u.F*!K,{Symbol:L});for(var nt="hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables".split(","),et=0;nt.length>et;)d(nt[et++]);for(var nt=E(d.store),et=0;nt.length>et;)y(nt[et++]);u(u.S+u.F*!K,"Symbol",{for:function(t){return o(B,t+="")?B[t]:B[t]=L(t)},keyFor:function(t){if($(t))return h(B,t);throw TypeError(t+" is not a symbol!")},useSetter:function(){J=!0},useSimple:function(){J=!1}}),u(u.S+u.F*!K,"Object",{create:Q,defineProperty:z,defineProperties:Y,getOwnPropertyDescriptor:V,getOwnPropertyNames:Z,getOwnPropertySymbols:tt}),N&&u(u.S+u.F*(!K||a(function(){var t=L();return"[null]"!=C([t])||"{}"!=C({a:t})||"{}"!=C(Object(t))})),"JSON",{stringify:function(t){if(void 0!==t&&!$(t)){for(var n,e,r=[t],o=1;arguments.length>o;)r.push(arguments[o++]);return n=r[1],"function"==typeof n&&(e=n),!e&&x(n)||(n=function(t,n){if(e&&(n=e.call(this,t,n)),!$(n))return n}),r[1]=n,C.apply(N,r)}}}),L[k][q]||e(5)(L[k],q,L[k].valueOf),l(L,"Symbol"),l(Math,"Math",!0),l(r.JSON,"JSON",!0)},function(t,n,e){e(25)("asyncIterator")},function(t,n,e){e(25)("observable")},function(t,n,e){e(62);for(var r=e(1),o=e(5),i=e(17),u=e(7)("toStringTag"),f=["NodeList","DOMTokenList","MediaList","StyleSheetList","CSSRuleList"],c=0;c<5;c++){var a=f[c],s=r[a],l=s&&s.prototype;l&&!l[u]&&o(l,u,a),i[a]=i.Array}},function(t,n){"use strict";var e={versions:function(){var t=window.navigator.userAgent;return{trident:t.indexOf("Trident")>-1,presto:t.indexOf("Presto")>-1,webKit:t.indexOf("AppleWebKit")>-1,gecko:t.indexOf("Gecko")>-1&&t.indexOf("KHTML")==-1,mobile:!!t.match(/AppleWebKit.*Mobile.*/),ios:!!t.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),android:t.indexOf("Android")>-1||t.indexOf("Linux")>-1,iPhone:t.indexOf("iPhone")>-1||t.indexOf("Mac")>-1,iPad:t.indexOf("iPad")>-1,webApp:t.indexOf("Safari")==-1,weixin:t.indexOf("MicroMessenger")==-1}}()};t.exports=e},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}var o=e(40),i=r(o),u=function(){function t(t,n,e){return n||e?String.fromCharCode(n||e):o[t]||t}function n(t){return l[t]}var e=/&quot;|&lt;|&gt;|&amp;|&nbsp;|&apos;|&#(\d+);|&#(\d+)/g,r=/['<> "&]/g,o={"&quot;":'"',"&lt;":"<","&gt;":">","&amp;":"&","&nbsp;":" "},f=/\u00a0/g,c=/<br\s*\/?>/gi,a=/\r?\n/g,s=/\s/g,l={};for(var p in o)l[o[p]]=p;return o["&apos;"]="'",l["'"]="&#39;",{encode:function(t){return t?(""+t).replace(r,n).replace(a,"<br/>").replace(s,"&nbsp;"):""},decode:function(n){return n?(""+n).replace(c,"\n").replace(e,t).replace(f," "):""},encodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},encodeBase16forJSON:function(t){if(!t)return t;t=t.replace(/[\u4E00-\u9FBF]/gi,function(t){return escape(t).replace("%u","\\u")});for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},decodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e+=2)n.push(String.fromCharCode("0x"+t.slice(e,e+2)));return n.join("")},encodeObject:function(t){if(t instanceof Array)for(var n=0,e=t.length;e>n;n++)t[n]=u.encodeObject(t[n]);else if("object"==("undefined"==typeof t?"undefined":(0,i.default)(t)))for(var r in t)t[r]=u.encodeObject(t[r]);else if("string"==typeof t)return u.encode(t);return t},loadScript:function(t){var n=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(n),n.setAttribute("src",t)},addLoadEvent:function(t){var n=window.onload;"function"!=typeof window.onload?window.onload=t:window.onload=function(){n(),t()}}}}();t.exports=u},function(t,n){function e(t,n){t.classList?t.classList.add(n):t.className+=" "+n}t.exports=e},function(t,n){function e(t,n){if(t.classList)t.classList.remove(n);else{var e=new RegExp("(^|\\b)"+n.split(" ").join("|")+"(\\b|$)","gi");t.className=t.className.replace(e," ")}}t.exports=e},,,function(t,n){"use strict";function e(){var t=document.querySelector("#page-nav");if(t&&!document.querySelector("#page-nav .extend.prev")&&(t.innerHTML='<a class="extend prev disabled" rel="prev">&laquo; Prev</a>'+t.innerHTML),t&&!document.querySelector("#page-nav .extend.next")&&(t.innerHTML=t.innerHTML+'<a class="extend next disabled" rel="next">Next &raquo;</a>'),yiliaConfig&&yiliaConfig.open_in_new){var n=document.querySelectorAll(".article-entry a:not(.article-more-a)");n.forEach(function(t){t.setAttribute("target","_blank")})}var e=document.querySelector("#js-aboutme");e&&0!==e.length&&(e.innerHTML=e.innerText)}t.exports={init:e}},,,,,,,,,function(t,n){function e(t,n){if("string"==typeof n)return t.insertAdjacentHTML("afterend",n);var e=t.nextSibling;return e?t.parentNode.insertBefore(n,e):t.parentNode.appendChild(n)}t.exports=e}])</script><script src="/./main.234bc0.js"></script><script>!function(){var e=function(e){var t=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(t),t.setAttribute("src",e)};e("/slider.885efe.js")}()</script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    showProcessingMessages: false,
+    messageStyle: "none",
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+        inlineMath:  [ ["$", "$"] ],
+        displayMath: [ ["$$","$$"] ],
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code','a'],
+        ignoreClass:"comment-content"
+    },
+    "HTML-CSS": {
+        availableFonts: ["STIX","TeX"],
+        showMathMenu: false
+    }
+});
+MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?...">
+</script>
+
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">所有文章</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'friends')"><a href="javascript:void(0)" q-class="active:friends">友链</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Github</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">PyTorch</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DeepLearning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">LSTM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">GRU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">R</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tensorflow</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Paper阅读记录</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ModelCompression</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">GPU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Torch</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Cudnn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">阿里云</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">论文记录</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">图像分割</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Style transfer</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Keras</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            2、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: true
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-friends" q-show="friends">
+  		
+        <ul class="search-ul">
+          
+            <li class="search-li">
+              <a href="http://blog.csdn.net/u013082989" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>My CSDN</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://lawlite.me/archives/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>归档</a>
+            </li>
+          
+        </ul>
+  		
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">研究生一枚</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
