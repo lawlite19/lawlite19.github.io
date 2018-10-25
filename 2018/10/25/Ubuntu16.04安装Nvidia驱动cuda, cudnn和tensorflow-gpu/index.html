@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/GPU/16_GPU%E5%AF%B9%E5%BA%94nvidia%E7%89%88%E6%9C%AC.jpg">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/GPU/14_cuda%E7%89%88%E6%9C%AC%E5%AF%B9%E5%BA%94nvidia%E7%89%88%E6%9C%AC.jpg">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/GPU/17_cudnn.jpg">
-<meta property="og:updated_time" content="2018-10-25T08:33:13.310Z">
+<meta property="og:updated_time" content="2018-10-25T08:54:21.308Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ubuntu16.04安装Nvidia驱动cuda,cudnn和tensorflow-gpu">
 <meta name="twitter:description" content="之前有在阿里云GPU服务器上弄过： 点击查看， 这里从装Nvidia开始一、 安装Nvidia驱动  1.1 查找需要安装的Nvidia版本1.1.1 官网 官网上查找： https://www.nvidia.com/Download/index.aspx?lang=en-us 这里是 GeForce GTX 1080 TI 如下图，推荐 410 版本的">
@@ -258,11 +258,12 @@ var _hmt = _hmt || [];
 <h3 id="1-1-查找需要安装的Nvidia版本"><a href="#1-1-查找需要安装的Nvidia版本" class="headerlink" title="1.1 查找需要安装的Nvidia版本"></a>1.1 查找需要安装的Nvidia版本</h3><h4 id="1-1-1-官网"><a href="#1-1-1-官网" class="headerlink" title="1.1.1 官网"></a>1.1.1 官网</h4><ul>
 <li>官网上查找： <a href="https://www.nvidia.com/Download/index.aspx?lang=en-us" target="_blank" rel="external">https://www.nvidia.com/Download/index.aspx?lang=en-us</a><ul>
 <li>这里是 <code>GeForce GTX 1080 TI</code></li>
-<li>如下图，推荐 <code>410</code> 版本的</li>
+<li>如下图，推荐 <code>410</code> 版本的<a id="more"></a>
+<img src="/assets/blog_images/GPU/15_GPU%E5%AF%B9%E5%BA%94nvidia%E7%89%88%E6%9C%AC.jpg" alt="GPU对应nvidia版本" title="15_GPU对应nvidia版本"></li>
 </ul>
 </li>
 </ul>
-<p><img src="/assets/blog_images/GPU/15_GPU%E5%AF%B9%E5%BA%94nvidia%E7%89%88%E6%9C%AC.jpg" alt="GPU对应nvidia版本" title="15_GPU对应nvidia版本"><br><a id="more"></a><br><img src="/assets/blog_images/GPU/16_GPU%E5%AF%B9%E5%BA%94nvidia%E7%89%88%E6%9C%AC.jpg" alt="GPU对应驱动版本" title="16_GPU对应nvidia版本"></p>
+<p><img src="/assets/blog_images/GPU/16_GPU%E5%AF%B9%E5%BA%94nvidia%E7%89%88%E6%9C%AC.jpg" alt="GPU对应驱动版本" title="16_GPU对应nvidia版本"></p>
 <h4 id="1-1-2-命令行查看推荐驱动"><a href="#1-1-2-命令行查看推荐驱动" class="headerlink" title="1.1.2 命令行查看推荐驱动"></a>1.1.2 命令行查看推荐驱动</h4><ul>
 <li><p>查看驱动：<code>ubuntu-drivers devices</code>， 如下图</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">ubuntu@ubuntu-System-Product-Name:~$ ubuntu-drivers devices</div><div class="line">== cpu-microcode<span class="selector-class">.py</span> ==</div><div class="line">driver   : intel-microcode - distro free</div><div class="line"></div><div class="line">== /sys/devices/pci0000:<span class="number">00</span>/<span class="number">0000</span>:<span class="number">00</span>:<span class="number">01.0</span>/<span class="number">0000</span>:<span class="number">01</span>:<span class="number">00.0</span> ==</div><div class="line">vendor   : NVIDIA Corporation</div><div class="line">modalias : pci:v000010DEd00001B06sv00001458sd0000374Dbc03sc00i00</div><div class="line">driver   : nvidia-<span class="number">410</span> - third-party free recommended</div><div class="line">driver   : nvidia-<span class="number">384</span> - distro non-free</div><div class="line">driver   : xserver-xorg-video-nouveau - distro free builtin</div><div class="line">driver   : nvidia-<span class="number">390</span> - third-party free</div><div class="line">driver   : nvidia-<span class="number">396</span> - third-party free</div></pre></td></tr></table></figure>
@@ -710,6 +711,10 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
               </li>
              
@@ -726,15 +731,11 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
