@@ -18,7 +18,7 @@
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/Weights-Initialization/Weights_initialization_06.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/Weights-Initialization/Weights_initialization_07.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/Weights-Initialization/Weights_initialization_12.png">
-<meta property="og:updated_time" content="2017-06-25T08:50:41.000Z">
+<meta property="og:updated_time" content="2018-10-19T02:44:38.935Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文记录-Relu激励函数权重初始化">
 <meta name="twitter:description" content="参考论文：点击这里查看 上一篇博客谈到了关于Sigmoid，tanh激励函数的权重初始化方法，以及深度神经网络为什么难训练 这篇博客主要推导关于Relu类激励函数的权重初始化方法">
@@ -279,7 +279,7 @@ var _hmt = _hmt || [];
 </li>
 <li><p>根据 <strong>公式(2)</strong> 继续推导：</p>
 <ul>
-<li><p>$Var[y_l] = n_l Var[w_l x_l]\\<br>\quad \quad\quad = n_l[E(w_l^2 x_l^2) - E^2(w_l x_l)]\\<br>\quad \quad\quad = n_l[E(w_l^2) - E^2(w_l)]E(x_l^2)\\<br>\quad \quad\quad = n_lVar[w_l]E(x_l^2)……………………………………..(3)$</p>
+<li><p>$Var[y_l] = n_l Var[w_l x_l]\\<br>\quad \quad\quad = n_l[E(w_l^2 x_l^2) - E^2(w_l x_l)]\\<br>\quad \quad\quad = n_lE(w_l^2)E(x_l^2)\\<br>\quad \quad\quad = n_lVar[w_l]E(x_l^2)……………………………………..(3)$</p>
 </li>
 <li><p>对于<code>x</code>来说：$Var[x_l] \ne E[x_l^2]$，除非<code>x</code>的均值也是<code>0</code>,</p>
 </li>
@@ -684,10 +684,6 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
               </li>
              
@@ -701,6 +697,10 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">GRU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -748,11 +748,11 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tensorflow</a>
+                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
+                <a href="javascript:void(0)" class="js-tag color1">Tensorflow</a>
               </li>
              
               <li class="article-tag-list-item">
