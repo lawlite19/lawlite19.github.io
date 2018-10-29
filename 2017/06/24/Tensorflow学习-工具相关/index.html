@@ -23,11 +23,12 @@
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/Tensorflow-tool/06_rnn_graph.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/Tensorflow-tool/07_loss.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/Tensorflow-tool/08_weights_biases.png">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/Tensorflow-tool/13_visualize_embeddings.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/Tensorflow-tool/09_debug.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/Tensorflow-tool/10_debug.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/Tensorflow-tool/12_debug.png">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/Tensorflow-tool/11_debug.png">
-<meta property="og:updated_time" content="2017-06-27T12:35:59.000Z">
+<meta property="og:updated_time" content="2018-10-29T08:34:24.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tensorflow学习-工具相关">
 <meta name="twitter:description" content="Tensorflow版本(# 2017-06-24)：1.2.0   Python版本：3.5.3 包括： Tensorboard可视化 tfdbg调试 常用的高级函数">
@@ -240,7 +241,7 @@ var _hmt = _hmt || [];
 			<div id="toc-article" class="toc-article">
 			    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
 				<strong class="toc-title">文章目录</strong>
-	            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、TensorBoard-可视化"><span class="toc-number">1.</span> <span class="toc-text">一、TensorBoard 可视化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、可视化计算图"><span class="toc-number">1.1.</span> <span class="toc-text">1、可视化计算图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-全连接网络"><span class="toc-number">1.1.1.</span> <span class="toc-text">(1) 全连接网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-CNN卷积神经网络"><span class="toc-number">1.1.2.</span> <span class="toc-text">(2) CNN卷积神经网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-RNN-LSTM循环神经网络"><span class="toc-number">1.1.3.</span> <span class="toc-text">(3) RNN_LSTM循环神经网络</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、可视化训练过程"><span class="toc-number">1.2.</span> <span class="toc-text">2、可视化训练过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-权重weights，偏置biases，损失值loss"><span class="toc-number">1.2.1.</span> <span class="toc-text">(1) 权重weights，偏置biases，损失值loss</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、Tensorflow-调试tfdbg"><span class="toc-number">2.</span> <span class="toc-text">二、Tensorflow 调试tfdbg</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、本地调试"><span class="toc-number">2.1.</span> <span class="toc-text">1、本地调试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-加入代码"><span class="toc-number">2.1.1.</span> <span class="toc-text">(1) 加入代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-运行"><span class="toc-number">2.1.2.</span> <span class="toc-text">(2) 运行</span></a></li></ol></li></ol></li></ol>
+	            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、TensorBoard-可视化"><span class="toc-number">1.</span> <span class="toc-text">一、TensorBoard 可视化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、可视化计算图"><span class="toc-number">1.1.</span> <span class="toc-text">1、可视化计算图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-全连接网络"><span class="toc-number">1.1.1.</span> <span class="toc-text">(1) 全连接网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-CNN卷积神经网络"><span class="toc-number">1.1.2.</span> <span class="toc-text">(2) CNN卷积神经网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-RNN-LSTM循环神经网络"><span class="toc-number">1.1.3.</span> <span class="toc-text">(3) RNN_LSTM循环神经网络</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、可视化训练过程"><span class="toc-number">1.2.</span> <span class="toc-text">2、可视化训练过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-权重weights，偏置biases，损失值loss"><span class="toc-number">1.2.1.</span> <span class="toc-text">(1) 权重weights，偏置biases，损失值loss</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、可视化embedding"><span class="toc-number">1.3.</span> <span class="toc-text">3、可视化embedding</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、Tensorflow-调试tfdbg"><span class="toc-number">2.</span> <span class="toc-text">二、Tensorflow 调试tfdbg</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、本地调试"><span class="toc-number">2.1.</span> <span class="toc-text">1、本地调试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-加入代码"><span class="toc-number">2.1.1.</span> <span class="toc-text">(1) 加入代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-运行"><span class="toc-number">2.1.2.</span> <span class="toc-text">(2) 运行</span></a></li></ol></li></ol></li></ol>
            </div>
 		   <script type="text/javascript">
 			function showToc(){
@@ -396,6 +397,14 @@ var _hmt = _hmt || [];
 </ul>
 </li>
 </ul>
+<h2 id="3、可视化embedding"><a href="#3、可视化embedding" class="headerlink" title="3、可视化embedding"></a>3、可视化embedding</h2><ul>
+<li>全部代码： <a href="https://github.com/lawlite19/Blog-Back-Up/blob/master/code/tensorflow-tools/tensorflow_embeddings.py" target="_blank" rel="external">点击查看</a></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#-*- coding: utf-8 -*-</span></div><div class="line"><span class="comment"># Author: Lawlite</span></div><div class="line"><span class="comment"># Date: 2017/07/26</span></div><div class="line"><span class="comment"># Associate Blog: http://lawlite.me/2017/06/24/Tensorflow学习-工具相关/#1、可视化embedding</span></div><div class="line"><span class="comment"># License: MIT</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"><span class="keyword">from</span> tensorflow.contrib.tensorboard.plugins <span class="keyword">import</span> projector</div><div class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</div><div class="line"><span class="keyword">import</span> os</div><div class="line"></div><div class="line">MNIST_DATA_PATH = <span class="string">'MNIST_data'</span></div><div class="line">LOG_DIR = <span class="string">'log'</span></div><div class="line">SPRITE_IMAGE_FILE = <span class="string">'mnist_10k_sprite.png'</span></div><div class="line">META_DATA_FILE = <span class="string">'metadata.tsv'</span></div><div class="line">IMAGE_NUM = <span class="number">100</span></div><div class="line"></div><div class="line">mnist = input_data.read_data_sets(MNIST_DATA_PATH, one_hot=<span class="keyword">False</span>)</div><div class="line">plot_array = mnist.test.images[:IMAGE_NUM]   <span class="comment"># 取前100个图片</span></div><div class="line">np.savetxt(os.path.join(LOG_DIR, META_DATA_FILE), mnist.test.labels[:IMAGE_NUM], fmt=<span class="string">'%d'</span>)  <span class="comment"># label 保存为metadata.tsv文件</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="string">'''可视化embedding, 3个步骤'''</span></div><div class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line">    <span class="string">'''1、 将2D矩阵放入Variable中'''</span></div><div class="line">    embeddings_var = tf.Variable(plot_array, name=<span class="string">'embedding'</span>)</div><div class="line">    tf.global_variables_initializer().run()</div><div class="line">    </div><div class="line">    <span class="string">'''2、 保存到文件中'''</span></div><div class="line">    saver = tf.train.Saver()</div><div class="line">    sess.run(embeddings_var.initializer)</div><div class="line">    saver.save(sess, os.path.join(LOG_DIR, <span class="string">"model.ckpt"</span>))</div><div class="line">    </div><div class="line">    <span class="string">'''3、 关联metadata和sprite图片'''</span></div><div class="line">    summary_writer = tf.summary.FileWriter(LOG_DIR)</div><div class="line">    config = projector.ProjectorConfig()</div><div class="line">    embedding = config.embeddings.add()</div><div class="line">    embedding.tensor_name = embeddings_var.name</div><div class="line">    embedding.metadata_path = META_DATA_FILE</div><div class="line">    embedding.sprite.image_path = SPRITE_IMAGE_FILE</div><div class="line">    embedding.sprite.single_image_dim.extend([<span class="number">28</span>, <span class="number">28</span>])</div><div class="line">    projector.visualize_embeddings(summary_writer, config)</div></pre></td></tr></table></figure>
+<ul>
+<li>结果</li>
+</ul>
+<p><img src="/assets/blog_images/Tensorflow-tool/13_visualize_embeddings.png" alt="可视化embedding" title="13_visualize_embeddings"></p>
 <h1 id="二、Tensorflow-调试tfdbg"><a href="#二、Tensorflow-调试tfdbg" class="headerlink" title="二、Tensorflow 调试tfdbg"></a>二、<code>Tensorflow</code> 调试<code>tfdbg</code></h1><ul>
 <li>官网教程：<a href="https://www.tensorflow.org/programmers_guide/debugger" target="_blank" rel="external">点击查看</a></li>
 <li><code>Youtube</code>视频简短教程：<a href="https://www.youtube.com/watch?v=CA7fjRfduOI&amp;t=29s" target="_blank" rel="external">点击查看</a></li>
@@ -742,19 +751,19 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Github</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">DeepLearning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Github</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -778,11 +787,11 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">

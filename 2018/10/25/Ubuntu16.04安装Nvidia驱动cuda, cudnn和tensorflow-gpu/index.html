@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/GPU/16_GPU%E5%AF%B9%E5%BA%94nvidia%E7%89%88%E6%9C%AC.jpg">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/GPU/14_cuda%E7%89%88%E6%9C%AC%E5%AF%B9%E5%BA%94nvidia%E7%89%88%E6%9C%AC.jpg">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/GPU/17_cudnn.jpg">
-<meta property="og:updated_time" content="2018-10-25T08:54:21.308Z">
+<meta property="og:updated_time" content="2018-10-25T13:21:34.424Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ubuntu16.04安装Nvidia驱动cuda,cudnn和tensorflow-gpu">
 <meta name="twitter:description" content="之前有在阿里云GPU服务器上弄过： 点击查看， 这里从装Nvidia开始一、 安装Nvidia驱动  1.1 查找需要安装的Nvidia版本1.1.1 官网 官网上查找： https://www.nvidia.com/Download/index.aspx?lang=en-us 这里是 GeForce GTX 1080 TI 如下图，推荐 410 版本的">
@@ -297,6 +297,10 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">(wangyongzhi_ml) ubuntu@ubuntu-System-Product-Name:/usr/<span class="built_in">local</span>/cuda-10.0/bin$ nvidia-smi</div><div class="line">Thu Oct 25 15:49:46 2018</div><div class="line">+-----------------------------------------------------------------------------+</div><div class="line">| NVIDIA-SMI 410.66       Driver Version: 410.66       CUDA Version: 10.0     |</div><div class="line">|-------------------------------+----------------------+----------------------+</div><div class="line">| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |</div><div class="line">| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |</div><div class="line">|===============================+======================+======================|</div><div class="line">|   0  GeForce GTX 108...  Off  | 00000000:01:00.0  On |                  N/A |</div><div class="line">|  0%   44C    P8    20W / 250W |     42MiB / 11174MiB |      0%      Default |</div><div class="line">+-------------------------------+----------------------+----------------------+</div><div class="line">|   1  GeForce GTX 108...  Off  | 00000000:02:00.0 Off |                  N/A |</div><div class="line">|  0%   50C    P8    20W / 250W |      2MiB / 11178MiB |      0%      Default |</div><div class="line">+-------------------------------+----------------------+----------------------+</div><div class="line"></div><div class="line">+-----------------------------------------------------------------------------+</div><div class="line">| Processes:                                                       GPU Memory |</div><div class="line">|  GPU       PID   Type   Process name                             Usage      |</div><div class="line">|=============================================================================|</div><div class="line">|    0       949      G   /usr/lib/xorg/Xorg                            39MiB |</div><div class="line">+-----------------------------------------------------------------------------+</div></pre></td></tr></table></figure>
+<ul>
+<li>跑个程序的使用情况</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">ubuntu@ubuntu-System-Product-Name:~$ nvidia-smi</div><div class="line">Thu Oct 25 21:20:00 2018</div><div class="line">+-----------------------------------------------------------------------------+</div><div class="line">| NVIDIA-SMI 410.66       Driver Version: 410.66       CUDA Version: 10.0     |</div><div class="line">|-------------------------------+----------------------+----------------------+</div><div class="line">| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |</div><div class="line">| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |</div><div class="line">|===============================+======================+======================|</div><div class="line">|   0  GeForce GTX 108...  Off  | 00000000:01:00.0  On |                  N/A |</div><div class="line">|  0%   53C    P2   128W / 250W |  10776MiB / 11174MiB |     44%      Default |</div><div class="line">+-------------------------------+----------------------+----------------------+</div><div class="line">|   1  GeForce GTX 108...  Off  | 00000000:02:00.0 Off |                  N/A |</div><div class="line">|  0%   52C    P8    21W / 250W |  10631MiB / 11178MiB |      0%      Default |</div><div class="line">+-------------------------------+----------------------+----------------------+</div><div class="line"></div><div class="line">+-----------------------------------------------------------------------------+</div><div class="line">| Processes:                                                       GPU Memory |</div><div class="line">|  GPU       PID   Type   Process name                             Usage      |</div><div class="line">|=============================================================================|</div><div class="line">|    0       949      G   /usr/lib/xorg/Xorg                            39MiB |</div><div class="line">|    0      3009      C   python                                     10725MiB |</div><div class="line">|    1      3009      C   python                                     10619MiB |</div><div class="line">+-----------------------------------------------------------------------------+</div></pre></td></tr></table></figure>
 <h2 id="二、安装cuda"><a href="#二、安装cuda" class="headerlink" title="二、安装cuda"></a>二、安装cuda</h2><ul>
 <li>官网： <a href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" rel="external">https://developer.nvidia.com/cuda-toolkit-archive</a></li>
 <li>选择想要安装的版本，这里选择的是<code>cuda-9.0</code>, 下载</li>
@@ -695,19 +699,19 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Github</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">DeepLearning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Github</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -731,11 +735,11 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
