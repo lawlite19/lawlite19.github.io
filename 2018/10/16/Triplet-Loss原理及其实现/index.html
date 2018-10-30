@@ -22,7 +22,12 @@
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/Triplet-Loss/05_batch_all_embeddings_mean_norm.jpg">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/Triplet-Loss/06_batch_all_fraction_positive.jpg">
 <meta property="og:image" content="http://lawlite.me/assets/blog_images/Triplet-Loss/07_batch_all_loss.jpg">
-<meta property="og:updated_time" content="2018-10-29T13:19:47.943Z">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/Triplet-Loss/09_batch_hard_embeddings_mean_norm.jpg">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/Triplet-Loss/10_batch_hard_positive_negative_dis.jpg">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/Triplet-Loss/12_pca.jpg">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/Triplet-Loss/08_batch_all_embeddings_pca.jpg">
+<meta property="og:image" content="http://lawlite.me/assets/blog_images/Triplet-Loss/11_batch_hard_embedings_pca.jpg">
+<meta property="og:updated_time" content="2018-10-30T01:58:39.585Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Triplet-Loss原理及其实现">
 <meta name="twitter:description" content="一、 Triplet loss1、介绍 Triplet loss最初是在 FaceNet: A Unified Embedding for Face Recognition and Clustering 论文中提出的，可以学到较好的人脸的embedding 为什么不适用 softmax函数呢，softmax最终的类别数是确定的，而Triplet loss学到的是一个好的embedding，相似的图">
@@ -279,7 +284,7 @@ var _hmt = _hmt || [];
 </ul>
 <p><img src="/assets/blog_images/Triplet-Loss/02_triplets.png" alt="三种triplets 情况" title="02_triplets"></p>
 <ul>
-<li><code>FaceNet</code> 中是随机选取<code>semi-hard triplets</code> 进行训练的, （也可以选择 <code>hard triplets</code> 进行训练）</li>
+<li><code>FaceNet</code> 中是随机选取<code>semi-hard triplets</code> 进行训练的, （也可以选择 <code>hard triplets</code>  或者两者一起进行训练）</li>
 </ul>
 <h3 id="3、训练方法"><a href="#3、训练方法" class="headerlink" title="3、训练方法"></a>3、训练方法</h3><h4 id="3-1-offline"><a href="#3-1-offline" class="headerlink" title="3.1 offline"></a>3.1 <code>offline</code></h4><ul>
 <li>训练集<strong>所有数据</strong>经过计算得到对应的 <code>embeddings</code>, 可以得到 很多<code>&lt;i, j, k&gt;</code> 的三元组，然后再计算 <code>triplet loss</code></li>
@@ -388,10 +393,11 @@ var _hmt = _hmt || [];
 <li><code>tensorboard --logdir experiment/model/</code></li>
 </ul>
 </li>
-<li>embeddings_mean_norm</li>
-</ul>
-<p><img src="/assets/blog_images/Triplet-Loss/05_batch_all_embeddings_mean_norm.jpg" alt="embeddings_mean_norm" title="05_batch_all_embeddings_mean_norm"></p>
+<li><p>embeddings_mean_norm</p>
 <ul>
+<li>[ 可以看到是上升的，因为我们要学到可分性好的 <code>embeddings</code>， 那么其方差应该是偏大的，均值应该是变大的 ]<br><img src="/assets/blog_images/Triplet-Loss/05_batch_all_embeddings_mean_norm.jpg" alt="embeddings_mean_norm" title="05_batch_all_embeddings_mean_norm"></li>
+</ul>
+</li>
 <li><p>fraction positive</p>
 <ul>
 <li>这个是收敛的，因为随着优化占的比例是越来越少<br><img src="/assets/blog_images/Triplet-Loss/06_batch_all_fraction_positive.jpg" alt="fraction positive" title="06_batch_all_fraction_positive"></li>
@@ -404,7 +410,48 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <p><img src="/assets/blog_images/Triplet-Loss/07_batch_all_loss.jpg" alt="loss" title="07_batch_all_loss"></p>
-<h4 id="3-2-2-batch-hard"><a href="#3-2-2-batch-hard" class="headerlink" title="3.2.2 batch hard"></a>3.2.2 batch hard</h4><h3 id="3-3-可视化embedding"><a href="#3-3-可视化embedding" class="headerlink" title="3.3 可视化embedding"></a>3.3 可视化embedding</h3><h4 id="3-3-1-batch-all"><a href="#3-3-1-batch-all" class="headerlink" title="3.3.1 batch all"></a>3.3.1 batch all</h4><h4 id="3-3-2-batch-hard"><a href="#3-3-2-batch-hard" class="headerlink" title="3.3.2 batch hard"></a>3.3.2 batch hard</h4><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<h4 id="3-2-2-batch-hard"><a href="#3-2-2-batch-hard" class="headerlink" title="3.2.2 batch hard"></a>3.2.2 batch hard</h4><ul>
+<li>embeddings mean norm</li>
+</ul>
+<p><img src="/assets/blog_images/Triplet-Loss/09_batch_hard_embeddings_mean_norm.jpg" alt="embeddings mean norm" title="09_batch_hard_embeddings_mean_norm"></p>
+<ul>
+<li>positive and negative distance<ul>
+<li>这里我原以为应该是 <code>negative</code> 应该是增大的，<code>positive</code> 应该是减小的，但实际结果是 <code>positive</code> 也是增大的，因为我们计算 <code>loss</code> 是<code>triplet_loss = tf.maximum(hardest_positive_dist - hardest_negative_dist + margin, 0.0)</code>， 只要 <code>negative</code> 的距离大于 <code>positive + margin</code> 就是 <code>0</code> 了，所以只要满足就行， 用<code>BN</code> 训练的效果可能更好一点。（有什么其他看法的可以交流一下）</li>
+</ul>
+</li>
+</ul>
+<p><img src="/assets/blog_images/Triplet-Loss/10_batch_hard_positive_negative_dis.jpg" alt="positive and negative distance" title="10_batch_hard_positive_negative_dis"></p>
+<ul>
+<li>loss<ul>
+<li><code>batch hard</code> 的 <code>loss</code> 就应该是收敛的了</li>
+</ul>
+</li>
+</ul>
+<p><img src="/assets/blog_images/Triplet-Loss/12_pca.jpg" alt="loss" title="12_pca"></p>
+<h3 id="3-3-可视化embedding"><a href="#3-3-可视化embedding" class="headerlink" title="3.3 可视化embedding"></a>3.3 可视化embedding</h3><ul>
+<li>全部代码： <a href="https://github.com/lawlite19/Blog-Back-Up/blob/master/code/triplet-loss/visualize_embeddings.py" target="_blank" rel="external">点击查看</a></li>
+<li>之前在 <code>tensorflow</code> 工具中使用过： <a href="http://lawlite.me/2017/06/24/Tensorflow%E5%AD%A6%E4%B9%A0-%E5%B7%A5%E5%85%B7%E7%9B%B8%E5%85%B3/#3%E3%80%81%E5%8F%AF%E8%A7%86%E5%8C%96embedding">点击查看</a></li>
+<li>这里将可视化 <code>embeddings</code> 的训练数据都放在 <code>experiment/log</code>文件夹下<ul>
+<li><strong>另外</strong>我使用 <code>tensorflow 1.11</code> 出现问题，这里使用的版本是 <code>tensorflow 1.10</code></li>
+</ul>
+</li>
+<li>加载训练的模型，预测得到embeddings</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">args = parser.parse_args(argv[<span class="number">1</span>:])</div><div class="line"><span class="keyword">with</span> open(args.model_config) <span class="keyword">as</span> f:</div><div class="line">    params = json.load(f)</div><div class="line">tf.logging.info(<span class="string">"创建模型...."</span>)</div><div class="line">config = tf.estimator.RunConfig(model_dir=args.model_dir, tf_random_seed=<span class="number">100</span>)  <span class="comment"># config</span></div><div class="line">cls = tf.estimator.Estimator(model_fn=my_model, config=config, params=params)  <span class="comment"># 建立模型</span></div><div class="line"></div><div class="line">tf.logging.info(<span class="string">"预测...."</span>)</div><div class="line"></div><div class="line">predictions = cls.predict(input_fn=<span class="keyword">lambda</span>: test_input_fn(args.data_dir, params))</div><div class="line">embeddings = np.zeros((<span class="number">10000</span>, params[<span class="string">'embedding_size'</span>]))</div><div class="line"><span class="keyword">for</span> i, p <span class="keyword">in</span> enumerate(predictions):</div><div class="line">    embeddings[i] = p[<span class="string">'embeddings'</span>]</div><div class="line">tf.logging.info(<span class="string">"embeddings shape: &#123;&#125;"</span>.format(embeddings.shape))</div></pre></td></tr></table></figure>
+<ul>
+<li>获得label数据，保存为 <code>metadata.tsv</code>文件</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line">    <span class="comment"># Obtain the test labels</span></div><div class="line">    dataset = mnist_dataset.test(args.data_dir)</div><div class="line">    dataset = dataset.map(<span class="keyword">lambda</span> img, lab: lab)</div><div class="line">    dataset = dataset.batch(<span class="number">10000</span>)</div><div class="line">    labels_tensor = dataset.make_one_shot_iterator().get_next()</div><div class="line">    labels = sess.run(labels_tensor)   </div><div class="line"></div><div class="line">np.savetxt(os.path.join(args.log_dir, <span class="string">'metadata.tsv'</span>), labels, fmt=<span class="string">'%d'</span>)</div></pre></td></tr></table></figure>
+<ul>
+<li>可视化<code>embedding</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">shutil.copy(args.sprite_filename, args.log_dir)</div><div class="line"><span class="string">'''可视化embeddings'''</span></div><div class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line">    <span class="comment"># 1. Variable</span></div><div class="line">    embedding_var = tf.Variable(embeddings, name=<span class="string">"mnist_embeddings"</span>)</div><div class="line">    <span class="comment">#tf.global_variables_initializer().run()  # 不需要</span></div><div class="line">    </div><div class="line">    <span class="comment"># 2. 保存到文件中，embeddings.ckpt</span></div><div class="line">    saver = tf.train.Saver()</div><div class="line">    sess.run(embedding_var.initializer)</div><div class="line">    saver.save(sess, os.path.join(args.log_dir, <span class="string">'embeddings.ckpt'</span>))</div><div class="line">    </div><div class="line">    <span class="comment"># 3. 关联metadata.tsv, 和mnist_10k_sprite.png</span></div><div class="line">    summary_writer = tf.summary.FileWriter(args.log_dir)</div><div class="line">    config = projector.ProjectorConfig()</div><div class="line">    embedding = config.embeddings.add()</div><div class="line">    embedding.tensor_name = embedding_var.name</div><div class="line">    embedding.metadata_path = <span class="string">'metadata.tsv'</span></div><div class="line">    embedding.sprite.image_path = <span class="string">'mnist_10k_sprite.png'</span></div><div class="line">    embedding.sprite.single_image_dim.extend([<span class="number">28</span>, <span class="number">28</span>])</div><div class="line">    projector.visualize_embeddings(summary_writer, config)</div></pre></td></tr></table></figure>
+<h4 id="3-3-1-batch-all"><a href="#3-3-1-batch-all" class="headerlink" title="3.3.1 batch all"></a>3.3.1 batch all</h4><ul>
+<li><code>PCA</code> 结果</li>
+</ul>
+<p><img src="/assets/blog_images/Triplet-Loss/08_batch_all_embeddings_pca.jpg" alt="batch all embeddings pca" title="08_batch_all_embeddings_pca"></p>
+<h4 id="3-3-2-batch-hard"><a href="#3-3-2-batch-hard" class="headerlink" title="3.3.2 batch hard"></a>3.3.2 batch hard</h4><p><img src="/assets/blog_images/Triplet-Loss/11_batch_hard_embedings_pca.jpg" alt="batch hard embeddings pca" title="11_batch_hard_embedings_pca"></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a href="https://omoindrot.github.io/triplet-loss#batch-hard-strategy" target="_blank" rel="external">https://omoindrot.github.io/triplet-loss#batch-hard-strategy</a></li>
 <li><a href="https://github.com/omoindrot/tensorflow-triplet-loss" target="_blank" rel="external">https://github.com/omoindrot/tensorflow-triplet-loss</a></li>
 <li><a href="https://github.com/lawlite19/Blog-Back-Up" target="_blank" rel="external">https://github.com/lawlite19/Blog-Back-Up</a></li>
