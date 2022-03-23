@@ -74,7 +74,7 @@ var _hmt = _hmt || [];
 	        
 				<li><a href="/留言板/">留言板</a></li>
 	        
-				<li><a href="http://lawlite.me/archives/">归档</a></li>
+				<li><a href="http://lawlite.cn/archives/">归档</a></li>
 	        
 			</ul>
 		</nav>
@@ -162,7 +162,7 @@ var _hmt = _hmt || [];
 		        
 					<li style="width: 20%"><a href="/留言板/">留言板</a></li>
 		        
-					<li style="width: 20%"><a href="http://lawlite.me/archives/">归档</a></li>
+					<li style="width: 20%"><a href="http://lawlite.cn/archives/">归档</a></li>
 		        
 				</ul>
 			</nav>
@@ -206,7 +206,7 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <ul>
-<li>之前有在阿里云GPU服务器上弄过： <a href="http://lawlite.me/2017/12/25/%E9%98%BF%E9%87%8C%E4%BA%91GPU%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8ATorch%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/">点击查看</a>， 这里从装<code>Nvidia</code>开始<h2 id="一、-安装Nvidia驱动"><a href="#一、-安装Nvidia驱动" class="headerlink" title="一、 安装Nvidia驱动"></a>一、 安装Nvidia驱动</h2></li>
+<li>之前有在阿里云GPU服务器上弄过： <a href="http://lawlite.me/2017/12/25/%E9%98%BF%E9%87%8C%E4%BA%91GPU%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8ATorch%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/" target="_blank" rel="external">点击查看</a>， 这里从装<code>Nvidia</code>开始<h2 id="一、-安装Nvidia驱动"><a href="#一、-安装Nvidia驱动" class="headerlink" title="一、 安装Nvidia驱动"></a>一、 安装Nvidia驱动</h2></li>
 </ul>
 <h3 id="1-1-查找需要安装的Nvidia版本"><a href="#1-1-查找需要安装的Nvidia版本" class="headerlink" title="1.1 查找需要安装的Nvidia版本"></a>1.1 查找需要安装的Nvidia版本</h3><h4 id="1-1-1-官网"><a href="#1-1-1-官网" class="headerlink" title="1.1.1 官网"></a>1.1.1 官网</h4><ul>
 <li>官网上查找： <a href="https://www.nvidia.com/Download/index.aspx?lang=en-us" target="_blank" rel="external">https://www.nvidia.com/Download/index.aspx?lang=en-us</a><ul>
@@ -856,7 +856,7 @@ var _hmt = _hmt || [];
       
         <h2 id="1、概述"><a href="#1、概述" class="headerlink" title="1、概述"></a>1、概述</h2><ul>
 <li>一些剪枝的操作主要是<strong>减少了全连接层的参数</strong>，全连接层的参数量占比最多（比如<code>VGG-16</code>中全连接层操作占了<code>90%</code>，计算量只占了不到<code>1%</code>）, 但是主要的<strong>计算量集中在卷层操作</strong></li>
-<li>论文就是提出了<strong>对卷积层进行剪枝操作</strong>，然后进行<code>retrain</code>，不会造成<strong>稀疏连接</strong>（像<a href="http://lawlite.me/2017/09/07/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-DeepCompression-CompressingDeepNeuralNetworksWithPruning-TrainedQuantizationAndHuffmanCoding/">上篇论文</a>一样，稀疏矩阵操作需要特殊的库等来处理）</li>
+<li>论文就是提出了<strong>对卷积层进行剪枝操作</strong>，然后进行<code>retrain</code>，不会造成<strong>稀疏连接</strong>（像<a href="http://lawlite.me/2017/09/07/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-DeepCompression-CompressingDeepNeuralNetworksWithPruning-TrainedQuantizationAndHuffmanCoding/" target="_blank" rel="external">上篇论文</a>一样，稀疏矩阵操作需要特殊的库等来处理）</li>
 <li>全连接层可以使用<strong>平均池化层</strong>来代替以减少参数量</li>
 </ul>
         
@@ -1057,19 +1057,15 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">PyTorch</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
+                <a href="javascript:void(0)" class="js-tag color3">PyTorch</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">R</a>
+                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1081,11 +1077,15 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
+                <a href="javascript:void(0)" class="js-tag color4">GRU</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
+                <a href="javascript:void(0)" class="js-tag color2">R</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1093,11 +1093,11 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Cudnn</a>
+                <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">Cudnn</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1109,19 +1109,11 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">GRU</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">ModelCompression</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Style transfer</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Keras</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1130,10 +1122,6 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">图像分割</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">ObjectDetection</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1146,6 +1134,18 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">阿里云</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Style transfer</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Keras</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">ObjectDetection</a>
               </li>
             
             <div class="clearfix"></div>
@@ -1201,7 +1201,7 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
             </li>
           
             <li class="search-li">
-              <a href="http://lawlite.me/archives/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>归档</a>
+              <a href="http://lawlite.cn/archives/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>归档</a>
             </li>
           
         </ul>
@@ -1212,7 +1212,7 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">研究生一枚</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">程序猿👨🏻‍💻</div>
   	  	
     	</section>
     

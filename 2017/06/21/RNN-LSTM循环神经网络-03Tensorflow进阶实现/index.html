@@ -80,7 +80,7 @@ var _hmt = _hmt || [];
 	        
 				<li><a href="/留言板/">留言板</a></li>
 	        
-				<li><a href="http://lawlite.me/archives/">归档</a></li>
+				<li><a href="http://lawlite.cn/archives/">归档</a></li>
 	        
 			</ul>
 		</nav>
@@ -168,7 +168,7 @@ var _hmt = _hmt || [];
 		        
 					<li style="width: 20%"><a href="/留言板/">留言板</a></li>
 		        
-					<li style="width: 20%"><a href="http://lawlite.me/archives/">归档</a></li>
+					<li style="width: 20%"><a href="http://lawlite.cn/archives/">归档</a></li>
 		        
 				</ul>
 			</nav>
@@ -249,8 +249,8 @@ var _hmt = _hmt || [];
       
         <ul>
 <li>全部代码：<a href="https://github.com/lawlite19/Blog-Back-Up/tree/master/code/rnn/rnn_tensorflow" target="_blank" rel="external">点击这里查看</a></li>
-<li>关于<code>Tensorflow</code>实现一个简单的<strong>二元序列的例子</strong>可以<a href="http://lawlite.me/2017/06/16/RNN-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-02Tensorflow%E4%B8%AD%E7%9A%84%E5%AE%9E%E7%8E%B0/">点击这里查看</a></li>
-<li>关于<code>RNN</code>和<code>LSTM</code>的基础可以<a href="http://lawlite.me/2017/06/14/RNN-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8CLSTM-01%E5%9F%BA%E7%A1%80/">查看这里</a></li>
+<li>关于<code>Tensorflow</code>实现一个简单的<strong>二元序列的例子</strong>可以<a href="http://lawlite.me/2017/06/16/RNN-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-02Tensorflow%E4%B8%AD%E7%9A%84%E5%AE%9E%E7%8E%B0/" target="_blank" rel="external">点击这里查看</a></li>
+<li>关于<code>RNN</code>和<code>LSTM</code>的基础可以<a href="http://lawlite.me/2017/06/14/RNN-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8CLSTM-01%E5%9F%BA%E7%A1%80/" target="_blank" rel="external">查看这里</a></li>
 <li>这篇博客主要包含以下内容<ul>
 <li>训练一个<code>RNN</code>模型<strong>逐字符生成文本数据</strong>(最后的部分)</li>
 <li>使用<code>Tensorflow</code>的<code>scan</code>函数实现<code>dynamic_rnn</code><strong>动态创建</strong>的效果</li>
@@ -300,7 +300,7 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <h1 id="二、使用tf-scan函数和dynamic-rnn"><a href="#二、使用tf-scan函数和dynamic-rnn" class="headerlink" title="二、使用tf.scan函数和dynamic_rnn"></a>二、使用<code>tf.scan</code>函数和<code>dynamic_rnn</code></h1><h2 id="1、为什么使用tf-scan和dynamic-rnn"><a href="#1、为什么使用tf-scan和dynamic-rnn" class="headerlink" title="1、为什么使用tf.scan和dynamic_rnn"></a>1、为什么使用<code>tf.scan</code>和<code>dynamic_rnn</code></h2><ul>
-<li>之前我们<a href="http://lawlite.me/2017/06/16/RNN-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-02Tensorflow%E4%B8%AD%E7%9A%84%E5%AE%9E%E7%8E%B0/#1-实现过程">实现的第一个例子</a>中没有用<code>dynamic_rnn</code>的部分是将输入的三维数据<code>[batch_size,num_steps, state_size]</code>按<code>num_steps</code>维度进行拆分，然后每计算一步都存到<code>list</code>列表中，如下图</li>
+<li>之前我们<a href="http://lawlite.me/2017/06/16/RNN-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-02Tensorflow%E4%B8%AD%E7%9A%84%E5%AE%9E%E7%8E%B0/#1-实现过程" target="_blank" rel="external">实现的第一个例子</a>中没有用<code>dynamic_rnn</code>的部分是将输入的三维数据<code>[batch_size,num_steps, state_size]</code>按<code>num_steps</code>维度进行拆分，然后每计算一步都存到<code>list</code>列表中，如下图</li>
 </ul>
 <p><img src="/assets/blog_images/RNN/RNN_list_tensor19.png" alt="计算之后存到list中" title="RNN_list_tensor19"></p>
 <ul>
@@ -334,7 +334,7 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <h2 id="3、dynamic-rnn的使用"><a href="#3、dynamic-rnn的使用" class="headerlink" title="3、dynamic_rnn的使用"></a>3、<code>dynamic_rnn</code>的使用</h2><ul>
-<li>之前在我们<a href="http://lawlite.me/2017/06/16/RNN-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-02Tensorflow%E4%B8%AD%E7%9A%84%E5%AE%9E%E7%8E%B0/#2-%E4%BD%BF%E7%94%A8dynamic-rnn%E6%96%B9%E5%BC%8F">第一个例子</a>中实际已经使用过了，这里使用<code>MultiRNNCell</code>实现<strong>多层cell</strong>，具体下面再讲</li>
+<li>之前在我们<a href="http://lawlite.me/2017/06/16/RNN-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-02Tensorflow%E4%B8%AD%E7%9A%84%E5%AE%9E%E7%8E%B0/#2-%E4%BD%BF%E7%94%A8dynamic-rnn%E6%96%B9%E5%BC%8F" target="_blank" rel="external">第一个例子</a>中实际已经使用过了，这里使用<code>MultiRNNCell</code>实现<strong>多层cell</strong>，具体下面再讲</li>
 <li>构建模型：<ul>
 <li><code>tf.nn.embedding_lookup(params, ids)</code>函数是在<code>params</code>中查找<code>ids</code>的<strong>表示</strong>， 和在<code>matrix</code>中用<code>array</code>索引类似, 这里是在<strong>二维embeddings</strong>中找<strong>二维的ids</strong>, <code>ids</code>每一行中的一个数对应<code>embeddings</code>中的一行，所以最后是<code>[batch_size, num_steps, state_size]</code>，关于具体的输出可以<a href="https://gist.github.com/lawlite19/02a598c6d9b91a53d0a38fd081f9cbc4" target="_blank" rel="external">查看这里</a></li>
 <li>这里我认为就是某个<strong>字母的表示</strong>,之前上面我们的<code>statci_rnn</code>就是<code>one-hot</code>来表示的</li>
@@ -421,7 +421,7 @@ var _hmt = _hmt || [];
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cell = tf<span class="selector-class">.nn</span><span class="selector-class">.rnn_cell</span><span class="selector-class">.LSTMCell</span>(num_units=state_size, state_is_tuple=True)</div><div class="line">cell = tf<span class="selector-class">.nn</span><span class="selector-class">.rnn_cell</span><span class="selector-class">.DropoutWrapper</span>(cell, input_keep_prob=keep_prob)</div><div class="line">cell = tf<span class="selector-class">.nn</span><span class="selector-class">.rnn_cell</span><span class="selector-class">.MultiRNNCell</span>(cells=[cell]*num_layers, state_is_tuple=True)</div><div class="line">cell = tf<span class="selector-class">.nn</span><span class="selector-class">.rnn_cell</span><span class="selector-class">.DropoutWrapper</span>(cell,output_keep_prob=keep_prob)</div></pre></td></tr></table></figure>
 <h1 id="五、层标准化-Layer-Normalization"><a href="#五、层标准化-Layer-Normalization" class="headerlink" title="五、层标准化 (Layer Normalization)"></a>五、层标准化 (<code>Layer Normalization</code>)</h1><h2 id="1、说明"><a href="#1、说明" class="headerlink" title="1、说明"></a>1、说明</h2><ul>
 <li><code>Layer Normalization</code>是受<code>Batch Normalization</code>的启发而来，针对于<strong>RNN</strong>，可以查看<a href="https://arxiv.org/abs/1607.06450" target="_blank" rel="external">相关论文</a></li>
-<li><code>Batch Normalization</code>主要针对于<strong>传统的深度神经网络</strong>和<strong>CNN</strong>，关于<code>Batch Normalization</code>的操作和推导可以看<a href="http://lawlite.me/2017/06/23/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-Batch-Normalization/">我之前的博客</a></li>
+<li><code>Batch Normalization</code>主要针对于<strong>传统的深度神经网络</strong>和<strong>CNN</strong>，关于<code>Batch Normalization</code>的操作和推导可以看<a href="http://lawlite.me/2017/06/23/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-Batch-Normalization/" target="_blank" rel="external">我之前的博客</a></li>
 <li>可以加快训练的速度，得到更好的结果等</li>
 </ul>
 <h2 id="2、代码-1"><a href="#2、代码-1" class="headerlink" title="2、代码"></a>2、代码</h2><ul>
@@ -869,19 +869,15 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">PyTorch</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
+                <a href="javascript:void(0)" class="js-tag color3">PyTorch</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">R</a>
+                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -893,11 +889,15 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
+                <a href="javascript:void(0)" class="js-tag color4">GRU</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
+                <a href="javascript:void(0)" class="js-tag color2">R</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -905,11 +905,11 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Cudnn</a>
+                <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">Cudnn</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -921,19 +921,11 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">GRU</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">ModelCompression</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Style transfer</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Keras</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -942,10 +934,6 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">图像分割</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">ObjectDetection</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -958,6 +946,18 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">阿里云</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Style transfer</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Keras</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">ObjectDetection</a>
               </li>
             
             <div class="clearfix"></div>
@@ -1013,7 +1013,7 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
             </li>
           
             <li class="search-li">
-              <a href="http://lawlite.me/archives/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>归档</a>
+              <a href="http://lawlite.cn/archives/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>归档</a>
             </li>
           
         </ul>
@@ -1024,7 +1024,7 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">研究生一枚</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">程序猿👨🏻‍💻</div>
   	  	
     	</section>
     

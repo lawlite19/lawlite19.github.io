@@ -83,7 +83,7 @@ var _hmt = _hmt || [];
 	        
 				<li><a href="/留言板/">留言板</a></li>
 	        
-				<li><a href="http://lawlite.me/archives/">归档</a></li>
+				<li><a href="http://lawlite.cn/archives/">归档</a></li>
 	        
 			</ul>
 		</nav>
@@ -171,7 +171,7 @@ var _hmt = _hmt || [];
 		        
 					<li style="width: 20%"><a href="/留言板/">留言板</a></li>
 		        
-					<li style="width: 20%"><a href="http://lawlite.me/archives/">归档</a></li>
+					<li style="width: 20%"><a href="http://lawlite.cn/archives/">归档</a></li>
 		        
 				</ul>
 			</nav>
@@ -252,7 +252,7 @@ var _hmt = _hmt || [];
       
         <h2 id="1、概述"><a href="#1、概述" class="headerlink" title="1、概述"></a>1、概述</h2><ul>
 <li>一些剪枝的操作主要是<strong>减少了全连接层的参数</strong>，全连接层的参数量占比最多（比如<code>VGG-16</code>中全连接层操作占了<code>90%</code>，计算量只占了不到<code>1%</code>）, 但是主要的<strong>计算量集中在卷层操作</strong></li>
-<li>论文就是提出了<strong>对卷积层进行剪枝操作</strong>，然后进行<code>retrain</code>，不会造成<strong>稀疏连接</strong>（像<a href="http://lawlite.me/2017/09/07/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-DeepCompression-CompressingDeepNeuralNetworksWithPruning-TrainedQuantizationAndHuffmanCoding/">上篇论文</a>一样，稀疏矩阵操作需要特殊的库等来处理）</li>
+<li>论文就是提出了<strong>对卷积层进行剪枝操作</strong>，然后进行<code>retrain</code>，不会造成<strong>稀疏连接</strong>（像<a href="http://lawlite.me/2017/09/07/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-DeepCompression-CompressingDeepNeuralNetworksWithPruning-TrainedQuantizationAndHuffmanCoding/" target="_blank" rel="external">上篇论文</a>一样，稀疏矩阵操作需要特殊的库等来处理）</li>
 <li>全连接层可以使用<strong>平均池化层</strong>来代替以减少参数量</li>
 </ul>
 <a id="more"></a>
@@ -273,7 +273,7 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <h3 id="2-2-去除哪些filters-在单层中"><a href="#2-2-去除哪些filters-在单层中" class="headerlink" title="2.2 去除哪些filters (在单层中)"></a>2.2 去除哪些<code>filters</code> (在单层中)</h3><ul>
-<li>向<a href="http://lawlite.me/2017/09/07/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-DeepCompression-CompressingDeepNeuralNetworksWithPruning-TrainedQuantizationAndHuffmanCoding/">之前的论文</a>介绍的，权重的绝对值越小，则权重的作用也就越小<ul>
+<li>向<a href="http://lawlite.me/2017/09/07/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-DeepCompression-CompressingDeepNeuralNetworksWithPruning-TrainedQuantizationAndHuffmanCoding/" target="_blank" rel="external">之前的论文</a>介绍的，权重的绝对值越小，则权重的作用也就越小<ul>
 <li>[ 假设权重值都在<code>0</code>附近，进行乘积得到的值很小，所以对结果造成的影响也很小 ]</li>
 <li>[ 删除一些冗余的值还有可能防止过拟合 ]</li>
 </ul>
@@ -328,7 +328,7 @@ var _hmt = _hmt || [];
 </ul>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a href="https://arxiv.org/abs/1608.08710" target="_blank" rel="external">https://arxiv.org/abs/1608.08710</a></li>
-<li><a href="http://lawlite.me/2017/09/07/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-DeepCompression-CompressingDeepNeuralNetworksWithPruning-TrainedQuantizationAndHuffmanCoding/">http://lawlite.me/2017/09/07/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-DeepCompression-CompressingDeepNeuralNetworksWithPruning-TrainedQuantizationAndHuffmanCoding/</a></li>
+<li><a href="http://lawlite.me/2017/09/07/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-DeepCompression-CompressingDeepNeuralNetworksWithPruning-TrainedQuantizationAndHuffmanCoding/" target="_blank" rel="external">http://lawlite.me/2017/09/07/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-DeepCompression-CompressingDeepNeuralNetworksWithPruning-TrainedQuantizationAndHuffmanCoding/</a></li>
 <li><a href="http://blog.csdn.net/u013082989/article/details/53673602" target="_blank" rel="external">http://blog.csdn.net/u013082989/article/details/53673602</a></li>
 </ul>
 
@@ -692,19 +692,15 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">PyTorch</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
+                <a href="javascript:void(0)" class="js-tag color3">PyTorch</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">R</a>
+                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -716,11 +712,15 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
+                <a href="javascript:void(0)" class="js-tag color4">GRU</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
+                <a href="javascript:void(0)" class="js-tag color2">R</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -728,11 +728,11 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Cudnn</a>
+                <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">Cudnn</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -744,19 +744,11 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">GRU</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">ModelCompression</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Style transfer</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Keras</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -765,10 +757,6 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">图像分割</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">ObjectDetection</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -781,6 +769,18 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">阿里云</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Style transfer</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Keras</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">ObjectDetection</a>
               </li>
             
             <div class="clearfix"></div>
@@ -836,7 +836,7 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
             </li>
           
             <li class="search-li">
-              <a href="http://lawlite.me/archives/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>归档</a>
+              <a href="http://lawlite.cn/archives/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>归档</a>
             </li>
           
         </ul>
@@ -847,7 +847,7 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">研究生一枚</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">程序猿👨🏻‍💻</div>
   	  	
     	</section>
     
