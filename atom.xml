@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://lawlite.me/"/>
+  <link href="http://lawlite.cn/"/>
   <updated>2019-05-04T04:41:26.032Z</updated>
-  <id>http://lawlite.me/</id>
+  <id>http://lawlite.cn/</id>
   
   <author>
     <name>Lawlite</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>Ubuntu16.04安装Nvidia驱动cuda,cudnn和tensorflow-gpu</title>
-    <link href="http://lawlite.me/2018/10/25/Ubuntu16.04%E5%AE%89%E8%A3%85Nvidia%E9%A9%B1%E5%8A%A8cuda,%20cudnn%E5%92%8Ctensorflow-gpu/"/>
-    <id>http://lawlite.me/2018/10/25/Ubuntu16.04安装Nvidia驱动cuda, cudnn和tensorflow-gpu/</id>
+    <link href="http://lawlite.cn/2018/10/25/Ubuntu16.04%E5%AE%89%E8%A3%85Nvidia%E9%A9%B1%E5%8A%A8cuda,%20cudnn%E5%92%8Ctensorflow-gpu/"/>
+    <id>http://lawlite.cn/2018/10/25/Ubuntu16.04安装Nvidia驱动cuda, cudnn和tensorflow-gpu/</id>
     <published>2018-10-25T07:25:54.000Z</published>
     <updated>2019-05-04T04:41:26.032Z</updated>
     
@@ -41,18 +41,18 @@
     </summary>
     
     
-      <category term="Cudnn" scheme="http://lawlite.me/tags/Cudnn/"/>
+      <category term="Tensorflow" scheme="http://lawlite.cn/tags/Tensorflow/"/>
     
-      <category term="Tensorflow" scheme="http://lawlite.me/tags/Tensorflow/"/>
+      <category term="Cudnn" scheme="http://lawlite.cn/tags/Cudnn/"/>
     
   </entry>
   
   <entry>
     <title>Triplet-Loss原理及其实现</title>
-    <link href="http://lawlite.me/2018/10/16/Triplet-Loss%E5%8E%9F%E7%90%86%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/"/>
-    <id>http://lawlite.me/2018/10/16/Triplet-Loss原理及其实现/</id>
+    <link href="http://lawlite.cn/2018/10/16/Triplet-Loss%E5%8E%9F%E7%90%86%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://lawlite.cn/2018/10/16/Triplet-Loss原理及其实现/</id>
     <published>2018-10-16T06:32:35.000Z</published>
-    <updated>2019-03-03T04:50:05.208Z</updated>
+    <updated>2019-05-04T04:44:04.826Z</updated>
     
     <content type="html"><![CDATA[<h2 id="一、-Triplet-loss"><a href="#一、-Triplet-loss" class="headerlink" title="一、 Triplet loss"></a>一、 Triplet loss</h2><h3 id="1、介绍"><a href="#1、介绍" class="headerlink" title="1、介绍"></a>1、介绍</h3><ul><li><code>Triplet loss</code>最初是在 <a href="https://arxiv.org/abs/1503.03832" target="_blank" rel="external">FaceNet: A Unified Embedding for Face Recognition and Clustering</a> 论文中提出的，可以学到较好的人脸的<code>embedding</code></li><li>为什么不适用 <code>softmax</code>函数呢，<code>softmax</code>最终的类别数是确定的，而<code>Triplet loss</code>学到的是一个好的<code>embedding</code>，相似的图像在<code>embedding</code>空间里是相近的，可以判断是否是同一个人脸。<h3 id="2、原理"><a href="#2、原理" class="headerlink" title="2、原理"></a>2、原理</h3></li><li><p>输入是一个三元组 <code>&lt;a, p, n&gt;</code></p><ul><li><code>a： anchor</code></li><li><code>p： positive</code>, 与 <code>a</code> 是同一类别的样本</li><li><code>n： negative</code>, 与 <code>a</code> 是不同类别的样本</li></ul><a id="more"></a></li></ul><p><img src="/assets/blog_images/Triplet-Loss/01_triplet_loss%E7%A4%BA%E6%84%8F.png" alt="triplet loss示意" title="01_triplet_loss示意"></p><ul><li>公式是： $$L = max(d(a, p) - d(a, n) + margin, 0)$$<ul><li>所以最终的优化目标是拉近 <code>a, p</code> 的距离， 拉远 <code>a, n</code> 的距离</li><li><code>easy triplets</code>:  $L = 0$ 即 $d(a, p) +margin &lt; d(a, n)$，这种情况不需要优化，天然<code>a, p</code>的距离很近， <code>a, n</code>的距离远</li><li><code>hard triplets</code>:  $d(a, n) &lt; d(a, p)$,  即<code>a, p</code>的距离远</li><li><code>semi-hard triplets</code>: $d(a, p) &lt; d(a, n) &lt; d(a, p) + margin$, 即<code>a, n</code>的距离靠的很近，但是有一个<code>margin</code></li></ul></li></ul><p><img src="/assets/blog_images/Triplet-Loss/02_triplets.png" alt="三种triplets 情况" title="02_triplets"></p><ul><li><code>FaceNet</code> 中是随机选取<code>semi-hard triplets</code> 进行训练的, （也可以选择 <code>hard triplets</code>  或者两者一起进行训练）</li></ul><h3 id="3、训练方法"><a href="#3、训练方法" class="headerlink" title="3、训练方法"></a>3、训练方法</h3><h4 id="3-1-offline"><a href="#3-1-offline" class="headerlink" title="3.1 offline"></a>3.1 <code>offline</code></h4><ul><li>训练集<strong>所有数据</strong>经过计算得到对应的 <code>embeddings</code>, 可以得到 很多<code>&lt;i, j, k&gt;</code> 的三元组，然后再计算 <code>triplet loss</code></li><li>效率不高，因为需要过一遍所有的数据得到三元组，然后训练反向更新网络<h4 id="3-2-online"><a href="#3-2-online" class="headerlink" title="3.2 online"></a>3.2 <code>online</code></h4></li><li>从训练集中抽取<code>B</code>个样本，然后计算 <code>B</code> 个<code>embeddings</code>，可以产生 $B^3$ 个 <code>triplets</code> （当然其中有不合法的，因为需要的是<code>&lt;a, p, n&gt;</code>）</li></ul><p><img src="/assets/blog_images/Triplet-Loss/03_online_triplet_loss.png" alt="online triplet loss" title="03_online_triplet_loss"></p><ul><li>实际使用中采用此方法，又分为两种策略 （是在一篇<strong>行人重识别</strong>的论文中提到的 <a href="https://arxiv.org/abs/1703.07737" target="_blank" rel="external">In Defense of the Triplet Loss for Person Re-Identification</a>），假设 $B = PK$, 其中<code>P</code>个身份的人，每个身份的人<code>K</code>张图片（一般<code>K</code> 取 <code>4</code>）<ul><li><code>Batch All</code>:  计算<code>batch_size</code>中所有<code>valid</code>的的<code>hard triplet</code> 和 <code>semi-hard triplet</code>， 然后取平均得到<code>Loss</code><ul><li>注意因为很多 <code>easy triplets</code>的情况，所以平均会导致<code>Loss</code>很小，所以是对所有 <strong>valid</strong> 的所有求平均 （下面代码中会介绍）</li><li>可以产生 $PK(K-1)(PK-K)$个 <code>triplets</code><ul><li><code>PK</code>个 <code>anchor</code></li><li><code>K-1</code> 个 <code>positive</code></li><li><code>PK-K</code> 个 <code>negative</code></li></ul></li></ul></li><li><code>Batch Hard</code>:  对于每一个<code>anchor</code>， 选择距离最大的<code>d(a, p)</code>  和 距离最大的 <code>d(a, n)</code><ul><li>所以公有 $PK$ 个 三元组<code>triplets</code></li></ul></li></ul></li></ul><h2 id="二、-Tensorflow-中的实现"><a href="#二、-Tensorflow-中的实现" class="headerlink" title="二、 Tensorflow 中的实现"></a>二、 Tensorflow 中的实现</h2><ul><li><a href="https://github.com/lawlite19/Blog-Back-Up/tree/master/code/triplet-loss" target="_blank" rel="external">全部代码</a></li><li><code>Tensorflow</code> 中有实现好的<code>triplet loss</code> 接口，这里自己实现，（实现起来还是有点绕的, 有一些小细节问题）</li><li>使用<code>numpy</code>也仿照实现了，便于调试查看中间的结果, <a href="https://github.com/lawlite19/Blog-Back-Up/blob/master/code/triplet-loss/triplet_loss_np.py" target="_blank" rel="external">全部代码</a><h3 id="1、Batch-All"><a href="#1、Batch-All" class="headerlink" title="1、Batch All"></a>1、Batch All</h3><h4 id="1-1-计算两两embeddings的距离"><a href="#1-1-计算两两embeddings的距离" class="headerlink" title="1.1 计算两两embeddings的距离"></a>1.1 计算两两<code>embeddings</code>的距离</h4></li><li><code>numpy</code> 中的实现，便于调试理解， <a href="https://github.com/lawlite19/Blog-Back-Up/blob/master/code/triplet-loss/triplet_loss_np.py#L9" target="_blank" rel="external">点击查看</a></li><li>输入大小是<code>（batch_size, vector_size）</code>大小的 <code>embeddings</code> 向量</li><li>因为 $(a-b)^2 = a^2 -2ab + b^2$, 矩阵相乘 $embeddings \times embeddings^T$ 中包含<code>a*b</code>的值，对象线上是向量平方的值，所以可以直接使用矩阵计算</li><li>如果不使用平方，就开根号，<ul><li>注意根号下不能为<code>0</code>，<code>0</code>开根号是没有问题的，但是<code>Tensorflow</code>梯度反向传播是就会导致无穷大，所以加上一个平滑项<code>1e-16</code>，最后再修改回来。</li></ul></li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">_pairwise_distance</span><span class="params">(embeddings, squared=False)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">       计算两两embedding的距离</div><div class="line">       ------------------------------------------</div><div class="line">       Args：</div><div class="line">          embedding: 特征向量， 大小（batch_size, vector_size）</div><div class="line">          squared:   是否距离的平方，即欧式距离</div><div class="line">    </div><div class="line">       Returns：</div><div class="line">          distances: 两两embeddings的距离矩阵，大小 （batch_size, batch_size）</div><div class="line">    '''    </div><div class="line">    <span class="comment"># 矩阵相乘,得到（batch_size, batch_size），因为计算欧式距离|a-b|^2 = a^2 -2ab + b^2, </span></div><div class="line">    <span class="comment"># 其中 ab 可以用矩阵乘表示</span></div><div class="line">    dot_product = tf.matmul(embeddings, tf.transpose(embeddings))   </div><div class="line">    <span class="comment"># dot_product对角线部分就是 每个embedding的平方</span></div><div class="line">    square_norm = tf.diag_part(dot_product)</div><div class="line">    <span class="comment"># |a-b|^2 = a^2 - 2ab + b^2</span></div><div class="line">    <span class="comment"># tf.expand_dims(square_norm, axis=1)是（batch_size, 1）大小的矩阵，减去 （batch_size, batch_size）大小的矩阵，相当于每一列操作</span></div><div class="line">    distances = tf.expand_dims(square_norm, axis=<span class="number">1</span>) - <span class="number">2.0</span> * dot_product + tf.expand_dims(square_norm, axis=<span class="number">0</span>)</div><div class="line">    distances = tf.maximum(distances, <span class="number">0.0</span>)   <span class="comment"># 小于0的距离置为0</span></div><div class="line">    <span class="keyword">if</span> <span class="keyword">not</span> squared:          <span class="comment"># 如果不平方，就开根号，但是注意有0元素，所以0的位置加上 1e*-16</span></div><div class="line">        distances = distances + mask * <span class="number">1e-16</span></div><div class="line">        distances = tf.sqrt(distances)</div><div class="line">        distances = distances * (<span class="number">1.0</span> - mask)    <span class="comment"># 0的部分仍然置为0</span></div><div class="line">    <span class="keyword">return</span> distances</div></pre></td></tr></table></figure><h4 id="1-2-计算valid-mask"><a href="#1-2-计算valid-mask" class="headerlink" title="1.2 计算valid mask"></a>1.2 计算valid mask</h4><ul><li><code>numpy</code> 中的实现， <a href="https://github.com/lawlite19/Blog-Back-Up/blob/master/code/triplet-loss/triplet_loss_np.py#L27" target="_blank" rel="external">点击查看</a></li><li>上面得到了 <code>(batch_size, batch_size)</code> 大小的距离矩阵，然后就可以计算所有 <code>embeddings</code> 组成的三元组<code>&lt;i, j, k&gt;</code>损失</li><li>但是不是所有的三元组都是 <code>valid</code> 的, 要是<code>&lt;a, p, n&gt;</code>的形式，所以计算一个<code>3D</code>的<code>mask</code>，然后乘上得到的 <code>(batch_size, batch_size, batch_size)</code>的所有三元组的损失即可，如何得到<code>mask</code>呢</li><li><code>&lt;i, j, k&gt;</code>要满足<ul><li><code>i, j, k</code>不相等</li><li><code>labels[i] == labels[j] and labels[i] != labels[k]</code></li></ul></li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">_get_triplet_mask</span><span class="params">(labels)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">       得到一个3D的mask [a, p, n], 对应triplet（a, p, n）是valid的位置是True</div><div class="line">       ----------------------------------</div><div class="line">       Args:</div><div class="line">          labels: 对应训练数据的labels, shape = (batch_size,)</div><div class="line">       </div><div class="line">       Returns:</div><div class="line">          mask: 3D,shape = (batch_size, batch_size, batch_size)</div><div class="line">    </div><div class="line">    '''</div><div class="line">    </div><div class="line">    <span class="comment"># 初始化一个二维矩阵，坐标(i, j)不相等置为1，得到indices_not_equal</span></div><div class="line">    indices_equal = tf.cast(tf.eye(tf.shape(labels)[<span class="number">0</span>]), tf.bool)</div><div class="line">    indices_not_equal = tf.logical_not(indices_equal)</div><div class="line">    <span class="comment"># 因为最后得到一个3D的mask矩阵(i, j, k)，增加一个维度，则 i_not_equal_j 在第三个维度增加一个即，(batch_size, batch_size, 1), 其他同理</span></div><div class="line">    i_not_equal_j = tf.expand_dims(indices_not_equal, <span class="number">2</span>) </div><div class="line">    i_not_equal_k = tf.expand_dims(indices_not_equal, <span class="number">1</span>)</div><div class="line">    j_not_equal_k = tf.expand_dims(indices_not_equal, <span class="number">0</span>)</div><div class="line">    <span class="comment"># 想得到i!=j!=k, 三个不等取and即可, 最后可以得到当下标（i, j, k）不相等时才取True</span></div><div class="line">    distinct_indices = tf.logical_and(tf.logical_and(i_not_equal_j, i_not_equal_k), j_not_equal_k)</div><div class="line"></div><div class="line">    <span class="comment"># 同样根据labels得到对应i=j, i!=k</span></div><div class="line">    label_equal = tf.equal(tf.expand_dims(labels, <span class="number">0</span>), tf.expand_dims(labels, <span class="number">1</span>))</div><div class="line">    i_equal_j = tf.expand_dims(label_equal, <span class="number">2</span>)</div><div class="line">    i_equal_k = tf.expand_dims(label_equal, <span class="number">1</span>)</div><div class="line">    valid_labels = tf.logical_and(i_equal_j, tf.logical_not(i_equal_k))</div><div class="line">    <span class="comment"># mask即为满足上面两个约束，所以两个3D取and</span></div><div class="line">    mask = tf.logical_and(distinct_indices, valid_labels)</div><div class="line">    <span class="keyword">return</span> mask</div></pre></td></tr></table></figure><h4 id="1-3-计算triplet-loss"><a href="#1-3-计算triplet-loss" class="headerlink" title="1.3 计算triplet loss"></a>1.3 计算triplet loss</h4><ul><li><code>numpy</code> 中的实现， <a href="https://github.com/lawlite19/Blog-Back-Up/blob/master/code/triplet-loss/triplet_loss_np.py#L66" target="_blank" rel="external">点击查看</a></li><li><code>1.1</code> 中计算得到了两两<code>embeddings</code>的距离，大小 <code>（batch_size, batch_size）</code>, 需要得到所有三元组的<code>triplet loss</code>， 即<code>（batch_size, batch_size, batch_size)</code>大小</li><li>为什么<code>triplet_loss = anchor_positive_dist - anchor_negative_dist + margin</code> 可以得到所有<code>(i, j, k)</code>的<code>triplet loss</code>， <ul><li>如下图，<code>x0y</code>平面的是<code>anchor_positive_dist</code>的距离矩阵（其实是<code>3D</code>的, 想象一下）</li><li><code>x0z</code>平面是<code>anchor_negative_dist</code>的距离矩阵（也是<code>3D</code>的）</li><li>两个相减, 比如<code>0-0 = 0</code>就相当于<code>i=0, j=0</code>的距离，减去 <code>j=0, k=0</code>的距离</li><li>以此类推，得到所有三元组的<code>loss</code></li></ul></li></ul><p><img src="/assets/blog_images/Triplet-Loss/04_triplet_loss%E4%BE%8B%E5%AD%90.png" alt="triplet loss 例子" title="04_triplet_loss例子"></p><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">batch_all_triplet_loss</span><span class="params">(labels, embeddings, margin, squared=False)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">       triplet loss of a batch</div><div class="line">       -------------------------------</div><div class="line">       Args:</div><div class="line">          labels:     标签数据，shape = （batch_size,）</div><div class="line">          embeddings: 提取的特征向量， shape = (batch_size, vector_size)</div><div class="line">          margin:     margin大小， scalar</div><div class="line">          </div><div class="line">       Returns:</div><div class="line">          triplet_loss: scalar, 一个batch的损失值</div><div class="line">          fraction_postive_triplets : valid的triplets占的比例</div><div class="line">    '''</div><div class="line">    </div><div class="line">    <span class="comment"># 得到每两两embeddings的距离，然后增加一个维度，一维需要得到（batch_size, batch_size, batch_size）大小的3D矩阵</span></div><div class="line">    <span class="comment"># 然后再点乘上valid 的 mask即可</span></div><div class="line">    pairwise_dis = _pairwise_distance(embeddings, squared=squared)</div><div class="line">    anchor_positive_dist = tf.expand_dims(pairwise_dis, <span class="number">2</span>)</div><div class="line">    <span class="keyword">assert</span> anchor_positive_dist.shape[<span class="number">2</span>] == <span class="number">1</span>, <span class="string">"&#123;&#125;"</span>.format(anchor_positive_dist.shape)</div><div class="line">    anchor_negative_dist = tf.expand_dims(pairwise_dis, <span class="number">1</span>)</div><div class="line">    <span class="keyword">assert</span> anchor_negative_dist.shape[<span class="number">1</span>] == <span class="number">1</span>, <span class="string">"&#123;&#125;"</span>.format(anchor_negative_dist.shape)</div><div class="line">    triplet_loss = anchor_positive_dist - anchor_negative_dist + margin</div><div class="line">    </div><div class="line">    mask = _get_triplet_mask(labels)</div><div class="line">    mask = tf.to_float(mask)</div><div class="line">    triplet_loss = tf.multiply(mask, triplet_loss)</div><div class="line">    triplet_loss = tf.maximum(triplet_loss, <span class="number">0.0</span>)</div><div class="line">    </div><div class="line">    <span class="comment"># 计算valid的triplet的个数，然后对所有的triplet loss求平均</span></div><div class="line">    valid_triplets = tf.to_float(tf.greater(triplet_loss, <span class="number">1e-16</span>))</div><div class="line">    num_positive_triplets = tf.reduce_sum(valid_triplets)</div><div class="line">    num_valid_triplets = tf.reduce_sum(mask)</div><div class="line">    fraction_postive_triplets = num_positive_triplets / (num_valid_triplets + <span class="number">1e-16</span>)</div><div class="line">    </div><div class="line">    triplet_loss = tf.reduce_sum(triplet_loss) / (num_positive_triplets + <span class="number">1e-16</span>)</div><div class="line">    <span class="keyword">return</span> triplet_loss, fraction_postive_triplets</div></pre></td></tr></table></figure><h3 id="2、Batch-Hard"><a href="#2、Batch-Hard" class="headerlink" title="2、Batch Hard"></a>2、Batch Hard</h3><ul><li><code>numpy</code> 中的实现，<a href="https://github.com/lawlite19/Blog-Back-Up/blob/master/code/triplet-loss/triplet_loss_np.py#L103" target="_blank" rel="external">点击查看</a></li><li>因为最后只有$PK$个<code>triplet</code>, 从 <code>positive</code> 中选择距离最大的，从 <code>negative</code> 中选择距离最小的即可<h4 id="2-1-计算positive-mask"><a href="#2-1-计算positive-mask" class="headerlink" title="2.1 计算positive mask"></a>2.1 计算positive mask</h4></li><li>满足 <code>a!=p and  a, p label一致即可</code></li><li>之后用<code>mask</code> 乘上计算的<code>pairwice_distances</code>， 然后取每行最大值即为每个样本对应 <code>positive</code> 的最大距离<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">_get_anchor_positive_triplet_mask</span><span class="params">(labels)</span>:</span></div><div class="line">    <span class="string">''' </span></div><div class="line">       得到合法的positive的mask， 即2D的矩阵，[a, p], a!=p and a和p相同labels</div><div class="line">       ------------------------------------------------</div><div class="line">       Args:</div><div class="line">          labels: 标签数据，shape = (batch_size, )</div><div class="line">          </div><div class="line">       Returns:</div><div class="line">          mask: 合法的positive mask, shape = (batch_size, batch_size)</div><div class="line">    '''</div><div class="line">    indices_equal = tf.cast(tf.eye(tf.shape(labels)[<span class="number">0</span>]), tf.bool)</div><div class="line">    indices_not_equal = tf.logical_not(indices_equal)                 <span class="comment"># （i, j）不相等</span></div><div class="line">    labels_equal = tf.equal(tf.expand_dims(labels, <span class="number">0</span>), tf.expand_dims(labels, <span class="number">1</span>))  <span class="comment"># labels相等，</span></div><div class="line">    mask = tf.logical_and(indices_not_equal, labels_equal)            <span class="comment"># 取and即可</span></div><div class="line">    <span class="keyword">return</span> mask</div></pre></td></tr></table></figure></li></ul><h4 id="2-2-计算negative-mask"><a href="#2-2-计算negative-mask" class="headerlink" title="2.2 计算negative mask"></a>2.2 计算negative mask</h4><ul><li>只需 <code>[a, n]</code> 对应的 <code>labels</code> 不一致即可<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">_get_anchor_negative_triplet_mask</span><span class="params">(labels)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">       得到negative的2D mask, [a, n] 只需a, n不同且有不同的labels</div><div class="line">       ------------------------------------------------</div><div class="line">       Args:</div><div class="line">          labels: 标签数据，shape = (batch_size, )</div><div class="line">          </div><div class="line">       Returns:</div><div class="line">          mask: negative mask, shape = (batch_size, batch_size)</div><div class="line">    '''</div><div class="line">    labels_equal = tf.equal(tf.expand_dims(labels, <span class="number">0</span>), tf.expand_dims(labels, <span class="number">1</span>))</div><div class="line">    mask = tf.logical_not(labels_equal)</div><div class="line">    <span class="keyword">return</span> mask</div></pre></td></tr></table></figure></li></ul><h4 id="2-3-batch-hard-loss"><a href="#2-3-batch-hard-loss" class="headerlink" title="2.3 batch hard loss"></a>2.3 batch hard loss</h4><ul><li>计算最大 <code>positive</code> 距离时直接取 <code>valid</code> 的每一行的最大值即可</li><li>计算最小<code>negative</code> 距离时不能直接取每一行的最小值，因为 <code>invalid</code> 位置的值为 <code>0</code>，所以可以在 <code>invalid</code> 位置加上每一行的最大值，然后就可以取每一行的最小值了<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">batch_hard_triplet_loss</span><span class="params">(labels, embeddings, margin, squared=False)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">       batch hard triplet loss of a batch， 每个样本最大的positive距离 - 对应样本最小的negative距离</div><div class="line">       ------------------------------------</div><div class="line">       Args:</div><div class="line">          labels:     标签数据，shape = （batch_size,）</div><div class="line">          embeddings: 提取的特征向量， shape = (batch_size, vector_size)</div><div class="line">          margin:     margin大小， scalar</div><div class="line">          </div><div class="line">       Returns:</div><div class="line">          triplet_loss: scalar, 一个batch的损失值</div><div class="line">    '''</div><div class="line">    pairwise_distances = _pairwise_distance(embeddings)</div><div class="line">    mask_anchor_positive = _get_anchor_positive_triplet_mask(labels)</div><div class="line">    mask_anchor_positive = tf.to_float(mask_anchor_positive)</div><div class="line">    anchor_positive_dist = tf.multiply(mask_anchor_positive, pairwise_distances)</div><div class="line">    hardest_positive_dist = tf.reduce_max(anchor_positive_dist, axis=<span class="number">1</span>, keepdims=<span class="keyword">True</span>)  <span class="comment"># 取每一行最大的值即为最大positive距离</span></div><div class="line">    tf.summary.scalar(<span class="string">"hardest_positive_dis"</span>, tf.reduce_mean(hardest_positive_dist))</div><div class="line">    </div><div class="line">    <span class="string">'''取每一行最小值得时候，因为invalid [a, n]置为了0， 所以不能直接取，这里对应invalid位置加上每一行的最大值即可，然后再取最小的值'''</span></div><div class="line">    mask_anchor_negative = _get_anchor_negative_triplet_mask(labels)</div><div class="line">    mask_anchor_negative = tf.to_float(mask_anchor_negative)</div><div class="line">    max_anchor_negative_dist = tf.reduce_max(pairwise_distances, axis=<span class="number">1</span>, keepdims=<span class="keyword">True</span>)   <span class="comment"># 每一样最大值</span></div><div class="line">    anchor_negative_dist = pairwise_distances + max_anchor_negative_dist * (<span class="number">1.0</span> - mask_anchor_negative)  <span class="comment"># (1.0 - mask_anchor_negative)即为invalid位置</span></div><div class="line">    hardest_negative_dist = tf.reduce_min(anchor_negative_dist, axis=<span class="number">1</span>, keepdims=<span class="keyword">True</span>)</div><div class="line">    tf.summary.scalar(<span class="string">"hardest_negative_dist"</span>, tf.reduce_mean(hardest_negative_dist))</div><div class="line">    </div><div class="line">    triplet_loss = tf.maximum(hardest_positive_dist - hardest_negative_dist + margin, <span class="number">0.0</span>)</div><div class="line">    triplet_loss = tf.reduce_mean(triplet_loss)</div><div class="line">    <span class="keyword">return</span> triplet_loss</div></pre></td></tr></table></figure></li></ul><h2 id="三、具体使用"><a href="#三、具体使用" class="headerlink" title="三、具体使用"></a>三、具体使用</h2><ul><li>使用 <code>mnist</code> 数据集和 <code>triplet loss</code> 训练，最后得到的 <code>embeddings</code>应该是同一类别的靠在一起</li><li>因为只有 <code>10</code> 个类别，所以直接随机取 <code>batch</code> 大小的数据，这里<code>batch_size=64</code>,<ul><li>注意如果类别很多时，就不能随机构建<code>batch</code> 了， 需要选 <code>P</code> 个类别，然后每个类别选 <code>K</code> 张图 </li></ul></li></ul><h3 id="3-1-构建模型"><a href="#3-1-构建模型" class="headerlink" title="3.1 构建模型"></a>3.1 构建模型</h3><ul><li>上一篇介绍了 <a href="http://lawlite.me/2018/05/31/Tensorflow%E9%AB%98%E7%BA%A7API/">tensorflow的高级API</a>, 这里使用 <code>Estimator</code> 构建模型</li><li>全部代码：<a href="https://github.com/lawlite19/Blog-Back-Up/blob/master/code/triplet-loss/train_with_triplet_loss.py" target="_blank" rel="external">点击查看</a><h4 id="3-1-1-使用Estimator"><a href="#3-1-1-使用Estimator" class="headerlink" title="3.1.1 使用Estimator"></a>3.1.1 使用Estimator</h4></li><li><code>params</code>  指定超参数， 这里保存为<code>json</code> 格式的文件，<ul><li>配置为：</li></ul></li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;learning_rate&quot;: 1e-3,</div><div class="line">    &quot;batch_size&quot;: 64,</div><div class="line">    &quot;num_epochs&quot;: 20,</div><div class="line"></div><div class="line">    &quot;num_channels&quot;: 32,</div><div class="line">    &quot;use_batch_norm&quot;: false,</div><div class="line">    &quot;bn_momentum&quot;: 0.9,</div><div class="line">    &quot;margin&quot;: 0.5,</div><div class="line">    &quot;embedding_size&quot;: 64,</div><div class="line">    &quot;triplet_strategy&quot;: &quot;batch_all&quot;,</div><div class="line">    &quot;squared&quot;: false,</div><div class="line"></div><div class="line">    &quot;image_size&quot;: 28,</div><div class="line">    &quot;num_labels&quot;: 10,</div><div class="line">    &quot;train_size&quot;: 50000,</div><div class="line">    &quot;eval_size&quot;: 10000,</div><div class="line"></div><div class="line">    &quot;num_parallel_calls&quot;: 4,</div><div class="line">    &quot;save_summary_steps&quot;: 50</div><div class="line">&#125;</div></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(argv)</span>:</span></div><div class="line">    args = parser.parse_args(argv[<span class="number">1</span>:])</div><div class="line">    tf.logging.info(<span class="string">"创建模型...."</span>)</div><div class="line">    <span class="keyword">with</span> open(args.model_config) <span class="keyword">as</span> f:</div><div class="line">        params = json.load(f)</div><div class="line">    config = tf.estimator.RunConfig(model_dir=args.model_dir, tf_random_seed=<span class="number">100</span>)  <span class="comment"># config</span></div><div class="line">    cls = tf.estimator.Estimator(model_fn=my_model, config=config, params=params)  <span class="comment"># 建立模型</span></div><div class="line">    tf.logging.info(<span class="string">"开始训练模型,共&#123;&#125; epochs...."</span>.format(params[<span class="string">'num_epochs'</span>]))</div><div class="line">    cls.train(input_fn = <span class="keyword">lambda</span>: train_input_fn(args.data_dir, params))            <span class="comment"># 训练模型，指定输入</span></div><div class="line">    </div><div class="line">    tf.logging.info(<span class="string">"测试集评价模型...."</span>)</div><div class="line">    res = cls.evaluate(input_fn = <span class="keyword">lambda</span>: test_input_fn(args.data_dir, params))    <span class="comment"># 测试模型，指定输入</span></div><div class="line">    <span class="keyword">for</span> key <span class="keyword">in</span> res:</div><div class="line">        print(<span class="string">"评价---&#123;&#125; : &#123;&#125;"</span>.format(key, res[key]))</div></pre></td></tr></table></figure><h4 id="3-1-2-model-fn函数"><a href="#3-1-2-model-fn函数" class="headerlink" title="3.1.2 model_fn函数"></a>3.1.2 model_fn函数</h4><ul><li>下面都有对应注释</li><li>计算 <code>embedding_mean_norm</code> 中每一行 <code>embeding</code> 公式为： $||A||_F = [\sum_{i,j} abs(a_{i,j})^2]^{1/2}$ , 然后再取均值</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_model</span><span class="params">(features, labels, mode, params)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">       model_fn指定函数，构建模型，训练等</div><div class="line">       ---------------------------------</div><div class="line">       Args:</div><div class="line">          features: 输入，shape = (batch_size, 784)</div><div class="line">          labels:   输出，shape = (batch_size, )</div><div class="line">          mode:     str, 阶段</div><div class="line">          params:   dict, 超参数</div><div class="line">    '''</div><div class="line">    is_training = (mode == tf.estimator.ModeKeys.TRAIN)</div><div class="line">    images = features</div><div class="line">    images = tf.reshape(images, shape=[<span class="number">-1</span>, params[<span class="string">'image_size'</span>], params[<span class="string">'image_size'</span>], <span class="number">1</span>])  <span class="comment"># reshape (batch_size, img_size, img_size, 1)</span></div><div class="line">    <span class="keyword">with</span> tf.variable_scope(<span class="string">"model"</span>):</div><div class="line">        embeddings = build_model(is_training, images, params)  <span class="comment"># 简历模型</span></div><div class="line">    </div><div class="line">    <span class="keyword">if</span> mode == tf.estimator.ModeKeys.PREDICT:     <span class="comment"># 如果是预测阶段，直接返回得到embeddings</span></div><div class="line">        predictions = &#123;<span class="string">'embeddings'</span>: embeddings&#125;</div><div class="line">        <span class="keyword">return</span> tf.estimator.EstimatorSpec(mode=mode, predictions=predictions)</div><div class="line">    </div><div class="line">    <span class="string">'''调用对应的triplet loss'''</span></div><div class="line">    labels = tf.cast(labels, tf.int64)</div><div class="line">    <span class="keyword">if</span> params[<span class="string">'triplet_strategy'</span>] == <span class="string">'batch_all'</span>:</div><div class="line">        loss, fraction = batch_all_triplet_loss(labels, embeddings, margin=params[<span class="string">'margin'</span>], squared=params[<span class="string">'squared'</span>])</div><div class="line">    <span class="keyword">elif</span> params[<span class="string">'triplet_strategy'</span>] == <span class="string">'batch_hard'</span>:</div><div class="line">        loss = batch_hard_triplet_loss(labels, embeddings, margin=params[<span class="string">'margin'</span>], squared=params[<span class="string">'squared'</span>])</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">raise</span> ValueError(<span class="string">"triplet_strategy 配置不正确: &#123;&#125;"</span>.format(params[<span class="string">'triplet_strategy'</span>]))</div><div class="line">    </div><div class="line">    embedding_mean_norm = tf.reduce_mean(tf.norm(embeddings, axis=<span class="number">1</span>))     <span class="comment"># 这里计算了embeddings的二范数的均值 </span></div><div class="line">    tf.summary.scalar(<span class="string">"embedding_mean_norm"</span>, embedding_mean_norm)</div><div class="line">    <span class="keyword">with</span> tf.variable_scope(<span class="string">"metrics"</span>):</div><div class="line">        eval_metric_ops = &#123;<span class="string">'embedding_mean_norm'</span>: tf.metrics.mean(embedding_mean_norm)&#125;</div><div class="line">        <span class="keyword">if</span> params[<span class="string">'triplet_strategy'</span>] == <span class="string">'batch_all'</span>:</div><div class="line">            eval_metric_ops[<span class="string">'fraction_positive_triplets'</span>] = tf.metrics.mean(fraction)</div><div class="line">    <span class="keyword">if</span> mode == tf.estimator.ModeKeys.EVAL:</div><div class="line">        <span class="keyword">return</span> tf.estimator.EstimatorSpec(mode, loss=loss, eval_metric_ops=eval_metric_ops)</div><div class="line">    </div><div class="line">    tf.summary.scalar(<span class="string">'loss'</span>, loss)</div><div class="line">    <span class="keyword">if</span> params[<span class="string">'triplet_strategy'</span>] == <span class="string">"batch_all"</span>:</div><div class="line">        tf.summary.scalar(<span class="string">'fraction_positive_triplets'</span>, fraction)</div><div class="line">    tf.summary.image(<span class="string">'train_image'</span>, images, max_outputs=<span class="number">1</span>)   <span class="comment"># 1代表1个channel</span></div><div class="line">    </div><div class="line">    optimizer = tf.train.AdamOptimizer(learning_rate=params[<span class="string">'learning_rate'</span>])</div><div class="line">    global_step = tf.train.get_global_step()</div><div class="line">    <span class="keyword">if</span> params[<span class="string">'use_batch_norm'</span>]:</div><div class="line">        <span class="string">'''如果使用BN，需要估计batch上的均值和方差，tf.get_collection(tf.GraphKeys.UPDATE_OPS)就可以得到</span></div><div class="line">        tf.control_dependencies计算完之后再进行里面的操作</div><div class="line">        '''</div><div class="line">        <span class="keyword">with</span> tf.control_dependencies(tf.get_collection(tf.GraphKeys.UPDATE_OPS)):</div><div class="line">            train_op = optimizer.minimize(loss, global_step=global_step)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        train_op = optimizer.minimize(loss, global_step=global_step)</div><div class="line">    <span class="keyword">return</span> tf.estimator.EstimatorSpec(mode, loss=loss, train_op=train_op)</div></pre></td></tr></table></figure><h4 id="3-1-3-构建模型，得到embeddings"><a href="#3-1-3-构建模型，得到embeddings" class="headerlink" title="3.1.3 构建模型，得到embeddings"></a>3.1.3 构建模型，得到embeddings</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_model</span><span class="params">(is_training, images, params)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">       建立模型</div><div class="line">       ----------------------------</div><div class="line">       Args：</div><div class="line">          is_training: bool, 是否是训练阶段，可以从mode中判断</div><div class="line">          images：     (batch_size, 28*28*1), 输入mnist数据</div><div class="line">          params:      dict, 一些超参数</div><div class="line">          </div><div class="line">       Returns:</div><div class="line">          out: 输出的embeddings, shape = (batch_size, 64)</div><div class="line">    '''</div><div class="line">    num_channel = params[<span class="string">'num_channels'</span>]</div><div class="line">    bn_momentum = params[<span class="string">'bn_momentum'</span>]</div><div class="line">    channels = [num_channel, num_channel * <span class="number">2</span>]</div><div class="line">    out = images</div><div class="line">    <span class="keyword">for</span> i, c <span class="keyword">in</span> enumerate(channels):</div><div class="line">        <span class="keyword">with</span> tf.variable_scope(<span class="string">"block_&#123;&#125;"</span>.format(i)):</div><div class="line">            out = tf.layers.conv2d(out, c, <span class="number">3</span>, padding=<span class="string">'same'</span>)</div><div class="line">            <span class="keyword">if</span> params[<span class="string">'use_batch_norm'</span>]:</div><div class="line">                out = tf.layers.batch_normalization(out, momentum=bn_momentum, training=is_training)</div><div class="line">            out = tf.nn.relu(out)</div><div class="line">            out = tf.layers.max_pooling2d(out, <span class="number">2</span>, <span class="number">2</span>)</div><div class="line">    <span class="keyword">assert</span> out.shape[<span class="number">1</span>:] == [<span class="number">7</span>, <span class="number">7</span>, num_channel * <span class="number">2</span>]</div><div class="line">    out = tf.reshape(out, [<span class="number">-1</span>, <span class="number">7</span>*<span class="number">7</span>*num_channel*<span class="number">2</span>])</div><div class="line">    <span class="keyword">with</span> tf.variable_scope(<span class="string">"fc_1"</span>):</div><div class="line">        out = tf.layers.dense(out, params[<span class="string">'embedding_size'</span>])</div><div class="line">    <span class="keyword">return</span> out</div></pre></td></tr></table></figure><h3 id="3-2-训练结果"><a href="#3-2-训练结果" class="headerlink" title="3.2 训练结果"></a>3.2 训练结果</h3><h4 id="3-2-1-batch-all"><a href="#3-2-1-batch-all" class="headerlink" title="3.2.1 batch all"></a>3.2.1 batch all</h4><ul><li><code>python  train_with_triplet_loss.py</code></li><li>可以在 <code>tensorboard</code> 中查看<ul><li><code>tensorboard --logdir experiment/model/</code></li></ul></li><li><p>embeddings_mean_norm</p><ul><li>[ 可以看到是上升的，因为我们要学到可分性好的 <code>embeddings</code>， 那么其方差应该是偏大的，均值应该是变大的 ]<br><img src="/assets/blog_images/Triplet-Loss/05_batch_all_embeddings_mean_norm.jpg" alt="embeddings_mean_norm" title="05_batch_all_embeddings_mean_norm"></li></ul></li><li><p>fraction positive</p><ul><li>这个是收敛的，因为随着优化占的比例是越来越少<br><img src="/assets/blog_images/Triplet-Loss/06_batch_all_fraction_positive.jpg" alt="fraction positive" title="06_batch_all_fraction_positive"></li></ul></li><li><p>loss</p><ul><li>注意这里的 <code>loss</code> 一般不是收敛的，因为是计算的 <code>semi-hard</code> 和 <code>hard</code> 的距离均值，因为<strong>每次是先选择出</strong> <code>semi-hard</code> 和 <code>hard</code> 的 <code>triplet</code>, 那么上次优化后的可能就选择不到了，所以 <code>loss</code> 并不会收敛，<code>但是fraction_postive_triplets</code> 是收敛的，因为随着优化占的比例是越来越少的</li></ul></li></ul><p><img src="/assets/blog_images/Triplet-Loss/07_batch_all_loss.jpg" alt="loss" title="07_batch_all_loss"></p><h4 id="3-2-2-batch-hard"><a href="#3-2-2-batch-hard" class="headerlink" title="3.2.2 batch hard"></a>3.2.2 batch hard</h4><ul><li>embeddings mean norm</li></ul><p><img src="/assets/blog_images/Triplet-Loss/09_batch_hard_embeddings_mean_norm.jpg" alt="embeddings mean norm" title="09_batch_hard_embeddings_mean_norm"></p><ul><li>positive and negative distance<ul><li>这里我原以为应该是 <code>negative</code> 应该是增大的，<code>positive</code> 应该是减小的，但实际结果是 <code>positive</code> 也是增大的，因为我们计算 <code>loss</code> 是<code>triplet_loss = tf.maximum(hardest_positive_dist - hardest_negative_dist + margin, 0.0)</code>， 只要 <code>negative</code> 的距离大于 <code>positive + margin</code> 就是 <code>0</code> 了，所以只要满足就行， 用<code>BN</code> 训练的效果可能更好一点。（有什么其他看法的可以交流一下）</li></ul></li></ul><p><img src="/assets/blog_images/Triplet-Loss/10_batch_hard_positive_negative_dis.jpg" alt="positive and negative distance" title="10_batch_hard_positive_negative_dis"></p><ul><li>loss<ul><li><code>batch hard</code> 的 <code>loss</code> 就应该是收敛的了</li></ul></li></ul><p><img src="/assets/blog_images/Triplet-Loss/12_pca.jpg" alt="loss" title="12_pca"></p><h3 id="3-3-可视化embedding"><a href="#3-3-可视化embedding" class="headerlink" title="3.3 可视化embedding"></a>3.3 可视化embedding</h3><ul><li>全部代码： <a href="https://github.com/lawlite19/Blog-Back-Up/blob/master/code/triplet-loss/visualize_embeddings.py" target="_blank" rel="external">点击查看</a></li><li>之前在 <code>tensorflow</code> 工具中使用过： <a href="http://lawlite.me/2017/06/24/Tensorflow%E5%AD%A6%E4%B9%A0-%E5%B7%A5%E5%85%B7%E7%9B%B8%E5%85%B3/#3%E3%80%81%E5%8F%AF%E8%A7%86%E5%8C%96embedding">点击查看</a></li><li>这里将可视化 <code>embeddings</code> 的训练数据都放在 <code>experiment/log</code>文件夹下<ul><li><strong>另外</strong>我使用 <code>tensorflow 1.11</code> 出现问题，这里使用的版本是 <code>tensorflow 1.10</code></li></ul></li><li>加载训练的模型，预测得到embeddings</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">args = parser.parse_args(argv[<span class="number">1</span>:])</div><div class="line"><span class="keyword">with</span> open(args.model_config) <span class="keyword">as</span> f:</div><div class="line">    params = json.load(f)</div><div class="line">tf.logging.info(<span class="string">"创建模型...."</span>)</div><div class="line">config = tf.estimator.RunConfig(model_dir=args.model_dir, tf_random_seed=<span class="number">100</span>)  <span class="comment"># config</span></div><div class="line">cls = tf.estimator.Estimator(model_fn=my_model, config=config, params=params)  <span class="comment"># 建立模型</span></div><div class="line"></div><div class="line">tf.logging.info(<span class="string">"预测...."</span>)</div><div class="line"></div><div class="line">predictions = cls.predict(input_fn=<span class="keyword">lambda</span>: test_input_fn(args.data_dir, params))</div><div class="line">embeddings = np.zeros((<span class="number">10000</span>, params[<span class="string">'embedding_size'</span>]))</div><div class="line"><span class="keyword">for</span> i, p <span class="keyword">in</span> enumerate(predictions):</div><div class="line">    embeddings[i] = p[<span class="string">'embeddings'</span>]</div><div class="line">tf.logging.info(<span class="string">"embeddings shape: &#123;&#125;"</span>.format(embeddings.shape))</div></pre></td></tr></table></figure><ul><li>获得label数据，保存为 <code>metadata.tsv</code>文件</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line">    <span class="comment"># Obtain the test labels</span></div><div class="line">    dataset = mnist_dataset.test(args.data_dir)</div><div class="line">    dataset = dataset.map(<span class="keyword">lambda</span> img, lab: lab)</div><div class="line">    dataset = dataset.batch(<span class="number">10000</span>)</div><div class="line">    labels_tensor = dataset.make_one_shot_iterator().get_next()</div><div class="line">    labels = sess.run(labels_tensor)   </div><div class="line"></div><div class="line">np.savetxt(os.path.join(args.log_dir, <span class="string">'metadata.tsv'</span>), labels, fmt=<span class="string">'%d'</span>)</div></pre></td></tr></table></figure><ul><li>可视化<code>embedding</code></li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">shutil.copy(args.sprite_filename, args.log_dir)</div><div class="line"><span class="string">'''可视化embeddings'''</span></div><div class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line">    <span class="comment"># 1. Variable</span></div><div class="line">    embedding_var = tf.Variable(embeddings, name=<span class="string">"mnist_embeddings"</span>)</div><div class="line">    <span class="comment">#tf.global_variables_initializer().run()  # 不需要</span></div><div class="line">    </div><div class="line">    <span class="comment"># 2. 保存到文件中，embeddings.ckpt</span></div><div class="line">    saver = tf.train.Saver()</div><div class="line">    sess.run(embedding_var.initializer)</div><div class="line">    saver.save(sess, os.path.join(args.log_dir, <span class="string">'embeddings.ckpt'</span>))</div><div class="line">    </div><div class="line">    <span class="comment"># 3. 关联metadata.tsv, 和mnist_10k_sprite.png</span></div><div class="line">    summary_writer = tf.summary.FileWriter(args.log_dir)</div><div class="line">    config = projector.ProjectorConfig()</div><div class="line">    embedding = config.embeddings.add()</div><div class="line">    embedding.tensor_name = embedding_var.name</div><div class="line">    embedding.metadata_path = <span class="string">'metadata.tsv'</span></div><div class="line">    embedding.sprite.image_path = <span class="string">'mnist_10k_sprite.png'</span></div><div class="line">    embedding.sprite.single_image_dim.extend([<span class="number">28</span>, <span class="number">28</span>])</div><div class="line">    projector.visualize_embeddings(summary_writer, config)</div></pre></td></tr></table></figure><h4 id="3-3-1-batch-all"><a href="#3-3-1-batch-all" class="headerlink" title="3.3.1 batch all"></a>3.3.1 batch all</h4><ul><li><code>PCA</code> 结果</li></ul><p><img src="/assets/blog_images/Triplet-Loss/08_batch_all_embeddings_pca.jpg" alt="batch all embeddings pca" title="08_batch_all_embeddings_pca"></p><h4 id="3-3-2-batch-hard"><a href="#3-3-2-batch-hard" class="headerlink" title="3.3.2 batch hard"></a>3.3.2 batch hard</h4><p><img src="/assets/blog_images/Triplet-Loss/11_batch_hard_embedings_pca.jpg" alt="batch hard embeddings pca" title="11_batch_hard_embedings_pca"></p><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul><li><a href="https://omoindrot.github.io/triplet-loss#batch-hard-strategy" target="_blank" rel="external">https://omoindrot.github.io/triplet-loss#batch-hard-strategy</a></li><li><a href="https://github.com/omoindrot/tensorflow-triplet-loss" target="_blank" rel="external">https://github.com/omoindrot/tensorflow-triplet-loss</a></li><li><a href="https://github.com/lawlite19/Blog-Back-Up" target="_blank" rel="external">https://github.com/lawlite19/Blog-Back-Up</a></li><li><a href="https://github.com/omoindrot/tensorflow-triplet-loss/issues/6" target="_blank" rel="external">https://github.com/omoindrot/tensorflow-triplet-loss/issues/6</a></li><li>FaceNet：<a href="https://arxiv.org/pdf/1503.03832.pdf" target="_blank" rel="external">https://arxiv.org/pdf/1503.03832.pdf</a></li><li>Person Re-Identification： <a href="https://arxiv.org/pdf/1703.07737.pdf" target="_blank" rel="external">https://arxiv.org/pdf/1703.07737.pdf</a></li></ul>]]></content>
     
@@ -71,16 +71,16 @@
     </summary>
     
     
-      <category term="DeepLearning" scheme="http://lawlite.me/tags/DeepLearning/"/>
+      <category term="DeepLearning" scheme="http://lawlite.cn/tags/DeepLearning/"/>
     
-      <category term="Tensorflow" scheme="http://lawlite.me/tags/Tensorflow/"/>
+      <category term="Tensorflow" scheme="http://lawlite.cn/tags/Tensorflow/"/>
     
   </entry>
   
   <entry>
     <title>Tensorflow高级API</title>
-    <link href="http://lawlite.me/2018/05/31/Tensorflow%E9%AB%98%E7%BA%A7API/"/>
-    <id>http://lawlite.me/2018/05/31/Tensorflow高级API/</id>
+    <link href="http://lawlite.cn/2018/05/31/Tensorflow%E9%AB%98%E7%BA%A7API/"/>
+    <id>http://lawlite.cn/2018/05/31/Tensorflow高级API/</id>
     <published>2018-05-31T02:43:08.000Z</published>
     <updated>2018-10-16T06:15:36.747Z</updated>
     
@@ -96,14 +96,14 @@
     </summary>
     
     
-      <category term="Tensorflow" scheme="http://lawlite.me/tags/Tensorflow/"/>
+      <category term="Tensorflow" scheme="http://lawlite.cn/tags/Tensorflow/"/>
     
   </entry>
   
   <entry>
     <title>风格迁移 Style transfer</title>
-    <link href="http://lawlite.me/2018/02/28/%E9%A3%8E%E6%A0%BC%E8%BF%81%E7%A7%BBStyle-transfer/"/>
-    <id>http://lawlite.me/2018/02/28/风格迁移Style-transfer/</id>
+    <link href="http://lawlite.cn/2018/02/28/%E9%A3%8E%E6%A0%BC%E8%BF%81%E7%A7%BBStyle-transfer/"/>
+    <id>http://lawlite.cn/2018/02/28/风格迁移Style-transfer/</id>
     <published>2018-02-28T11:30:05.000Z</published>
     <updated>2018-03-03T07:07:34.000Z</updated>
     
@@ -122,16 +122,16 @@
     </summary>
     
     
-      <category term="Style transfer" scheme="http://lawlite.me/tags/Style-transfer/"/>
+      <category term="Style transfer" scheme="http://lawlite.cn/tags/Style-transfer/"/>
     
-      <category term="Keras" scheme="http://lawlite.me/tags/Keras/"/>
+      <category term="Keras" scheme="http://lawlite.cn/tags/Keras/"/>
     
   </entry>
   
   <entry>
     <title>阿里云GPU服务器上Torch安装与使用</title>
-    <link href="http://lawlite.me/2017/12/25/%E9%98%BF%E9%87%8C%E4%BA%91GPU%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8ATorch%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/"/>
-    <id>http://lawlite.me/2017/12/25/阿里云GPU服务器上Torch安装与使用/</id>
+    <link href="http://lawlite.cn/2017/12/25/%E9%98%BF%E9%87%8C%E4%BA%91GPU%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8ATorch%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/"/>
+    <id>http://lawlite.cn/2017/12/25/阿里云GPU服务器上Torch安装与使用/</id>
     <published>2017-12-25T01:35:30.000Z</published>
     <updated>2017-12-28T09:12:19.000Z</updated>
     
@@ -154,20 +154,20 @@
     </summary>
     
     
-      <category term="GPU" scheme="http://lawlite.me/tags/GPU/"/>
+      <category term="Cudnn" scheme="http://lawlite.cn/tags/Cudnn/"/>
     
-      <category term="Torch" scheme="http://lawlite.me/tags/Torch/"/>
+      <category term="GPU" scheme="http://lawlite.cn/tags/GPU/"/>
     
-      <category term="Cudnn" scheme="http://lawlite.me/tags/Cudnn/"/>
+      <category term="Torch" scheme="http://lawlite.cn/tags/Torch/"/>
     
-      <category term="阿里云" scheme="http://lawlite.me/tags/%E9%98%BF%E9%87%8C%E4%BA%91/"/>
+      <category term="阿里云" scheme="http://lawlite.cn/tags/%E9%98%BF%E9%87%8C%E4%BA%91/"/>
     
   </entry>
   
   <entry>
     <title>论文记录_U-Net:Convolutional Networks for Biomedical Image Segmentation</title>
-    <link href="http://lawlite.me/2017/10/18/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-U-Net-Convolutional-Networks-for-Biomedical-Image-Segmentation/"/>
-    <id>http://lawlite.me/2017/10/18/论文记录-U-Net-Convolutional-Networks-for-Biomedical-Image-Segmentation/</id>
+    <link href="http://lawlite.cn/2017/10/18/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-U-Net-Convolutional-Networks-for-Biomedical-Image-Segmentation/"/>
+    <id>http://lawlite.cn/2017/10/18/论文记录-U-Net-Convolutional-Networks-for-Biomedical-Image-Segmentation/</id>
     <published>2017-10-18T11:30:05.000Z</published>
     <updated>2017-10-19T09:28:32.000Z</updated>
     
@@ -196,16 +196,16 @@
     </summary>
     
     
-      <category term="论文记录" scheme="http://lawlite.me/tags/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95/"/>
+      <category term="论文记录" scheme="http://lawlite.cn/tags/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95/"/>
     
-      <category term="图像分割" scheme="http://lawlite.me/tags/%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2/"/>
+      <category term="图像分割" scheme="http://lawlite.cn/tags/%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2/"/>
     
   </entry>
   
   <entry>
     <title>论文记录_MobileNets Efficient Convolutional Neural Networks for Mobile Vision Application</title>
-    <link href="http://lawlite.me/2017/09/12/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Application/"/>
-    <id>http://lawlite.me/2017/09/12/论文记录-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Application/</id>
+    <link href="http://lawlite.cn/2017/09/12/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Application/"/>
+    <id>http://lawlite.cn/2017/09/12/论文记录-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Application/</id>
     <published>2017-09-12T03:34:17.000Z</published>
     <updated>2017-09-13T11:50:19.000Z</updated>
     
@@ -230,16 +230,16 @@
     </summary>
     
     
-      <category term="Paper阅读记录" scheme="http://lawlite.me/tags/Paper%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/"/>
+      <category term="Paper阅读记录" scheme="http://lawlite.cn/tags/Paper%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/"/>
     
-      <category term="ModelCompression" scheme="http://lawlite.me/tags/ModelCompression/"/>
+      <category term="ModelCompression" scheme="http://lawlite.cn/tags/ModelCompression/"/>
     
   </entry>
   
   <entry>
     <title>论文记录-Pruning Filters For Efficient ConvNets</title>
-    <link href="http://lawlite.me/2017/09/10/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-PruningFiltersForEfficientConvNets/"/>
-    <id>http://lawlite.me/2017/09/10/论文记录-PruningFiltersForEfficientConvNets/</id>
+    <link href="http://lawlite.cn/2017/09/10/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-PruningFiltersForEfficientConvNets/"/>
+    <id>http://lawlite.cn/2017/09/10/论文记录-PruningFiltersForEfficientConvNets/</id>
     <published>2017-09-10T02:32:12.000Z</published>
     <updated>2017-09-12T03:38:29.000Z</updated>
     
@@ -256,16 +256,16 @@
     </summary>
     
     
-      <category term="Paper阅读记录" scheme="http://lawlite.me/tags/Paper%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/"/>
+      <category term="Paper阅读记录" scheme="http://lawlite.cn/tags/Paper%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/"/>
     
-      <category term="ModelCompression" scheme="http://lawlite.me/tags/ModelCompression/"/>
+      <category term="ModelCompression" scheme="http://lawlite.cn/tags/ModelCompression/"/>
     
   </entry>
   
   <entry>
     <title>论文记录-Deep Compression:Compressing DeepNeural Networks With Pruning, Trained Quantization And Huffman Coding</title>
-    <link href="http://lawlite.me/2017/09/07/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-DeepCompression-CompressingDeepNeuralNetworksWithPruning-TrainedQuantizationAndHuffmanCoding/"/>
-    <id>http://lawlite.me/2017/09/07/论文记录-DeepCompression-CompressingDeepNeuralNetworksWithPruning-TrainedQuantizationAndHuffmanCoding/</id>
+    <link href="http://lawlite.cn/2017/09/07/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-DeepCompression-CompressingDeepNeuralNetworksWithPruning-TrainedQuantizationAndHuffmanCoding/"/>
+    <id>http://lawlite.cn/2017/09/07/论文记录-DeepCompression-CompressingDeepNeuralNetworksWithPruning-TrainedQuantizationAndHuffmanCoding/</id>
     <published>2017-09-07T02:43:52.000Z</published>
     <updated>2017-09-11T06:40:04.000Z</updated>
     
@@ -283,16 +283,16 @@
     </summary>
     
     
-      <category term="Paper阅读记录" scheme="http://lawlite.me/tags/Paper%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/"/>
+      <category term="Paper阅读记录" scheme="http://lawlite.cn/tags/Paper%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/"/>
     
-      <category term="ModelCompression" scheme="http://lawlite.me/tags/ModelCompression/"/>
+      <category term="ModelCompression" scheme="http://lawlite.cn/tags/ModelCompression/"/>
     
   </entry>
   
   <entry>
     <title>R语言学习</title>
-    <link href="http://lawlite.me/2017/06/30/R%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/"/>
-    <id>http://lawlite.me/2017/06/30/R语言学习/</id>
+    <link href="http://lawlite.cn/2017/06/30/R%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://lawlite.cn/2017/06/30/R语言学习/</id>
     <published>2017-06-30T08:48:15.000Z</published>
     <updated>2017-07-01T12:24:11.000Z</updated>
     
@@ -314,14 +314,14 @@
     </summary>
     
     
-      <category term="R" scheme="http://lawlite.me/tags/R/"/>
+      <category term="R" scheme="http://lawlite.cn/tags/R/"/>
     
   </entry>
   
   <entry>
     <title>Tensorflow学习-工具相关</title>
-    <link href="http://lawlite.me/2017/06/24/Tensorflow%E5%AD%A6%E4%B9%A0-%E5%B7%A5%E5%85%B7%E7%9B%B8%E5%85%B3/"/>
-    <id>http://lawlite.me/2017/06/24/Tensorflow学习-工具相关/</id>
+    <link href="http://lawlite.cn/2017/06/24/Tensorflow%E5%AD%A6%E4%B9%A0-%E5%B7%A5%E5%85%B7%E7%9B%B8%E5%85%B3/"/>
+    <id>http://lawlite.cn/2017/06/24/Tensorflow学习-工具相关/</id>
     <published>2017-06-24T11:30:05.000Z</published>
     <updated>2018-10-29T08:34:24.602Z</updated>
     
@@ -343,14 +343,14 @@
     </summary>
     
     
-      <category term="Tensorflow" scheme="http://lawlite.me/tags/Tensorflow/"/>
+      <category term="Tensorflow" scheme="http://lawlite.cn/tags/Tensorflow/"/>
     
   </entry>
   
   <entry>
     <title>（Unfinished）RNN-循环神经网络之LSTM和GRU-04介绍及推导</title>
-    <link href="http://lawlite.me/2017/06/21/RNN-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B9%8BLSTM%E5%92%8CGRU-04%E4%BB%8B%E7%BB%8D%E5%8F%8A%E6%8E%A8%E5%AF%BC/"/>
-    <id>http://lawlite.me/2017/06/21/RNN-循环神经网络之LSTM和GRU-04介绍及推导/</id>
+    <link href="http://lawlite.cn/2017/06/21/RNN-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B9%8BLSTM%E5%92%8CGRU-04%E4%BB%8B%E7%BB%8D%E5%8F%8A%E6%8E%A8%E5%AF%BC/"/>
+    <id>http://lawlite.cn/2017/06/21/RNN-循环神经网络之LSTM和GRU-04介绍及推导/</id>
     <published>2017-06-21T14:45:44.000Z</published>
     <updated>2017-06-25T08:49:42.000Z</updated>
     
@@ -369,22 +369,22 @@
     </summary>
     
     
-      <category term="Python" scheme="http://lawlite.me/tags/Python/"/>
+      <category term="Python" scheme="http://lawlite.cn/tags/Python/"/>
     
-      <category term="DeepLearning" scheme="http://lawlite.me/tags/DeepLearning/"/>
+      <category term="DeepLearning" scheme="http://lawlite.cn/tags/DeepLearning/"/>
     
-      <category term="RNN" scheme="http://lawlite.me/tags/RNN/"/>
+      <category term="RNN" scheme="http://lawlite.cn/tags/RNN/"/>
     
-      <category term="LSTM" scheme="http://lawlite.me/tags/LSTM/"/>
+      <category term="LSTM" scheme="http://lawlite.cn/tags/LSTM/"/>
     
-      <category term="GRU" scheme="http://lawlite.me/tags/GRU/"/>
+      <category term="GRU" scheme="http://lawlite.cn/tags/GRU/"/>
     
   </entry>
   
   <entry>
     <title>RNN-LSTM循环神经网络-03Tensorflow进阶实现</title>
-    <link href="http://lawlite.me/2017/06/21/RNN-LSTM%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-03Tensorflow%E8%BF%9B%E9%98%B6%E5%AE%9E%E7%8E%B0/"/>
-    <id>http://lawlite.me/2017/06/21/RNN-LSTM循环神经网络-03Tensorflow进阶实现/</id>
+    <link href="http://lawlite.cn/2017/06/21/RNN-LSTM%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-03Tensorflow%E8%BF%9B%E9%98%B6%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://lawlite.cn/2017/06/21/RNN-LSTM循环神经网络-03Tensorflow进阶实现/</id>
     <published>2017-06-21T08:54:28.000Z</published>
     <updated>2017-06-25T08:49:18.000Z</updated>
     
@@ -408,20 +408,20 @@
     </summary>
     
     
-      <category term="Python" scheme="http://lawlite.me/tags/Python/"/>
+      <category term="Python" scheme="http://lawlite.cn/tags/Python/"/>
     
-      <category term="DeepLearning" scheme="http://lawlite.me/tags/DeepLearning/"/>
+      <category term="DeepLearning" scheme="http://lawlite.cn/tags/DeepLearning/"/>
     
-      <category term="RNN" scheme="http://lawlite.me/tags/RNN/"/>
+      <category term="RNN" scheme="http://lawlite.cn/tags/RNN/"/>
     
-      <category term="LSTM" scheme="http://lawlite.me/tags/LSTM/"/>
+      <category term="LSTM" scheme="http://lawlite.cn/tags/LSTM/"/>
     
   </entry>
   
   <entry>
     <title>RNN-循环神经网络-02Tensorflow中的实现</title>
-    <link href="http://lawlite.me/2017/06/16/RNN-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-02Tensorflow%E4%B8%AD%E7%9A%84%E5%AE%9E%E7%8E%B0/"/>
-    <id>http://lawlite.me/2017/06/16/RNN-循环神经网络-02Tensorflow中的实现/</id>
+    <link href="http://lawlite.cn/2017/06/16/RNN-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-02Tensorflow%E4%B8%AD%E7%9A%84%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://lawlite.cn/2017/06/16/RNN-循环神经网络-02Tensorflow中的实现/</id>
     <published>2017-06-16T12:59:28.000Z</published>
     <updated>2017-06-25T08:49:26.000Z</updated>
     
@@ -444,18 +444,18 @@
     </summary>
     
     
-      <category term="Python" scheme="http://lawlite.me/tags/Python/"/>
+      <category term="Python" scheme="http://lawlite.cn/tags/Python/"/>
     
-      <category term="DeepLearning" scheme="http://lawlite.me/tags/DeepLearning/"/>
+      <category term="DeepLearning" scheme="http://lawlite.cn/tags/DeepLearning/"/>
     
-      <category term="RNN" scheme="http://lawlite.me/tags/RNN/"/>
+      <category term="RNN" scheme="http://lawlite.cn/tags/RNN/"/>
     
   </entry>
   
   <entry>
     <title>RNN-循环神经网络和LSTM_01基础</title>
-    <link href="http://lawlite.me/2017/06/14/RNN-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8CLSTM-01%E5%9F%BA%E7%A1%80/"/>
-    <id>http://lawlite.me/2017/06/14/RNN-循环神经网络和LSTM-01基础/</id>
+    <link href="http://lawlite.cn/2017/06/14/RNN-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8CLSTM-01%E5%9F%BA%E7%A1%80/"/>
+    <id>http://lawlite.cn/2017/06/14/RNN-循环神经网络和LSTM-01基础/</id>
     <published>2017-06-14T15:42:32.000Z</published>
     <updated>2017-06-25T08:49:35.000Z</updated>
     
@@ -477,18 +477,18 @@
     </summary>
     
     
-      <category term="DeepLearning" scheme="http://lawlite.me/tags/DeepLearning/"/>
+      <category term="DeepLearning" scheme="http://lawlite.cn/tags/DeepLearning/"/>
     
-      <category term="RNN" scheme="http://lawlite.me/tags/RNN/"/>
+      <category term="RNN" scheme="http://lawlite.cn/tags/RNN/"/>
     
-      <category term="LSTM" scheme="http://lawlite.me/tags/LSTM/"/>
+      <category term="LSTM" scheme="http://lawlite.cn/tags/LSTM/"/>
     
   </entry>
   
   <entry>
     <title>Seaborn绘图</title>
-    <link href="http://lawlite.me/2017/06/14/Seaborn%E7%BB%98%E5%9B%BE/"/>
-    <id>http://lawlite.me/2017/06/14/Seaborn绘图/</id>
+    <link href="http://lawlite.cn/2017/06/14/Seaborn%E7%BB%98%E5%9B%BE/"/>
+    <id>http://lawlite.cn/2017/06/14/Seaborn绘图/</id>
     <published>2017-06-14T13:25:43.000Z</published>
     <updated>2017-06-25T08:49:50.000Z</updated>
     
@@ -510,16 +510,16 @@
     </summary>
     
     
-      <category term="Python" scheme="http://lawlite.me/tags/Python/"/>
+      <category term="Python" scheme="http://lawlite.cn/tags/Python/"/>
     
-      <category term="可视化" scheme="http://lawlite.me/tags/%E5%8F%AF%E8%A7%86%E5%8C%96/"/>
+      <category term="可视化" scheme="http://lawlite.cn/tags/%E5%8F%AF%E8%A7%86%E5%8C%96/"/>
     
   </entry>
   
   <entry>
     <title>PyTorch学习</title>
-    <link href="http://lawlite.me/2017/05/10/PyTorch/"/>
-    <id>http://lawlite.me/2017/05/10/PyTorch/</id>
+    <link href="http://lawlite.cn/2017/05/10/PyTorch/"/>
+    <id>http://lawlite.cn/2017/05/10/PyTorch/</id>
     <published>2017-05-10T11:30:05.000Z</published>
     <updated>2017-07-06T08:50:11.000Z</updated>
     
@@ -541,16 +541,16 @@
     </summary>
     
     
-      <category term="Python" scheme="http://lawlite.me/tags/Python/"/>
+      <category term="Python" scheme="http://lawlite.cn/tags/Python/"/>
     
-      <category term="PyTorch" scheme="http://lawlite.me/tags/PyTorch/"/>
+      <category term="PyTorch" scheme="http://lawlite.cn/tags/PyTorch/"/>
     
   </entry>
   
   <entry>
     <title>Hexo+yilia主题实现文章目录和添加视频</title>
-    <link href="http://lawlite.me/2017/04/17/Hexo-yilia%E4%B8%BB%E9%A2%98%E5%AE%9E%E7%8E%B0%E6%96%87%E7%AB%A0%E7%9B%AE%E5%BD%95%E5%92%8C%E6%B7%BB%E5%8A%A0%E8%A7%86%E9%A2%91/"/>
-    <id>http://lawlite.me/2017/04/17/Hexo-yilia主题实现文章目录和添加视频/</id>
+    <link href="http://lawlite.cn/2017/04/17/Hexo-yilia%E4%B8%BB%E9%A2%98%E5%AE%9E%E7%8E%B0%E6%96%87%E7%AB%A0%E7%9B%AE%E5%BD%95%E5%92%8C%E6%B7%BB%E5%8A%A0%E8%A7%86%E9%A2%91/"/>
+    <id>http://lawlite.cn/2017/04/17/Hexo-yilia主题实现文章目录和添加视频/</id>
     <published>2017-04-17T07:00:21.000Z</published>
     <updated>2017-09-08T10:40:44.000Z</updated>
     
@@ -574,16 +574,16 @@
     </summary>
     
     
-      <category term="Github" scheme="http://lawlite.me/tags/Github/"/>
+      <category term="Github" scheme="http://lawlite.cn/tags/Github/"/>
     
-      <category term="Hexo" scheme="http://lawlite.me/tags/Hexo/"/>
+      <category term="Hexo" scheme="http://lawlite.cn/tags/Hexo/"/>
     
   </entry>
   
   <entry>
     <title>Hexo+Github实现相册功能</title>
-    <link href="http://lawlite.me/2017/04/13/Hexo-Github%E5%AE%9E%E7%8E%B0%E7%9B%B8%E5%86%8C%E5%8A%9F%E8%83%BD/"/>
-    <id>http://lawlite.me/2017/04/13/Hexo-Github实现相册功能/</id>
+    <link href="http://lawlite.cn/2017/04/13/Hexo-Github%E5%AE%9E%E7%8E%B0%E7%9B%B8%E5%86%8C%E5%8A%9F%E8%83%BD/"/>
+    <id>http://lawlite.cn/2017/04/13/Hexo-Github实现相册功能/</id>
     <published>2017-04-13T12:27:03.000Z</published>
     <updated>2017-06-25T08:48:03.000Z</updated>
     
@@ -607,16 +607,16 @@
     </summary>
     
     
-      <category term="Github" scheme="http://lawlite.me/tags/Github/"/>
+      <category term="Github" scheme="http://lawlite.cn/tags/Github/"/>
     
-      <category term="Hexo" scheme="http://lawlite.me/tags/Hexo/"/>
+      <category term="Hexo" scheme="http://lawlite.cn/tags/Hexo/"/>
     
   </entry>
   
   <entry>
     <title>Hexo+Github搭建自己的博客</title>
-    <link href="http://lawlite.me/2017/04/10/Hexo-Github%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://lawlite.me/2017/04/10/Hexo-Github搭建自己的博客/</id>
+    <link href="http://lawlite.cn/2017/04/10/Hexo-Github%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://lawlite.cn/2017/04/10/Hexo-Github搭建自己的博客/</id>
     <published>2017-04-10T14:49:15.000Z</published>
     <updated>2017-09-08T10:40:29.000Z</updated>
     
@@ -647,16 +647,16 @@
     </summary>
     
     
-      <category term="Github" scheme="http://lawlite.me/tags/Github/"/>
+      <category term="Github" scheme="http://lawlite.cn/tags/Github/"/>
     
-      <category term="Hexo" scheme="http://lawlite.me/tags/Hexo/"/>
+      <category term="Hexo" scheme="http://lawlite.cn/tags/Hexo/"/>
     
   </entry>
   
   <entry>
     <title>致火影</title>
-    <link href="http://lawlite.me/2017/03/24/%E8%87%B4%E7%81%AB%E5%BD%B1/"/>
-    <id>http://lawlite.me/2017/03/24/致火影/</id>
+    <link href="http://lawlite.cn/2017/03/24/%E8%87%B4%E7%81%AB%E5%BD%B1/"/>
+    <id>http://lawlite.cn/2017/03/24/致火影/</id>
     <published>2017-03-24T13:57:12.000Z</published>
     <updated>2017-06-25T09:17:26.000Z</updated>
     
@@ -670,14 +670,14 @@
     </summary>
     
     
-      <category term="随笔" scheme="http://lawlite.me/tags/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="http://lawlite.cn/tags/%E9%9A%8F%E7%AC%94/"/>
     
   </entry>
   
   <entry>
     <title>Keras学习</title>
-    <link href="http://lawlite.me/2017/02/14/Keras%E5%AD%A6%E4%B9%A0/"/>
-    <id>http://lawlite.me/2017/02/14/Keras学习/</id>
+    <link href="http://lawlite.cn/2017/02/14/Keras%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://lawlite.cn/2017/02/14/Keras学习/</id>
     <published>2017-02-14T12:25:43.000Z</published>
     <updated>2017-06-25T08:48:43.000Z</updated>
     
@@ -695,16 +695,16 @@
     </summary>
     
     
-      <category term="Python" scheme="http://lawlite.me/tags/Python/"/>
+      <category term="Python" scheme="http://lawlite.cn/tags/Python/"/>
     
-      <category term="DeepLearning" scheme="http://lawlite.me/tags/DeepLearning/"/>
+      <category term="DeepLearning" scheme="http://lawlite.cn/tags/DeepLearning/"/>
     
   </entry>
   
   <entry>
     <title>Theano学习</title>
-    <link href="http://lawlite.me/2017/02/10/Theano%E5%AD%A6%E4%B9%A0/"/>
-    <id>http://lawlite.me/2017/02/10/Theano学习/</id>
+    <link href="http://lawlite.cn/2017/02/10/Theano%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://lawlite.cn/2017/02/10/Theano学习/</id>
     <published>2017-02-10T13:25:43.000Z</published>
     <updated>2017-06-25T08:50:20.000Z</updated>
     
@@ -728,16 +728,16 @@
     </summary>
     
     
-      <category term="Python" scheme="http://lawlite.me/tags/Python/"/>
+      <category term="Python" scheme="http://lawlite.cn/tags/Python/"/>
     
-      <category term="DeepLearning" scheme="http://lawlite.me/tags/DeepLearning/"/>
+      <category term="DeepLearning" scheme="http://lawlite.cn/tags/DeepLearning/"/>
     
   </entry>
   
   <entry>
     <title>论文记录-Batch-Normalization</title>
-    <link href="http://lawlite.me/2017/01/09/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-Batch-Normalization/"/>
-    <id>http://lawlite.me/2017/01/09/论文记录-Batch-Normalization/</id>
+    <link href="http://lawlite.cn/2017/01/09/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-Batch-Normalization/"/>
+    <id>http://lawlite.cn/2017/01/09/论文记录-Batch-Normalization/</id>
     <published>2017-01-09T13:37:38.000Z</published>
     <updated>2017-06-25T08:50:34.000Z</updated>
     
@@ -757,16 +757,16 @@
     </summary>
     
     
-      <category term="DeepLearning" scheme="http://lawlite.me/tags/DeepLearning/"/>
+      <category term="DeepLearning" scheme="http://lawlite.cn/tags/DeepLearning/"/>
     
-      <category term="Paper阅读记录" scheme="http://lawlite.me/tags/Paper%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/"/>
+      <category term="Paper阅读记录" scheme="http://lawlite.cn/tags/Paper%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/"/>
     
   </entry>
   
   <entry>
     <title>论文记录-Relu激励函数权重初始化</title>
-    <link href="http://lawlite.me/2017/01/09/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-Relu%E6%BF%80%E5%8A%B1%E5%87%BD%E6%95%B0%E6%9D%83%E9%87%8D%E5%88%9D%E5%A7%8B%E5%8C%96/"/>
-    <id>http://lawlite.me/2017/01/09/论文记录-Relu激励函数权重初始化/</id>
+    <link href="http://lawlite.cn/2017/01/09/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-Relu%E6%BF%80%E5%8A%B1%E5%87%BD%E6%95%B0%E6%9D%83%E9%87%8D%E5%88%9D%E5%A7%8B%E5%8C%96/"/>
+    <id>http://lawlite.cn/2017/01/09/论文记录-Relu激励函数权重初始化/</id>
     <published>2017-01-09T07:20:00.000Z</published>
     <updated>2018-10-19T02:44:38.935Z</updated>
     
@@ -783,16 +783,16 @@
     </summary>
     
     
-      <category term="DeepLearning" scheme="http://lawlite.me/tags/DeepLearning/"/>
+      <category term="DeepLearning" scheme="http://lawlite.cn/tags/DeepLearning/"/>
     
-      <category term="Paper阅读记录" scheme="http://lawlite.me/tags/Paper%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/"/>
+      <category term="Paper阅读记录" scheme="http://lawlite.cn/tags/Paper%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/"/>
     
   </entry>
   
   <entry>
     <title>Python机器学习</title>
-    <link href="http://lawlite.me/2017/01/08/Python%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
-    <id>http://lawlite.me/2017/01/08/Python机器学习/</id>
+    <link href="http://lawlite.cn/2017/01/08/Python%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://lawlite.cn/2017/01/08/Python机器学习/</id>
     <published>2017-01-08T15:01:58.000Z</published>
     <updated>2017-06-25T08:48:51.000Z</updated>
     
@@ -816,16 +816,16 @@
     </summary>
     
     
-      <category term="Python" scheme="http://lawlite.me/tags/Python/"/>
+      <category term="Python" scheme="http://lawlite.cn/tags/Python/"/>
     
-      <category term="机器学习" scheme="http://lawlite.me/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+      <category term="机器学习" scheme="http://lawlite.cn/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title>论文记录-UnderstandingTheDifficultyOfTrainingDeepFeedforwardNeuralNetworks</title>
-    <link href="http://lawlite.me/2016/12/20/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-UnderstandingTheDifficultyOfTrainingDeepFeedforwardNeuralNetworks/"/>
-    <id>http://lawlite.me/2016/12/20/论文记录-UnderstandingTheDifficultyOfTrainingDeepFeedforwardNeuralNetworks/</id>
+    <link href="http://lawlite.cn/2016/12/20/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-UnderstandingTheDifficultyOfTrainingDeepFeedforwardNeuralNetworks/"/>
+    <id>http://lawlite.cn/2016/12/20/论文记录-UnderstandingTheDifficultyOfTrainingDeepFeedforwardNeuralNetworks/</id>
     <published>2016-12-20T11:03:24.000Z</published>
     <updated>2017-06-25T08:50:53.000Z</updated>
     
@@ -844,16 +844,16 @@
     </summary>
     
     
-      <category term="DeepLearning" scheme="http://lawlite.me/tags/DeepLearning/"/>
+      <category term="DeepLearning" scheme="http://lawlite.cn/tags/DeepLearning/"/>
     
-      <category term="Paper阅读记录" scheme="http://lawlite.me/tags/Paper%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/"/>
+      <category term="Paper阅读记录" scheme="http://lawlite.cn/tags/Paper%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/"/>
     
   </entry>
   
   <entry>
     <title>Tensorflow学习</title>
-    <link href="http://lawlite.me/2016/12/08/Tensorflow%E5%AD%A6%E4%B9%A0/"/>
-    <id>http://lawlite.me/2016/12/08/Tensorflow学习/</id>
+    <link href="http://lawlite.cn/2016/12/08/Tensorflow%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://lawlite.cn/2016/12/08/Tensorflow学习/</id>
     <published>2016-12-08T08:07:33.000Z</published>
     <updated>2017-06-25T08:50:03.000Z</updated>
     
@@ -869,16 +869,16 @@
     </summary>
     
     
-      <category term="DeepLearning" scheme="http://lawlite.me/tags/DeepLearning/"/>
+      <category term="DeepLearning" scheme="http://lawlite.cn/tags/DeepLearning/"/>
     
-      <category term="Tensorflow" scheme="http://lawlite.me/tags/Tensorflow/"/>
+      <category term="Tensorflow" scheme="http://lawlite.cn/tags/Tensorflow/"/>
     
   </entry>
   
   <entry>
     <title>Python科学计算</title>
-    <link href="http://lawlite.me/2016/11/09/Python%E7%A7%91%E5%AD%A6%E8%AE%A1%E7%AE%97/"/>
-    <id>http://lawlite.me/2016/11/09/Python科学计算/</id>
+    <link href="http://lawlite.cn/2016/11/09/Python%E7%A7%91%E5%AD%A6%E8%AE%A1%E7%AE%97/"/>
+    <id>http://lawlite.cn/2016/11/09/Python科学计算/</id>
     <published>2016-11-09T14:25:43.000Z</published>
     <updated>2017-06-25T08:49:02.000Z</updated>
     
@@ -896,16 +896,16 @@
     </summary>
     
     
-      <category term="Python" scheme="http://lawlite.me/tags/Python/"/>
+      <category term="Python" scheme="http://lawlite.cn/tags/Python/"/>
     
-      <category term="机器学习" scheme="http://lawlite.me/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+      <category term="机器学习" scheme="http://lawlite.cn/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title>搭建自己的VPN</title>
-    <link href="http://lawlite.me/2016/11/05/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84VPN/"/>
-    <id>http://lawlite.me/2016/11/05/搭建自己的VPN/</id>
+    <link href="http://lawlite.cn/2016/11/05/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84VPN/"/>
+    <id>http://lawlite.cn/2016/11/05/搭建自己的VPN/</id>
     <published>2016-11-05T09:33:50.000Z</published>
     <updated>2017-06-25T08:50:27.000Z</updated>
     
@@ -920,14 +920,14 @@
     </summary>
     
     
-      <category term="翻墙" scheme="http://lawlite.me/tags/%E7%BF%BB%E5%A2%99/"/>
+      <category term="翻墙" scheme="http://lawlite.cn/tags/%E7%BF%BB%E5%A2%99/"/>
     
   </entry>
   
   <entry>
     <title>Scrapy爬虫框架模板</title>
-    <link href="http://lawlite.me/2016/10/09/Python%E7%88%AC%E8%99%AB-Scrapy/"/>
-    <id>http://lawlite.me/2016/10/09/Python爬虫-Scrapy/</id>
+    <link href="http://lawlite.cn/2016/10/09/Python%E7%88%AC%E8%99%AB-Scrapy/"/>
+    <id>http://lawlite.cn/2016/10/09/Python爬虫-Scrapy/</id>
     <published>2016-10-09T05:42:56.000Z</published>
     <updated>2017-06-25T08:49:09.000Z</updated>
     
@@ -942,16 +942,16 @@
     </summary>
     
     
-      <category term="Python" scheme="http://lawlite.me/tags/Python/"/>
+      <category term="Python" scheme="http://lawlite.cn/tags/Python/"/>
     
-      <category term="爬虫" scheme="http://lawlite.me/tags/%E7%88%AC%E8%99%AB/"/>
+      <category term="爬虫" scheme="http://lawlite.cn/tags/%E7%88%AC%E8%99%AB/"/>
     
   </entry>
   
   <entry>
     <title>算法练习</title>
-    <link href="http://lawlite.me/2016/09/09/%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A0/"/>
-    <id>http://lawlite.me/2016/09/09/算法练习/</id>
+    <link href="http://lawlite.cn/2016/09/09/%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A0/"/>
+    <id>http://lawlite.cn/2016/09/09/算法练习/</id>
     <published>2016-09-09T05:35:45.000Z</published>
     <updated>2017-06-25T08:51:00.000Z</updated>
     
@@ -975,14 +975,14 @@
     </summary>
     
     
-      <category term="算法" scheme="http://lawlite.me/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="http://lawlite.cn/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
     <title>非极大值抑制</title>
-    <link href="http://lawlite.me/1018/11/20/%E9%9D%9E%E6%9E%81%E5%A4%A7%E5%80%BC%E6%8A%91%E5%88%B6/"/>
-    <id>http://lawlite.me/1018/11/20/非极大值抑制/</id>
+    <link href="http://lawlite.cn/1018/11/20/%E9%9D%9E%E6%9E%81%E5%A4%A7%E5%80%BC%E6%8A%91%E5%88%B6/"/>
+    <id>http://lawlite.cn/1018/11/20/非极大值抑制/</id>
     <published>1018-11-20T03:19:08.000Z</published>
     <updated>2018-11-27T13:13:19.461Z</updated>
     
@@ -998,7 +998,7 @@
     </summary>
     
     
-      <category term="ObjectDetection" scheme="http://lawlite.me/tags/ObjectDetection/"/>
+      <category term="ObjectDetection" scheme="http://lawlite.cn/tags/ObjectDetection/"/>
     
   </entry>
   
