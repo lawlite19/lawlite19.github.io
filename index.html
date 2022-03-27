@@ -179,6 +179,79 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-R树索引" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/03/27/R树索引/">R树索引</a>
+    </h1>
+  
+
+		<!-- 显示阅读和评论数 -->
+		
+		
+        
+        <a href="/2022/03/27/R树索引/" class="archive-article-date">
+  	<time datetime="2022-03-27T03:38:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-27</time>
+</a>
+        
+      </header>
+    
+		<!-- 目录内容 -->
+				
+		<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><h2 id="B树"><a href="#B树" class="headerlink" title="B树"></a>B树</h2><ul>
+<li><p>B树是一棵平衡树，它是把一维直线分为若干段线段，当我们查找满足某个要求的点的时候，只要去查找它所属的线段即可。这种思想其实就是先找一个大的空间，再逐步缩小所要查找的空间，最终在一个自己设定的最小不可分空间内找出满足要求的解。</p>
+<p><img src="/assets/blog_images/RTree/1051369-20170404121903503-367470976.png" alt="img"></p>
+<p><img src="/assets/blog_images/RTree/btree-example.png" alt="btree-example"></p>
+</li>
+</ul>
+        
+          <a class="article-more-a" href="/2022/03/27/R树索引/#more">more >></a>
+        
+      
+
+      
+    </div>
+
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/03/27/R树索引/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 网易云跟帖 -->
+
+
+  
     <article id="post-Ubuntu16.04安装Nvidia驱动cuda, cudnn和tensorflow-gpu" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -828,93 +901,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-论文记录-PruningFiltersForEfficientConvNets" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/10/论文记录-PruningFiltersForEfficientConvNets/">论文记录-Pruning Filters For Efficient ConvNets</a>
-    </h1>
-  
-
-		<!-- 显示阅读和评论数 -->
-		
-		
-        
-        <a href="/2017/09/10/论文记录-PruningFiltersForEfficientConvNets/" class="archive-article-date">
-  	<time datetime="2017-09-10T02:32:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-10</time>
-</a>
-        
-      </header>
-    
-		<!-- 目录内容 -->
-				
-		<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1、概述"><a href="#1、概述" class="headerlink" title="1、概述"></a>1、概述</h2><ul>
-<li>一些剪枝的操作主要是<strong>减少了全连接层的参数</strong>，全连接层的参数量占比最多（比如<code>VGG-16</code>中全连接层操作占了<code>90%</code>，计算量只占了不到<code>1%</code>）, 但是主要的<strong>计算量集中在卷层操作</strong></li>
-<li>论文就是提出了<strong>对卷积层进行剪枝操作</strong>，然后进行<code>retrain</code>，不会造成<strong>稀疏连接</strong>（像<a href="http://lawlite.me/2017/09/07/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95-DeepCompression-CompressingDeepNeuralNetworksWithPruning-TrainedQuantizationAndHuffmanCoding/" target="_blank" rel="external">上篇论文</a>一样，稀疏矩阵操作需要特殊的库等来处理）</li>
-<li>全连接层可以使用<strong>平均池化层</strong>来代替以减少参数量</li>
-</ul>
-        
-          <a class="article-more-a" href="/2017/09/10/论文记录-PruningFiltersForEfficientConvNets/#more">more >></a>
-        
-      
-
-      
-    </div>
-
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Paper阅读记录</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">ModelCompression</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/10/论文记录-PruningFiltersForEfficientConvNets/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 网易云跟帖 -->
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1041,6 +1027,14 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">PyTorch</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Github</a>
               </li>
              
@@ -1049,19 +1043,7 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DeepLearning</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">PyTorch</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1073,15 +1055,15 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DeepLearning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">LSTM</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">GRU</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">R</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1093,19 +1075,11 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">R</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Cudnn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Paper阅读记录</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1113,7 +1087,15 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Paper阅读记录</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">ModelCompression</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Cudnn</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1122,6 +1104,10 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">图像分割</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">ObjectDetection</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1145,7 +1131,7 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">ObjectDetection</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>
