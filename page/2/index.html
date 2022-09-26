@@ -179,6 +179,101 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-论文记录-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Application" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/12/论文记录-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Application/">论文记录_MobileNets Efficient Convolutional Neural Networks for Mobile Vision Application</a>
+    </h1>
+  
+
+		<!-- 显示阅读和评论数 -->
+		
+		
+        
+        <a href="/2017/09/12/论文记录-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Application/" class="archive-article-date">
+  	<time datetime="2017-09-12T03:34:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-12</time>
+</a>
+        
+      </header>
+    
+		<!-- 目录内容 -->
+				
+		<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><code>Tensorflow</code> 中的实现：<a href="https://github.com/tensorflow/models/blob/master/slim/nets/mobilenet_v1.md" target="_blank" rel="external">点击查看</a></li>
+<li><code>Caffe</code> 中的实现：<a href="https://github.com/shicai/MobileNet-Caffe" target="_blank" rel="external">点击查看</a></li>
+</ul>
+<h2 id="1、概述"><a href="#1、概述" class="headerlink" title="1、概述"></a>1、概述</h2><ul>
+<li><code>Google</code>在<code>2017</code>年提出的适用于手机端的神经网络模型</li>
+<li>主要使用了<strong>深度可分离卷积</strong><code>Depthwise Separable Convolution</code> 将卷积核进行分解计算来减少计算量</li>
+<li>引入了<strong>两个超参数</strong>减少参数量和计算量<ul>
+<li>宽度乘数（<code>Width Multiplier</code>）: [减少输入和输出的 <code>channels</code> ]</li>
+<li>分辨率乘数（<code>Resolution Multiplier</code>）：[减少输入输出的 <code>feature maps</code> 的大小]</li>
+</ul>
+</li>
+</ul>
+        
+          <a class="article-more-a" href="/2017/09/12/论文记录-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Application/#more">more >></a>
+        
+      
+
+      
+    </div>
+
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Paper阅读记录</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">ModelCompression</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/09/12/论文记录-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Application/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 网易云跟帖 -->
+
+
+  
     <article id="post-论文记录-PruningFiltersForEfficientConvNets" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -830,102 +925,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-RNN-循环神经网络和LSTM-01基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/14/RNN-循环神经网络和LSTM-01基础/">RNN-循环神经网络和LSTM_01基础</a>
-    </h1>
-  
-
-		<!-- 显示阅读和评论数 -->
-		
-		
-        
-        <a href="/2017/06/14/RNN-循环神经网络和LSTM-01基础/" class="archive-article-date">
-  	<time datetime="2017-06-14T15:42:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-14</time>
-</a>
-        
-      </header>
-    
-		<!-- 目录内容 -->
-				
-		<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="一、介绍"><a href="#一、介绍" class="headerlink" title="一、介绍"></a>一、介绍</h1><h2 id="1、什么是RNN"><a href="#1、什么是RNN" class="headerlink" title="1、什么是RNN"></a>1、什么是RNN</h2><ul>
-<li>传统的神经网络是<strong>层与层</strong>之间是<strong>全连接</strong>的，但是每层之间的神经元是没有连接的（其实是假设各个数据之间是<strong>独立的</strong>）<ul>
-<li>这种结构不善于处理<strong>序列化的问题</strong>。比如要预测句子中的下一个单词是什么，这往往与前面的单词有很大的关联，因为句子里面的单词并不是独立的。</li>
-</ul>
-</li>
-<li><code>RNN</code> 的结构说明当前的的输出与前面的输出也有关，即隐层之间的节点不再是无连接的，而是有连接的<ul>
-<li>基本的结构如图，可以看到有个<strong>循环的结构</strong>，将其展开就是右边的结构</li>
-</ul>
-</li>
-</ul>
-        
-          <a class="article-more-a" href="/2017/06/14/RNN-循环神经网络和LSTM-01基础/#more">more >></a>
-        
-      
-
-      
-    </div>
-
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">DeepLearning</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">RNN</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">LSTM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/06/14/RNN-循环神经网络和LSTM-01基础/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 网易云跟帖 -->
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1064,6 +1063,10 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">PyTorch</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">DeepLearning</a>
               </li>
              
@@ -1072,7 +1075,7 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">PyTorch</a>
+                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1084,7 +1087,7 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
+                <a href="javascript:void(0)" class="js-tag color4">GRU</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1092,7 +1095,7 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">GRU</a>
+                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1100,23 +1103,7 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Cudnn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">翻墙</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1124,7 +1111,31 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Cudnn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">ModelCompression</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">论文记录</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">图像分割</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">ObjectDetection</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1140,14 +1151,6 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文记录</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">图像分割</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Style transfer</a>
               </li>
              
@@ -1156,7 +1159,7 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">ObjectDetection</a>
+                <a href="javascript:void(0)" class="js-tag color3">io</a>
               </li>
             
             <div class="clearfix"></div>
